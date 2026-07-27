@@ -1,15 +1,15 @@
-# YOLO Dataset Configuration for AGAR Microbiology (ADLMS Project)
-path: ../data/splits
+# YOLOv8 Dataset Configuration for ADLMS
+# Absolute paths are best for YOLO, but relative paths starting from YOLO's datasets dir also work.
+# We will use paths relative to the project root for training script parsing.
+
+path: /media/mel12n/Datos/git/ADLMS/data/splits
 train: train/images
-val: val/images
-test: test/images
+val: train/images  # For prototyping, we'll use train as val since it's a tiny subset
+test: train/images
 
-# Number of classes
-nc: 4
-
-# Class names
+# Classes
 names:
-  0: colony          # Bacterial colony
-  1: inhibition_zone # AST inhibition halo
-  2: antibiotic_disk # Antibiotic disk
-  3: empty_plate     # No growth plate
+  0: colony
+  1: inhibition_zone
+  2: antibiotic_disk
+  3: empty_plate
