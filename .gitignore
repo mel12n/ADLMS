@@ -1,0 +1,35 @@
+# Antigravity & Documentation
+.antigravity/
+*.md
+
+# Python & Environment
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# Data & Datasets
+data/raw/
+data/processed/
+data/splits/
+*.zip
+*.tar.gz
+
+# Model Weights & Results
+models/checkpoints/
+models/exports/
+results/
+runs/
+*.pt
+*.onnx
+*.tflite
+
+# IDE & OS
+.DS_Store
+.vscode/
+.idea/

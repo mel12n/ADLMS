@@ -1,0 +1,15 @@
+# YOLO Dataset Configuration for AGAR Microbiology (ADLMS Project)
+path: ../data/splits
+train: train/images
+val: val/images
+test: test/images
+
+# Number of classes
+nc: 4
+
+# Class names
+names:
+  0: colony          # Bacterial colony
+  1: inhibition_zone # AST inhibition halo
+  2: antibiotic_disk # Antibiotic disk
+  3: empty_plate     # No growth plate
