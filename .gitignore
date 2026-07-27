@@ -1,7 +1,3 @@
-# Antigravity & Documentation
-.antigravity/
-*.md
-
 # Python & Environment
 __pycache__/
 *.py[cod]

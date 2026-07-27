@@ -2,84 +2,87 @@ import os
 import json
 import shutil
 from pathlib import Path
+import cv2
 import sys
+import glob
 
 sys.path.append(str(Path(__file__).resolve().parent.parent.parent))
 from src.utils.constants import RAW_DATA_DIR, SPLITS_DIR
 
-def coco_to_yolo_bbox(img_width, img_height, bbox):
+def convert_agar_json_to_yolo(input_dir, train_img_dir, train_lbl_dir):
     """
-    Convert COCO bounding box [x_min, y_min, width, height]
-    to YOLO format [x_center, y_center, width, height] normalized (0 to 1).
+    Parse AGAR per-image JSON files and convert annotations to YOLO format.
+    Input structure: data/raw/AGAR_representative/higher-resolution/bright/
     """
-    x_min, y_min, w, h = bbox
-    x_center = (x_min + w / 2.0) / img_width
-    y_center = (y_min + h / 2.0) / img_height
-    norm_w = w / img_width
-    norm_h = h / img_height
-    return [x_center, y_center, norm_w, norm_h]
-
-def convert_coco_json_to_yolo(json_path, image_dir, output_img_dir, output_lbl_dir, val_split=0.2):
-    """
-    Parse COCO JSON file and convert annotations to YOLO format.
-    Splits into train / validation sets.
-    """
-    if not os.path.exists(json_path):
-        print(f"Annotation file not found: {json_path}")
-        return
-
-    with open(json_path, 'r', encoding='utf-8') as f:
-        data = json.load(f)
-
-    images = {img['id']: img for img in data.get('images', [])}
-    categories = {cat['id']: idx for idx, cat in enumerate(data.get('categories', []))}
-
-    # Group annotations by image_id
-    image_annotations = {}
-    for ann in data.get('annotations', []):
-        img_id = ann['image_id']
-        image_annotations.setdefault(img_id, []).append(ann)
-
-    print(f"Loaded {len(images)} images and {len(data.get('annotations', []))} annotations.")
+    json_files = glob.glob(os.path.join(input_dir, "**", "*.json"), recursive=True)
+    print(f"Found {len(json_files)} JSON annotation files in {input_dir}")
 
     processed_count = 0
-    for img_id, img_info in images.items():
-        file_name = img_info['file_name']
-        img_w = img_info['width']
-        img_h = img_info['height']
+    empty_count = 0
+    uncountable_count = 0
 
-        src_img_path = Path(image_dir) / file_name
-        if not src_img_path.exists():
+    for json_path in json_files:
+        with open(json_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+
+        img_path = json_path.replace('.json', '.jpg')
+        if not os.path.exists(img_path):
             continue
 
-        txt_name = Path(file_name).stem + ".txt"
-        dst_txt_path = Path(output_lbl_dir) / txt_name
-        dst_img_path = Path(output_img_dir) / file_name
+        file_name = os.path.basename(img_path)
+        dst_img_path = Path(train_img_dir) / file_name
+        dst_txt_path = Path(train_lbl_dir) / file_name.replace('.jpg', '.txt')
 
-        # Copy image
-        shutil.copy(src_img_path, dst_img_path)
+        colonies_num = data.get('colonies_number', 0)
+        labels = data.get('labels', [])
 
-        # Write YOLO label file
-        anns = image_annotations.get(img_id, [])
+        if colonies_num == -1:
+            uncountable_count += 1
+            continue  # Skip uncountable plates for object detection for now
+
+        # We need image dimensions for YOLO normalization
+        img = cv2.imread(img_path)
+        if img is None:
+            continue
+        img_h, img_w = img.shape[:2]
+
+        shutil.copy(img_path, dst_img_path)
+
         with open(dst_txt_path, 'w', encoding='utf-8') as label_file:
-            for ann in anns:
-                cat_id = ann['category_id']
-                yolo_class = categories.get(cat_id, 0)
-                yolo_bbox = coco_to_yolo_bbox(img_w, img_h, ann['bbox'])
-                line = f"{yolo_class} " + " ".join(f"{coord:.6f}" for coord in yolo_bbox) + "\n"
-                label_file.write(line)
+            if colonies_num == 0:
+                # Empty plate
+                label_file.write(f"3 0.5 0.5 1.0 1.0\n")
+                empty_count += 1
+            else:
+                for lbl in labels:
+                    x = lbl['x']
+                    y = lbl['y']
+                    w = lbl['width']
+                    h = lbl['height']
+
+                    x_center = (x + w / 2.0) / img_w
+                    y_center = (y + h / 2.0) / img_h
+                    norm_w = w / img_w
+                    norm_h = h / img_h
+
+                    # Class 0: Colony
+                    line = f"0 {x_center:.6f} {y_center:.6f} {norm_w:.6f} {norm_h:.6f}\n"
+                    label_file.write(line)
 
         processed_count += 1
 
-    print(f"Successfully converted {processed_count} images & annotations to YOLO format.")
+    print(f"Conversion complete.")
+    print(f"Processed valid images: {processed_count}")
+    print(f"Empty plates: {empty_count}")
+    print(f"Skipped uncountable plates: {uncountable_count}")
 
 if __name__ == "__main__":
-    demo_json = RAW_DATA_DIR / "AGAR_demo" / "annotations.json"
-    demo_images = RAW_DATA_DIR / "AGAR_demo" / "images"
+    demo_extracted_dir = RAW_DATA_DIR / "AGAR_representative"
     train_img = SPLITS_DIR / "train" / "images"
     train_lbl = SPLITS_DIR / "train" / "labels"
     
-    if demo_json.exists():
-        convert_coco_json_to_yolo(demo_json, demo_images, train_img, train_lbl)
+    if demo_extracted_dir.exists():
+        convert_agar_json_to_yolo(str(demo_extracted_dir), train_img, train_lbl)
     else:
-        print(f"No COCO JSON found at {demo_json}. Run download_agar.py first.")
+        print(f"Extracted dataset not found at {demo_extracted_dir}.")
+
