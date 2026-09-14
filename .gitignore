@@ -29,3 +29,6 @@ runs/
 .DS_Store
 .vscode/
 .idea/
+
+# Image database
+AGAR_demo/
