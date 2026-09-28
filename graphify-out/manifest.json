@@ -1,0 +1,620 @@
+{
+  ".planning/config.json": {
+    "mtime": 1790253877.4517913,
+    "seen": 1790254044.270682,
+    "ast_hash": "13a39e08ef724a0d79acc17f3c31dc61",
+    "semantic_hash": ""
+  },
+  "build_code_map.py": {
+    "mtime": 1790077058.7605572,
+    "seen": 1790254044.2706947,
+    "ast_hash": "c2170bb998b1e5a6b73520c8899159d1",
+    "semantic_hash": ""
+  },
+  "codebase_map.json": {
+    "mtime": 1790077058.7781203,
+    "seen": 1790254044.2706985,
+    "ast_hash": "299d2f80c6d261d315b776c0606d57c2",
+    "semantic_hash": ""
+  },
+  "src/data/augment.py": {
+    "mtime": 1790077058.7920668,
+    "seen": 1790254044.2707014,
+    "ast_hash": "9e3dfe39341b90df87d9756a2e0ccb3e",
+    "semantic_hash": ""
+  },
+  "src/data/coco_to_yolo.py": {
+    "mtime": 1790077058.800468,
+    "seen": 1790254044.2707033,
+    "ast_hash": "f999440f8466be04c160b46f97c32262",
+    "semantic_hash": ""
+  },
+  "src/data/download_agar.py": {
+    "mtime": 1790077058.800468,
+    "seen": 1790254044.2707057,
+    "ast_hash": "556181e13ba581a64cb522e06e7e9307",
+    "semantic_hash": ""
+  },
+  "src/data/preprocess.py": {
+    "mtime": 1790077058.80945,
+    "seen": 1790254044.270708,
+    "ast_hash": "dcd55e5b6e5bea695af89ad395a9a58a",
+    "semantic_hash": ""
+  },
+  "src/evaluation/evaluate.py": {
+    "mtime": 1790077058.8159523,
+    "seen": 1790254044.27071,
+    "ast_hash": "da4fd4d8a4d07708f0f0dddad1c06588",
+    "semantic_hash": ""
+  },
+  "src/evaluation/grad_cam.py": {
+    "mtime": 1790077058.823028,
+    "seen": 1790254044.2707112,
+    "ast_hash": "25da95336bbc763920b9b1a2ed783d14",
+    "semantic_hash": ""
+  },
+  "src/models/export_model.py": {
+    "mtime": 1790077058.8257296,
+    "seen": 1790254044.270713,
+    "ast_hash": "e8b15d870d9a99d792c105300141a4f7",
+    "semantic_hash": ""
+  },
+  "src/models/train_yolo.py": {
+    "mtime": 1790077058.8337948,
+    "seen": 1790254044.2707167,
+    "ast_hash": "8ad474db3e1d729ff7450dee992a5519",
+    "semantic_hash": ""
+  },
+  "src/utils/constants.py": {
+    "mtime": 1790077058.8576796,
+    "seen": 1790254044.2707193,
+    "ast_hash": "de59e67e6f728ee33b11dbbc0ec1fb10",
+    "semantic_hash": ""
+  },
+  ".antigravity/implementation_plan.md": {
+    "mtime": 1790077058.7173588,
+    "seen": 1790254044.2707207,
+    "ast_hash": "347429fdff65f2bab752fa29dbe82141",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230320104623.txt": {
+    "mtime": 1790250073.5998013,
+    "seen": 1790254044.2707222,
+    "ast_hash": "3f0fa3416faeb6958ce2aee2b66247a4",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230321083329.txt": {
+    "mtime": 1790252896.7167895,
+    "seen": 1790254044.2707236,
+    "ast_hash": "649cda931a754afd36c0a94eb2a69eb3",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/classes.txt": {
+    "mtime": 1790252896.713005,
+    "seen": 1790254044.270725,
+    "ast_hash": "ce59c277d0aefa69e6f2112b26c3e425",
+    "semantic_hash": ""
+  },
+  "Poyecto.md": {
+    "mtime": 1790077058.751824,
+    "seen": 1790254044.2707264,
+    "ast_hash": "e898885bc350cd5cf04857c9c9203b46",
+    "semantic_hash": ""
+  },
+  "acif200_s12_MelianC.md": {
+    "mtime": 1790078899.6996844,
+    "seen": 1790254044.270728,
+    "ast_hash": "b7274b79675c18b7ab3c6a23838a643e",
+    "semantic_hash": ""
+  },
+  "antigravity_skills.md": {
+    "mtime": 1790077058.7540524,
+    "seen": 1790254044.2707298,
+    "ast_hash": "68a68f55bfd123568195cb5dd9daff82",
+    "semantic_hash": ""
+  },
+  "configs/dataset.yaml": {
+    "mtime": 1790077058.7781203,
+    "seen": 1790254044.270731,
+    "ast_hash": "00153591d442b6091b26e498dc7dbdeb",
+    "semantic_hash": ""
+  },
+  "desktop_setup_guide.md": {
+    "mtime": 1790077058.7840629,
+    "seen": 1790254044.2707324,
+    "ast_hash": "5c925878c87535ab4d002ade0ad2121a",
+    "semantic_hash": ""
+  },
+  "requirements.txt": {
+    "mtime": 1790167378.360454,
+    "seen": 1790254044.270734,
+    "ast_hash": "461044e65fc4093fc7259aeec514dba6",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Test/IMG20230323110751.jpg": {
+    "mtime": 1790165552.4547215,
+    "seen": 1790254044.270737,
+    "ast_hash": "164f90d9d52b8279d4d67276095312ee",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Test/IMG20230323111029.jpg": {
+    "mtime": 1790164648.5699103,
+    "seen": 1790254044.2707384,
+    "ast_hash": "5d4c736c5cec79004e60d84a29d0f0a1",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Test/IMG20230323111044.jpg": {
+    "mtime": 1790165323.7760477,
+    "seen": 1790254044.27074,
+    "ast_hash": "7a928af614b0c16ae4d29fe6769a7dea",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Test/IMG20230324104808.jpg": {
+    "mtime": 1790164582.9906173,
+    "seen": 1790254044.2707415,
+    "ast_hash": "ae4314e19734c456387aed5a847e832f",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Test/IMG_20230305_154641.jpg": {
+    "mtime": 1790164680.520178,
+    "seen": 1790254044.2707434,
+    "ast_hash": "5ceb6a76741f2326d26a6fb2cc6d4c3c",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Test/IMG_20230323_111918.jpg": {
+    "mtime": 1790164458.19785,
+    "seen": 1790254044.2707448,
+    "ast_hash": "d06a7275f5e491aca696ae12ce1d32b1",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230320104623.jpg": {
+    "mtime": 1790164624.7420828,
+    "seen": 1790254044.2707465,
+    "ast_hash": "ebc8dd76b2a8c8e6e2ac15bac16a464b",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230321083329.jpg": {
+    "mtime": 1790164551.9146914,
+    "seen": 1790254044.270748,
+    "ast_hash": "a086be337e39a891e3e67e97cea6037b",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230321083340.jpg": {
+    "mtime": 1790165568.765162,
+    "seen": 1790254044.270749,
+    "ast_hash": "9f2871c4dc1adb4c4b6e18d3c0766cb8",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230321083408.jpg": {
+    "mtime": 1790164588.7483623,
+    "seen": 1790254044.2707508,
+    "ast_hash": "c7cf2aa44243f074abe65a4308ed4368",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230321083418.jpg": {
+    "mtime": 1790165512.7033136,
+    "seen": 1790254044.2707524,
+    "ast_hash": "94034e827d1db4fd98c6dbdc8e249bcf",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230321083518.jpg": {
+    "mtime": 1790164259.2837784,
+    "seen": 1790254044.270754,
+    "ast_hash": "3bed612fee83b93667c4574a4fff56ed",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230321083555.jpg": {
+    "mtime": 1790165596.282663,
+    "seen": 1790254044.2707553,
+    "ast_hash": "e4c7920af742ec8a1e200a6d5c29a665",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230323110633.jpg": {
+    "mtime": 1790165557.136941,
+    "seen": 1790254044.2707572,
+    "ast_hash": "daff15f1d08d147e3766396cd912905d",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230323110715.jpg": {
+    "mtime": 1790165603.354537,
+    "seen": 1790254044.2707584,
+    "ast_hash": "a713e87ff3158cf574614e790a80a736",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230323110735.jpg": {
+    "mtime": 1790164318.9408338,
+    "seen": 1790254044.2707598,
+    "ast_hash": "e3bb40e0f2978c471508efdb8cf04fb5",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230323110818.jpg": {
+    "mtime": 1790164643.1990807,
+    "seen": 1790254044.2707615,
+    "ast_hash": "cd137d3f720f26c2551ffeaf0e93d9b9",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230323110849.jpg": {
+    "mtime": 1790164560.5004058,
+    "seen": 1790254044.270763,
+    "ast_hash": "8c8984eb7161a2eec67a30162d93f09a",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230323110902.jpg": {
+    "mtime": 1790164512.5720725,
+    "seen": 1790254044.2707644,
+    "ast_hash": "f3713ebfb1e05c84d23b2ca55c510033",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230323110918.jpg": {
+    "mtime": 1790164270.6445034,
+    "seen": 1790254044.2707658,
+    "ast_hash": "d0f2e34827b2083151109cf803a89c85",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230323110934.jpg": {
+    "mtime": 1790165642.3224664,
+    "seen": 1790254044.2707675,
+    "ast_hash": "39d817c3ac1610057951bb3b2fabc463",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230323110949.jpg": {
+    "mtime": 1790164659.4242706,
+    "seen": 1790254044.270772,
+    "ast_hash": "fa72d490e7a2b12fb5f7b6ddcbdffc00",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230323111002.jpg": {
+    "mtime": 1790165506.5667665,
+    "seen": 1790254044.2707736,
+    "ast_hash": "b626f245be340f5fb90f870f776cac65",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230323111015.jpg": {
+    "mtime": 1790164344.8151195,
+    "seen": 1790254044.2707753,
+    "ast_hash": "6187355dbe3530d2ec187c556587237c",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230323111056.jpg": {
+    "mtime": 1790164357.928585,
+    "seen": 1790254044.2707765,
+    "ast_hash": "289e628891e6fa632166bbda04c6e954",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230323111109.jpg": {
+    "mtime": 1790164312.3279755,
+    "seen": 1790254044.2707782,
+    "ast_hash": "1642a67ca90489831fd6d9b4d0636f07",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230323111131.jpg": {
+    "mtime": 1790165528.1887462,
+    "seen": 1790254044.27078,
+    "ast_hash": "a18d20defa651dc50a82a1f643a20964",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230324104531.jpg": {
+    "mtime": 1790165581.4725113,
+    "seen": 1790254044.2707815,
+    "ast_hash": "a7cc54b466fc5da6bbfcedfe7ce6a5dd",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230324104607.jpg": {
+    "mtime": 1790164632.1054494,
+    "seen": 1790254044.270783,
+    "ast_hash": "6f9ed94612b19ac94abf83a3fa8a2419",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230324104618.jpg": {
+    "mtime": 1790164325.2966108,
+    "seen": 1790254044.2707846,
+    "ast_hash": "9a481965655968a50cf0b7db1ad29329",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230324104632.jpg": {
+    "mtime": 1790164351.3813148,
+    "seen": 1790254044.270786,
+    "ast_hash": "58831243f1c6d0ba78a46fe772428cda",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230324104647.jpg": {
+    "mtime": 1790164472.7316885,
+    "seen": 1790254044.2707875,
+    "ast_hash": "e0627f7f12463e4ab4680a987a587cde",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230324104656.jpg": {
+    "mtime": 1790164277.0785563,
+    "seen": 1790254044.270789,
+    "ast_hash": "52f34c71809efe7341b5682fe2c676ca",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230324104710.jpg": {
+    "mtime": 1790165589.5212524,
+    "seen": 1790254044.2707903,
+    "ast_hash": "6424b6931cf689403ad85dfa329c0f1d",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230324104723.jpg": {
+    "mtime": 1790165610.4224412,
+    "seen": 1790254044.2707918,
+    "ast_hash": "765c54efdc3c496272e678d7543317f8",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230324104737.jpg": {
+    "mtime": 1790164638.4260628,
+    "seen": 1790254044.2707934,
+    "ast_hash": "853106d63f36d680cac898d0de437d84",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230324104753.jpg": {
+    "mtime": 1790165540.755482,
+    "seen": 1790254044.270795,
+    "ast_hash": "9d3de365a9b3ace6e8861061e94d1e72",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230324104819.jpg": {
+    "mtime": 1790164576.9057472,
+    "seen": 1790254044.2707968,
+    "ast_hash": "4c53052441db9c5633f41fc7485bd60f",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230324104834.jpg": {
+    "mtime": 1790165573.921816,
+    "seen": 1790254044.270798,
+    "ast_hash": "c96c32bd18e140170fcafe52bcbf1bfd",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230324104848.jpg": {
+    "mtime": 1790165309.0365667,
+    "seen": 1790254044.2707996,
+    "ast_hash": "75c1d0485e15146a7d65521b143c0d8b",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230326090154.jpg": {
+    "mtime": 1790165535.3866627,
+    "seen": 1790254044.270801,
+    "ast_hash": "6d504efffdfe750648bd9f926713d76c",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230326090205.jpg": {
+    "mtime": 1790165497.834723,
+    "seen": 1790254044.2708027,
+    "ast_hash": "60bb7df38d30b13a255f641d538baaec",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230326090226.jpg": {
+    "mtime": 1790164162.2923357,
+    "seen": 1790254044.2708044,
+    "ast_hash": "9f1d40a5a69e9aad79a36784039b97df",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230327095143.jpg": {
+    "mtime": 1790165564.5536704,
+    "seen": 1790254044.270806,
+    "ast_hash": "f0b8fd326ad2d11767a6299e4b269df7",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230327095200.jpg": {
+    "mtime": 1790164294.6483486,
+    "seen": 1790254044.2708077,
+    "ast_hash": "9a62f3357a7ed87e6a7fa2cc606b7e6e",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230329093833.jpg": {
+    "mtime": 1790164445.4373336,
+    "seen": 1790254044.2708097,
+    "ast_hash": "5a531a36fa06364793e4f202ceb10b8c",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG20230329093850.jpg": {
+    "mtime": 1790164686.892448,
+    "seen": 1790254044.2708108,
+    "ast_hash": "527ba8d02c2f9342c1644f85072eadda",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG_20230301_005827.jpg": {
+    "mtime": 1790164505.3237002,
+    "seen": 1790254044.2708125,
+    "ast_hash": "dcd8c5a1b7ae039f49ff8bc73e1da7c5",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG_20230305_154514.jpg": {
+    "mtime": 1790164418.5793014,
+    "seen": 1790254044.270814,
+    "ast_hash": "82615df1455c3caee34f90ca7758bf82",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG_20230305_154534.jpg": {
+    "mtime": 1790164424.8692348,
+    "seen": 1790254044.2708154,
+    "ast_hash": "8f987885daba0830f7892e762be354c6",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG_20230305_154610.jpg": {
+    "mtime": 1790165293.984052,
+    "seen": 1790254044.270817,
+    "ast_hash": "86f57ba4eec73e2f9510b689e1b5b6b3",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG_20230305_154728.jpg": {
+    "mtime": 1790164569.5236707,
+    "seen": 1790254044.2708185,
+    "ast_hash": "86cffd1266d32e9a3cb5af3322a8058f",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG_20230305_154750.jpg": {
+    "mtime": 1790164527.1209953,
+    "seen": 1790254044.2708201,
+    "ast_hash": "41274a7a74ea8f672c6dfdac7ae2321c",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG_20230305_154816.jpg": {
+    "mtime": 1790164301.5788233,
+    "seen": 1790254044.2708216,
+    "ast_hash": "23680fc6aa191bc43849a4b5c1524e79",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG_20230313_102516.jpg": {
+    "mtime": 1790164285.2876406,
+    "seen": 1790254044.270823,
+    "ast_hash": "a4b976206b7fc12e509211375b45fe28",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG_20230313_102541.jpg": {
+    "mtime": 1790164412.4171493,
+    "seen": 1790254044.2708244,
+    "ast_hash": "5af61b64028ecbc11d80fa155c0cf6d3",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG_20230313_102608.jpg": {
+    "mtime": 1790164617.3909354,
+    "seen": 1790254044.270826,
+    "ast_hash": "dab5960086021aa9aebc17f4358d08f8",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG_20230313_102637.jpg": {
+    "mtime": 1790165330.0724225,
+    "seen": 1790254044.2708275,
+    "ast_hash": "ca62a22b570505d6d180db51dabd8054",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG_20230313_102712.jpg": {
+    "mtime": 1790165655.17714,
+    "seen": 1790254044.2708292,
+    "ast_hash": "682ce574e01c6db5cd7af5e078fda765",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG_20230313_102731.jpg": {
+    "mtime": 1790164465.435957,
+    "seen": 1790254044.2708306,
+    "ast_hash": "bedb5eff72dd5685877d6a97d8f0566f",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG_20230313_102825.jpg": {
+    "mtime": 1790164430.3521578,
+    "seen": 1790254044.270832,
+    "ast_hash": "fa635e73bab81b3d1a39eb25c0c3f1e2",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG_20230313_102842.jpg": {
+    "mtime": 1790164534.3419185,
+    "seen": 1790254044.2708337,
+    "ast_hash": "f4ecc1d117c0063c2d936bf6c7170b13",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG_20230313_102921.jpg": {
+    "mtime": 1790164672.7921886,
+    "seen": 1790254044.2708352,
+    "ast_hash": "0fcd1a90dfd1fcad9a115fc6a4777b39",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG_20230323_111742.jpg": {
+    "mtime": 1790165285.573227,
+    "seen": 1790254044.2708366,
+    "ast_hash": "a441319b89452981e7326f17c31e6b47",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG_20230323_111801.jpg": {
+    "mtime": 1790165649.590575,
+    "seen": 1790254044.2708402,
+    "ast_hash": "e64201858fe36492d788ccd3311f3d84",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG_20230323_111837.jpg": {
+    "mtime": 1790164151.6048665,
+    "seen": 1790254044.2708416,
+    "ast_hash": "084d85ebc88d46ca25bfed3c108402a9",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG_20230323_111906.jpg": {
+    "mtime": 1790164521.0368922,
+    "seen": 1790254044.2708428,
+    "ast_hash": "984092bc651038b0f727a298dd5e659e",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Train/IMG_20230323_115630.jpg": {
+    "mtime": 1790164451.5647619,
+    "seen": 1790254044.2708445,
+    "ast_hash": "45ddd45ba7a40cffdcfdec17648c7a5d",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Valid/IMG20230320104650.jpg": {
+    "mtime": 1790164652.6573713,
+    "seen": 1790254044.2708457,
+    "ast_hash": "956368837af9e01cd1418e6b76e57db6",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Valid/IMG20230323110805.jpg": {
+    "mtime": 1790165547.5697088,
+    "seen": 1790254044.2708473,
+    "ast_hash": "7f61f235282df7794736596ba8c4a998",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Valid/IMG20230323111120.jpg": {
+    "mtime": 1790164332.013394,
+    "seen": 1790254044.2708488,
+    "ast_hash": "56831f8a12d09cc353cd33c7a943e201",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Valid/IMG20230323111143.jpg": {
+    "mtime": 1790165669.5189588,
+    "seen": 1790254044.2708504,
+    "ast_hash": "6d50c59e647e6e64430d27fbd9a8fbcb",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Valid/IMG20230324104554.jpg": {
+    "mtime": 1790164253.9073615,
+    "seen": 1790254044.270852,
+    "ast_hash": "6dcd1cd0bc4b49a0e6216d3dd24df712",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Valid/IMG20230326090251.jpg": {
+    "mtime": 1790165300.758273,
+    "seen": 1790254044.2708535,
+    "ast_hash": "0e6f5d3e4a2b82d37b1e0069dc80e412",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Valid/IMG20230327095210.jpg": {
+    "mtime": 1790165661.7425466,
+    "seen": 1790254044.2708554,
+    "ast_hash": "3f9c7fdc8de136eeabe86749913abc3d",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Valid/IMG_20230305_154552.jpg": {
+    "mtime": 1790165619.956593,
+    "seen": 1790254044.2708573,
+    "ast_hash": "e031dccfb83f2388617da6c9388d7102",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Valid/IMG_20230305_154700.jpg": {
+    "mtime": 1790164478.1907601,
+    "seen": 1790254044.2708588,
+    "ast_hash": "eeae752a8373e36db2e5216b0955a69c",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Valid/IMG_20230313_102655.jpg": {
+    "mtime": 1790165316.412724,
+    "seen": 1790254044.2708602,
+    "ast_hash": "16e8ad1854aec02dc18ba83f4b3985b5",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Valid/IMG_20230313_102749.jpg": {
+    "mtime": 1790165520.4223413,
+    "seen": 1790254044.2708619,
+    "ast_hash": "8bcca355eae8d510d6ea473e66cccb51",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Valid/IMG_20230313_102807.jpg": {
+    "mtime": 1790164545.588491,
+    "seen": 1790254044.2708633,
+    "ast_hash": "d1f418d26e75227b3db26abba858141b",
+    "semantic_hash": ""
+  },
+  "Antibiogram_demo/Valid/IMG_20230323_111852.jpg": {
+    "mtime": 1790164437.8065693,
+    "seen": 1790254044.2708647,
+    "ast_hash": "8253eed83960579a66e9632bcededbe4",
+    "semantic_hash": ""
+  }
+}
