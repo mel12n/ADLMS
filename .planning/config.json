@@ -1,5 +1,10 @@
 {
   "graphify": {
     "enabled": true
+  },
+  "workflow": {
+    "auto": false,
+    "architecture": "dual-hybrid",
+    "track": ["web-mvp", "streamlit"]
   }
 }

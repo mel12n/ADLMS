@@ -1,6 +1,7 @@
 import os
 import ast
 import json
+from pathlib import Path
 
 def parse_imports(file_path):
     imports = []
@@ -18,11 +19,14 @@ def parse_imports(file_path):
         print(f"Warning parsing {file_path}: {e}")
     return sorted(list(set(imports)))
 
-def build_codebase_map(root_dir="."):
+def build_codebase_map(root_dir=None):
+    if root_dir is None:
+        root_dir = str(Path(__file__).resolve().parent.parent)
+    output_path = Path(__file__).resolve().parent / "codebase_map.json"
     code_map = {}
     for dirpath, dirnames, filenames in os.walk(root_dir):
         # Exclude hidden dirs and git/venv
-        dirnames[:] = [d for d in dirnames if not d.startswith('.') and d not in ('venv', '__pycache__', 'build', 'dist')]
+        dirnames[:] = [d for d in dirnames if not d.startswith('.') and d not in ('venv', '__pycache__', 'build', 'dist', 'mvp_web')]
         for filename in filenames:
             if filename.endswith('.py'):
                 full_path = os.path.relpath(os.path.join(dirpath, filename), root_dir)
@@ -43,10 +47,10 @@ def build_codebase_map(root_dir="."):
                         data["imported_by"].append(other_file)
         data["imported_by"] = sorted(list(set(data["imported_by"])))
 
-    with open(os.path.join(root_dir, "codebase_map.json"), 'w', encoding='utf-8') as f:
+    with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(code_map, f, indent=2)
     
-    print(f"Successfully generated codebase_map.json with {len(code_map)} Python files mapped.")
+    print(f"Successfully generated {output_path} with {len(code_map)} Python files mapped.")
 
 if __name__ == "__main__":
-    build_codebase_map(".")
+    build_codebase_map()

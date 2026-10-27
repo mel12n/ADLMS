@@ -2,7 +2,7 @@
 # Absolute paths are best for YOLO, but relative paths starting from YOLO's datasets dir also work.
 # We will use paths relative to the project root for training script parsing.
 
-path: /media/mel12n/Datos/git/ADLMS/data/splits
+path: data/splits
 train: train/images
 val: train/images  # For prototyping, we'll use train as val since it's a tiny subset
 test: train/images

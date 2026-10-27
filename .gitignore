@@ -30,5 +30,7 @@ runs/
 .vscode/
 .idea/
 
-# Image database
-AGAR_demo/
+# Image database & large samples
+data/AGAR_demo/
+*.log
+.pytest_cache/

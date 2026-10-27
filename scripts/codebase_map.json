@@ -1,10 +1,50 @@
 {
-  "build_code_map.py": {
+  "run_web_mvp.py": {
+    "imports": [
+      "http.server",
+      "os",
+      "pathlib",
+      "socketserver",
+      "sys",
+      "webbrowser"
+    ],
+    "imported_by": []
+  },
+  "streamlit_app.py": {
+    "imports": [
+      "PIL",
+      "cv2",
+      "datetime",
+      "json",
+      "numpy",
+      "os",
+      "pathlib",
+      "streamlit",
+      "sys",
+      "uuid"
+    ],
+    "imported_by": []
+  },
+  "scripts/build_code_map.py": {
     "imports": [
       "ast",
       "json",
-      "os"
+      "os",
+      "pathlib"
     ],
+    "imported_by": []
+  },
+  "scripts/build_mvp_plates.py": {
+    "imports": [
+      "PIL",
+      "json",
+      "pathlib",
+      "shutil"
+    ],
+    "imported_by": []
+  },
+  "src/__init__.py": {
+    "imports": [],
     "imported_by": []
   },
   "src/data/augment.py": {
@@ -16,6 +56,8 @@
   },
   "src/data/coco_to_yolo.py": {
     "imports": [
+      "cv2",
+      "glob",
       "json",
       "os",
       "pathlib",
@@ -49,6 +91,10 @@
     ],
     "imported_by": []
   },
+  "src/data/__init__.py": {
+    "imports": [],
+    "imported_by": []
+  },
   "src/evaluation/evaluate.py": {
     "imports": [
       "argparse",
@@ -68,6 +114,10 @@
       "sys",
       "torch"
     ],
+    "imported_by": []
+  },
+  "src/evaluation/__init__.py": {
+    "imports": [],
     "imported_by": []
   },
   "src/models/export_model.py": {
@@ -91,6 +141,10 @@
     ],
     "imported_by": []
   },
+  "src/models/__init__.py": {
+    "imports": [],
+    "imported_by": []
+  },
   "src/utils/constants.py": {
     "imports": [
       "pathlib"
@@ -101,7 +155,14 @@
       "src/data/preprocess.py",
       "src/evaluation/evaluate.py",
       "src/models/export_model.py",
-      "src/models/train_yolo.py"
+      "src/models/train_yolo.py",
+      "src/utils/__init__.py"
     ]
+  },
+  "src/utils/__init__.py": {
+    "imports": [
+      "src.utils.constants"
+    ],
+    "imported_by": []
   }
 }
