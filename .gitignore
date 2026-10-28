@@ -34,3 +34,7 @@ runs/
 data/AGAR_demo/
 *.log
 .pytest_cache/
+
+#Agents
+.antigravity/
+.planning/
