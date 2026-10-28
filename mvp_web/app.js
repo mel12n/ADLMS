@@ -889,7 +889,13 @@ function buildFhir() {
           id,
           status: 'preliminary',
           category: [{ coding: [{ system: 'http://terminology.hl7.org/CodeSystem/v2-0074', code: 'MB', display: 'Microbiology' }] }],
-          code: { coding: [{ system: 'http://loinc.org', code: '18769-0', display: 'Microbial susceptibility tests' }], text: 'Antibiograma por difusión en disco — DeepHalo / ADLMS' },
+          code: {
+            coding: [
+              { system: 'http://loinc.org', code: '18769-0', display: 'Microbial susceptibility tests' },
+              { system: 'http://snomed.info/sct', code: '70549008', display: 'Antimicrobial susceptibility test' }
+            ],
+            text: 'Antibiograma por difusión en disco — DeepHalo / ADLMS'
+          },
           identifier: [{
             system: 'https://minsal.cl/lab/muestras',
             value: state.plate && state.plate.sampleId ? String(state.plate.sampleId) : '2026102508332914'

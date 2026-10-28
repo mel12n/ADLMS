@@ -104,19 +104,19 @@ SAMPLE_PRESETS = {
         "label": "Escherichia coli (ATCC 25922) — Enterobacterales",
         "organism": "Escherichia coli",
         "species_group": "Enterobacterales",
-        "image_file": BASE_DIR / "mvp_web" / "sample_plates" / "ecoli_plate.jpg",
+        "image_file": BASE_DIR / "mvp_web" / "sample_plates" / "gn_a.jpg",
         "disks": [
-            {"id": "d1", "abx": "CIP", "x_pct": 0.35, "y_pct": 0.35, "default_dia_mm": 28.5},
+            {"id": "d1", "abx": "CIP", "x_pct": 0.35, "y_pct": 0.35, "default_dia_mm": 26.4},
             {"id": "d2", "abx": "AMK", "x_pct": 0.65, "y_pct": 0.35, "default_dia_mm": 21.0},
             {"id": "d3", "abx": "MEM", "x_pct": 0.50, "y_pct": 0.65, "default_dia_mm": 26.2},
-            {"id": "d4", "abx": "CTX", "x_pct": 0.25, "y_pct": 0.60, "default_dia_mm": 22.8}
+            {"id": "d4", "abx": "CTX", "x_pct": 0.25, "y_pct": 0.60, "default_dia_mm": 14.1}
         ]
     },
     "staph": {
         "label": "Staphylococcus aureus (ATCC 29213) — Gram Positivo",
         "organism": "Staphylococcus aureus",
         "species_group": "Staphylococcus aureus",
-        "image_file": BASE_DIR / "mvp_web" / "sample_plates" / "staph_plate.jpg",
+        "image_file": BASE_DIR / "mvp_web" / "sample_plates" / "gp_a.jpg",
         "disks": [
             {"id": "d1", "abx": "FOX", "x_pct": 0.38, "y_pct": 0.38, "default_dia_mm": 24.5},
             {"id": "d2", "abx": "GEN", "x_pct": 0.62, "y_pct": 0.38, "default_dia_mm": 20.0},
@@ -127,7 +127,7 @@ SAMPLE_PRESETS = {
         "label": "Pseudomonas aeruginosa — No Fermentador",
         "organism": "Pseudomonas aeruginosa",
         "species_group": "Pseudomonas aeruginosa",
-        "image_file": BASE_DIR / "mvp_web" / "sample_plates" / "pseudo_plate.jpg",
+        "image_file": BASE_DIR / "mvp_web" / "sample_plates" / "gn_b.jpg",
         "disks": [
             {"id": "d1", "abx": "MEM", "x_pct": 0.36, "y_pct": 0.40, "default_dia_mm": 19.5},
             {"id": "d2", "abx": "AMK", "x_pct": 0.64, "y_pct": 0.40, "default_dia_mm": 19.0},
@@ -138,7 +138,7 @@ SAMPLE_PRESETS = {
         "label": "Klebsiella pneumoniae — BLEE Probable",
         "organism": "Klebsiella pneumoniae",
         "species_group": "Enterobacterales",
-        "image_file": BASE_DIR / "mvp_web" / "sample_plates" / "kleb_plate.jpg",
+        "image_file": BASE_DIR / "mvp_web" / "sample_plates" / "gn_b.jpg",
         "disks": [
             {"id": "d1", "abx": "CTX", "x_pct": 0.35, "y_pct": 0.35, "default_dia_mm": 14.5},
             {"id": "d2", "abx": "MEM", "x_pct": 0.65, "y_pct": 0.35, "default_dia_mm": 23.5},
@@ -318,11 +318,18 @@ def build_fhir_bundle(organism, results, sample_id="SAMP-2026-0042", technologis
                 }]
             }],
             "code": {
-                "coding": [{
-                    "system": "http://loinc.org",
-                    "code": "18769-0",
-                    "display": "Microbial susceptibility tests by disk diffusion (Kirby-Bauer)"
-                }],
+                "coding": [
+                    {
+                        "system": "http://loinc.org",
+                        "code": "18769-0",
+                        "display": "Microbial susceptibility tests by disk diffusion (Kirby-Bauer)"
+                    },
+                    {
+                        "system": "http://snomed.info/sct",
+                        "code": "70549008",
+                        "display": "Antimicrobial susceptibility test"
+                    }
+                ],
                 "text": "Antibiograma Automatizado DeepHalo / ADLMS"
             },
             "subject": {
