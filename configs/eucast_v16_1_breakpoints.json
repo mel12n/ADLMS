@@ -1,0 +1,2340 @@
+{
+  "version": "EUCAST v16.1 (2026-06-24) + CLSI M100",
+  "source_file": "v_16.1_Breakpoint_Tables.xlsx",
+  "groups": [
+    "Enterobacterales",
+    "Staphylococcus",
+    "Pseudomonas",
+    "Enterococcus",
+    "Acinetobacter",
+    "Streptococcus A,B,C,G",
+    "S.pneumoniae",
+    "H.influenzae"
+  ],
+  "aliases": {
+    "AMP": "AM",
+    "AMK": "AK",
+    "GEN": "CN",
+    "GM": "CN",
+    "CLI": "DA",
+    "ERY": "E",
+    "NIT": "F",
+    "PEN": "P",
+    "VAN": "VA",
+    "QDA": "QD",
+    "RIF": "RD",
+    "PIP": "PRL",
+    "LVX": "LEV",
+    "MFX": "MXF",
+    "LNZ": "LZD",
+    "TCY": "TE",
+    "CHL": "C",
+    "FOF": "FOS",
+    "TPZ": "TZP",
+    "TMP": "W",
+    "MNO": "MH",
+    "FUS": "FD",
+    "S": "ST"
+  },
+  "drugs": {
+    "VA": {
+      "code": "VA",
+      "name": "Vancomicina",
+      "atc": "J01XA01",
+      "loinc": "525-6",
+      "unit": "µg",
+      "potency": "70µg",
+      "note": "Requiere CMI en Staphylococcus (disco 5 µg válido solo en Enterococcus EUCAST)",
+      "eucast": {
+        "Enterococcus": {
+          "s": 12,
+          "r": 12,
+          "disk_ug": "5",
+          "source_row": "Vancomycin, E. faecalis and E. faecium"
+        },
+        "Streptococcus A,B,C,G": {
+          "s": 13,
+          "r": 13,
+          "disk_ug": "5",
+          "source_row": "Vancomycin1"
+        },
+        "S.pneumoniae": {
+          "s": 16,
+          "r": 16,
+          "disk_ug": "5",
+          "source_row": "Vancomycin1"
+        }
+      },
+      "clsi": {}
+    },
+    "MUP": {
+      "code": "MUP",
+      "name": "Mupirocina",
+      "atc": "D06AX09",
+      "loinc": "35822-6",
+      "unit": "µg",
+      "potency": "10µg",
+      "note": "Agente tópico (cribado nasal)",
+      "eucast": {},
+      "clsi": {}
+    },
+    "S": {
+      "code": "S",
+      "name": "Estreptomicina",
+      "atc": "J01GA01",
+      "loinc": "",
+      "unit": "µg",
+      "potency": "",
+      "note": "Cribado de resistencia de alto nivel en Enterococcus",
+      "eucast": {},
+      "clsi": {}
+    },
+    "FD": {
+      "code": "FD",
+      "name": "Ácido fusídico",
+      "atc": "J01XC01",
+      "loinc": "263-4",
+      "unit": "µg",
+      "potency": "50µg",
+      "note": "",
+      "eucast": {
+        "Staphylococcus": {
+          "s": 24,
+          "r": 24,
+          "disk_ug": "10",
+          "source_row": "Fusidic acid"
+        }
+      },
+      "clsi": {}
+    },
+    "AM": {
+      "code": "AM",
+      "name": "Ampicilina",
+      "atc": "J01CA01",
+      "loinc": "29-9",
+      "unit": "µg",
+      "potency": "2µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 14,
+          "r": 14,
+          "disk_ug": "10",
+          "source_row": "Ampicillin iv1"
+        },
+        "Staphylococcus": {
+          "s": 18,
+          "r": 18,
+          "disk_ug": "2",
+          "source_row": "Ampicillin, S. saprophyticus"
+        },
+        "Enterococcus": {
+          "s": 10,
+          "r": 10,
+          "disk_ug": "2",
+          "source_row": "Ampicillin iv"
+        },
+        "S.pneumoniae": {
+          "s": 22,
+          "r": 19,
+          "disk_ug": "2",
+          "source_row": "Ampicillin iv (indications other than endocarditis and meningitis)"
+        },
+        "H.influenzae": {
+          "s": 18,
+          "r": 18,
+          "disk_ug": "2",
+          "source_row": "Ampicillin (indications other than meningitis)2"
+        }
+      },
+      "clsi": {
+        "Enterobacterales": {
+          "s": 17,
+          "r": 14
+        },
+        "Staphylococcus": null
+      }
+    },
+    "SAM": {
+      "code": "SAM",
+      "name": "Ampicilina-sulbactam",
+      "atc": "J01CR01",
+      "loinc": "33-1",
+      "unit": "µg",
+      "potency": "20/10µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 14,
+          "r": 14,
+          "disk_ug": "10-10",
+          "source_row": "Ampicillin-sulbactam iv1"
+        }
+      },
+      "clsi": {
+        "Enterobacterales": {
+          "s": 15,
+          "r": 12
+        }
+      }
+    },
+    "AMC": {
+      "code": "AMC",
+      "name": "Amoxicilina-ác. clavulánico",
+      "atc": "J01CR02",
+      "loinc": "21-6",
+      "unit": "µg",
+      "potency": "20/10µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 19,
+          "r": 19,
+          "disk_ug": "20-10",
+          "source_row": "Amoxicillin-clavulanic acid iv1",
+          "atu": [
+            19,
+            20
+          ]
+        },
+        "H.influenzae": {
+          "s": 15,
+          "r": 15,
+          "disk_ug": "2-1",
+          "source_row": "Amoxicillin-clavulanic acid iv"
+        }
+      },
+      "clsi": {
+        "Enterobacterales": {
+          "s": 18,
+          "r": 14
+        }
+      }
+    },
+    "PRL": {
+      "code": "PRL",
+      "name": "Piperacilina",
+      "atc": "J01CA12",
+      "loinc": "409-3",
+      "unit": "µg",
+      "potency": "75µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 20,
+          "r": 20,
+          "disk_ug": "30",
+          "source_row": "Piperacillin"
+        },
+        "Pseudomonas": {
+          "s": 50,
+          "r": 18,
+          "disk_ug": "30",
+          "source_row": "Piperacillin",
+          "atu": [
+            18,
+            19
+          ]
+        },
+        "Enterococcus": {
+          "s": 50,
+          "r": 18,
+          "disk_ug": "30",
+          "source_row": "Piperacillin, E. faecalis"
+        }
+      },
+      "clsi": {
+        "Enterobacterales": {
+          "s": 21,
+          "r": 18
+        },
+        "Pseudomonas": {
+          "s": 21,
+          "r": 15
+        }
+      }
+    },
+    "TZP": {
+      "code": "TZP",
+      "name": "Piperacilina-tazobactam",
+      "atc": "J01CR05",
+      "loinc": "413-5",
+      "unit": "µg",
+      "potency": "100/10µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 20,
+          "r": 20,
+          "disk_ug": "30-6",
+          "source_row": "Piperacillin-tazobactam",
+          "atu": [
+            19,
+            19
+          ]
+        },
+        "Pseudomonas": {
+          "s": 50,
+          "r": 18,
+          "disk_ug": "30-6",
+          "source_row": "Piperacillin-tazobactam",
+          "atu": [
+            18,
+            19
+          ]
+        },
+        "Enterococcus": {
+          "s": 50,
+          "r": 18,
+          "disk_ug": "30-6",
+          "source_row": "Piperacillin-tazobactam2, E. faecalis"
+        },
+        "H.influenzae": {
+          "s": 27,
+          "r": 27,
+          "disk_ug": "30-6",
+          "source_row": "Piperacillin-tazobactam",
+          "atu": [
+            26,
+            28
+          ]
+        }
+      },
+      "clsi": {
+        "Enterobacterales": {
+          "s": 25,
+          "r": 21
+        },
+        "Pseudomonas": {
+          "s": 22,
+          "r": 18
+        }
+      }
+    },
+    "TIM": {
+      "code": "TIM",
+      "name": "Ticarcilina-clavulánico",
+      "atc": "J01CR03",
+      "loinc": "",
+      "unit": "µg",
+      "potency": "75-10",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 23,
+          "r": 20,
+          "disk_ug": "75-10",
+          "source_row": "Ticarcillin-clavulanic acid"
+        },
+        "Pseudomonas": {
+          "s": 50,
+          "r": 18,
+          "disk_ug": "75-10",
+          "source_row": "Ticarcillin-clavulanic acid"
+        }
+      },
+      "clsi": {}
+    },
+    "TEM": {
+      "code": "TEM",
+      "name": "Temocilina",
+      "atc": "J01CA17",
+      "loinc": "",
+      "unit": "µg",
+      "potency": "30",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 50,
+          "r": 17,
+          "disk_ug": "30",
+          "source_row": "Temocillin (infections originating from the urinary tract), E. coli, Klebsiella spp. (except K. aerogenes) and P. mirabilis"
+        }
+      },
+      "clsi": {}
+    },
+    "MEL": {
+      "code": "MEL",
+      "name": "Mecilinam",
+      "atc": "J01CA11",
+      "loinc": "",
+      "unit": "µg",
+      "potency": "10",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 15,
+          "r": 15,
+          "disk_ug": "10",
+          "source_row": "Mecillinam oral (pivmecillinam) (uncomplicated UTI only), E. coli, Citrobacter spp., Klebsiella spp., Raoultella spp., Enterobacter spp. and P. mirabilis"
+        }
+      },
+      "clsi": {}
+    },
+    "CFR": {
+      "code": "CFR",
+      "name": "Cefadroxilo",
+      "atc": "J01DB05",
+      "loinc": "65-3",
+      "unit": "µg",
+      "potency": "30µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 12,
+          "r": 12,
+          "disk_ug": "30",
+          "source_row": "Cefadroxil (uncomplicated UTI only)"
+        }
+      },
+      "clsi": {}
+    },
+    "CNL": {
+      "code": "CNL",
+      "name": "Cefalexina",
+      "atc": "J01DB01",
+      "loinc": "",
+      "unit": "µg",
+      "potency": "30",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 14,
+          "r": 14,
+          "disk_ug": "30",
+          "source_row": "Cefalexin (uncomplicated UTI only)"
+        }
+      },
+      "clsi": {}
+    },
+    "KZ": {
+      "code": "KZ",
+      "name": "Cefazolina",
+      "atc": "J01DB04",
+      "loinc": "",
+      "unit": "µg",
+      "potency": "30",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 50,
+          "r": 20,
+          "disk_ug": "30",
+          "source_row": "Cefazolin (infections originating from the urinary tract), E. coli and Klebsiella spp. (except K. aerogenes)"
+        }
+      },
+      "clsi": {}
+    },
+    "FEP": {
+      "code": "FEP",
+      "name": "Cefepima",
+      "atc": "J01DE01",
+      "loinc": "8272-7",
+      "unit": "µg",
+      "potency": "30µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 27,
+          "r": 24,
+          "disk_ug": "30",
+          "source_row": "Cefepime"
+        },
+        "Pseudomonas": {
+          "s": 50,
+          "r": 21,
+          "disk_ug": "30",
+          "source_row": "Cefepime",
+          "atu": [
+            19,
+            23
+          ]
+        },
+        "H.influenzae": {
+          "s": 28,
+          "r": 28,
+          "disk_ug": "30",
+          "source_row": "Cefepime",
+          "atu": [
+            28,
+            33
+          ]
+        }
+      },
+      "clsi": {
+        "Enterobacterales": {
+          "s": 25,
+          "r": 19
+        },
+        "Pseudomonas": {
+          "s": 18,
+          "r": 15
+        }
+      }
+    },
+    "FEP_ENM": {
+      "code": "FEP_ENM",
+      "name": "Cefepima-enmetazobactam",
+      "atc": "J01DE51",
+      "loinc": "",
+      "unit": "µg",
+      "potency": "30-20",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 22,
+          "r": 22,
+          "disk_ug": "30-20",
+          "source_row": "Cefepime-enmetazobactam",
+          "atu": [
+            21,
+            22
+          ]
+        }
+      },
+      "clsi": {}
+    },
+    "FDC": {
+      "code": "FDC",
+      "name": "Cefiderocol",
+      "atc": "J01DI04",
+      "loinc": "",
+      "unit": "µg",
+      "potency": "30",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 23,
+          "r": 23,
+          "disk_ug": "30",
+          "source_row": "Cefiderocol",
+          "atu": [
+            21,
+            23
+          ]
+        },
+        "Pseudomonas": {
+          "s": 22,
+          "r": 22,
+          "disk_ug": "30",
+          "source_row": "Cefiderocol, P. aeruginosa",
+          "atu": [
+            20,
+            21
+          ]
+        }
+      },
+      "clsi": {}
+    },
+    "CFM": {
+      "code": "CFM",
+      "name": "Cefixima",
+      "atc": "J01DD08",
+      "loinc": "81-0",
+      "unit": "µg",
+      "potency": "5µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 17,
+          "r": 17,
+          "disk_ug": "5",
+          "source_row": "Cefixime (uncomplicated UTI only)"
+        },
+        "H.influenzae": {
+          "s": 26,
+          "r": 26,
+          "disk_ug": "5",
+          "source_row": "Cefixime"
+        }
+      },
+      "clsi": {}
+    },
+    "CTX": {
+      "code": "CTX",
+      "name": "Cefotaxima",
+      "atc": "J01DD01",
+      "loinc": "109-9",
+      "unit": "µg",
+      "potency": "30µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 20,
+          "r": 17,
+          "disk_ug": "5",
+          "source_row": "Cefotaxime (indications other than meningitis)"
+        },
+        "H.influenzae": {
+          "s": 27,
+          "r": 27,
+          "disk_ug": "5",
+          "source_row": "Cefotaxime",
+          "atu": [
+            25,
+            27
+          ]
+        }
+      },
+      "clsi": {
+        "Enterobacterales": {
+          "s": 26,
+          "r": 23
+        }
+      }
+    },
+    "FOX": {
+      "code": "FOX",
+      "name": "Cefoxitina",
+      "atc": "J01DC01",
+      "loinc": "117-2",
+      "unit": "µg",
+      "potency": "30µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 19,
+          "r": 19,
+          "disk_ug": "30",
+          "source_row": "Cefoxitin (screen only)5"
+        },
+        "Staphylococcus": {
+          "s": 22,
+          "r": 22,
+          "disk_ug": "30",
+          "source_row": "Cefoxitin (screen only), S. aureus and coagulase-negative staphylococci except  S. epidermidis and S. lugdunensis"
+        }
+      },
+      "clsi": {
+        "Enterobacterales": {
+          "s": 18,
+          "r": 15
+        },
+        "Staphylococcus": {
+          "s": 22,
+          "r": 22
+        }
+      }
+    },
+    "CPD": {
+      "code": "CPD",
+      "name": "Cefpodoxima",
+      "atc": "J01DD13",
+      "loinc": "121-4",
+      "unit": "µg",
+      "potency": "1µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 21,
+          "r": 21,
+          "disk_ug": "10",
+          "source_row": "Cefpodoxime  (uncomplicated UTI only)"
+        },
+        "H.influenzae": {
+          "s": 26,
+          "r": 26,
+          "disk_ug": "10",
+          "source_row": "Cefpodoxime",
+          "atu": [
+            26,
+            29
+          ]
+        }
+      },
+      "clsi": {}
+    },
+    "CPT": {
+      "code": "CPT",
+      "name": "Ceftarolina",
+      "atc": "J01DI02",
+      "loinc": "73650-4",
+      "unit": "µg",
+      "potency": "30µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 23,
+          "r": 23,
+          "disk_ug": "5",
+          "source_row": "Ceftaroline",
+          "atu": [
+            22,
+            23
+          ]
+        },
+        "Staphylococcus": {
+          "s": 20,
+          "r": 17,
+          "disk_ug": "5",
+          "source_row": "Ceftaroline (indications other than pneumonia), S. aureus",
+          "atu": [
+            19,
+            20
+          ]
+        }
+      },
+      "clsi": {}
+    },
+    "CAZ": {
+      "code": "CAZ",
+      "name": "Ceftazidima",
+      "atc": "J01DD02",
+      "loinc": "134-7",
+      "unit": "µg",
+      "potency": "30µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 22,
+          "r": 19,
+          "disk_ug": "10",
+          "source_row": "Ceftazidime"
+        },
+        "Pseudomonas": {
+          "s": 50,
+          "r": 17,
+          "disk_ug": "10",
+          "source_row": "Ceftazidime"
+        }
+      },
+      "clsi": {
+        "Enterobacterales": {
+          "s": 21,
+          "r": 18
+        },
+        "Pseudomonas": {
+          "s": 18,
+          "r": 15
+        }
+      }
+    },
+    "CZA": {
+      "code": "CZA",
+      "name": "Ceftazidima-avibactam",
+      "atc": "J01DD52",
+      "loinc": "73648-8",
+      "unit": "µg",
+      "potency": "30/20µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 13,
+          "r": 13,
+          "disk_ug": "10-4",
+          "source_row": "Ceftazidime-avibactam"
+        },
+        "Pseudomonas": {
+          "s": 17,
+          "r": 17,
+          "disk_ug": "10-4",
+          "source_row": "Ceftazidime-avibactam, P. aeruginosa",
+          "atu": [
+            16,
+            17
+          ]
+        }
+      },
+      "clsi": {}
+    },
+    "CTB": {
+      "code": "CTB",
+      "name": "Ceftibuteno",
+      "atc": "J01DD14",
+      "loinc": "35777-2",
+      "unit": "µg",
+      "potency": "30µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 23,
+          "r": 23,
+          "disk_ug": "30",
+          "source_row": "Ceftibuten (infections originating from the urinary tract)"
+        },
+        "H.influenzae": {
+          "s": 25,
+          "r": 25,
+          "disk_ug": "30",
+          "source_row": "Ceftibuten"
+        }
+      },
+      "clsi": {}
+    },
+    "BPR": {
+      "code": "BPR",
+      "name": "Ceftobiprol",
+      "atc": "J01DI01",
+      "loinc": "",
+      "unit": "µg",
+      "potency": "5µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 23,
+          "r": 23,
+          "disk_ug": "5",
+          "source_row": "Ceftobiprole"
+        },
+        "Staphylococcus": {
+          "s": 17,
+          "r": 17,
+          "disk_ug": "5",
+          "source_row": "Ceftobiprole, S. aureus",
+          "atu": [
+            16,
+            17
+          ]
+        }
+      },
+      "clsi": {}
+    },
+    "CZT": {
+      "code": "CZT",
+      "name": "Ceftolozano-tazobactam",
+      "atc": "J01DI54",
+      "loinc": "73647-0",
+      "unit": "µg",
+      "potency": "30/10µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 22,
+          "r": 22,
+          "disk_ug": "30-10",
+          "source_row": "Ceftolozane-tazobactam7",
+          "atu": [
+            19,
+            21
+          ]
+        },
+        "Pseudomonas": {
+          "s": 23,
+          "r": 23,
+          "disk_ug": "30-10",
+          "source_row": "Ceftolozane-tazobactam4, P. aeruginosa"
+        },
+        "H.influenzae": {
+          "s": 23,
+          "r": 23,
+          "disk_ug": "30-10",
+          "source_row": "Ceftolozane-tazobactam (pneumonia)3",
+          "atu": [
+            22,
+            23
+          ]
+        }
+      },
+      "clsi": {}
+    },
+    "CRO": {
+      "code": "CRO",
+      "name": "Ceftriaxona",
+      "atc": "J01DD04",
+      "loinc": "142-0",
+      "unit": "µg",
+      "potency": "30µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 27,
+          "r": 24,
+          "disk_ug": "30",
+          "source_row": "Ceftriaxone (indications other than meningitis)"
+        },
+        "H.influenzae": {
+          "s": 32,
+          "r": 32,
+          "disk_ug": "30",
+          "source_row": "Ceftriaxone",
+          "atu": [
+            31,
+            33
+          ]
+        }
+      },
+      "clsi": {
+        "Enterobacterales": {
+          "s": 26,
+          "r": 23
+        }
+      }
+    },
+    "CXM": {
+      "code": "CXM",
+      "name": "Cefuroxima",
+      "atc": "J01DC02",
+      "loinc": "146-1",
+      "unit": "µg",
+      "potency": "5µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 50,
+          "r": 19,
+          "disk_ug": "30",
+          "source_row": "Cefuroxime iv, E. coli, Klebsiella spp. (except K. aerogenes), Raoultella spp. and P. mirabilis"
+        },
+        "H.influenzae": {
+          "s": 27,
+          "r": 25,
+          "disk_ug": "30",
+          "source_row": "Cefuroxime iv",
+          "atu": [
+            25,
+            27
+          ]
+        }
+      },
+      "clsi": {
+        "Enterobacterales": {
+          "s": 18,
+          "r": 15
+        }
+      }
+    },
+    "DOR": {
+      "code": "DOR",
+      "name": "Doripenem",
+      "atc": "J01DH04",
+      "loinc": "72893-1",
+      "unit": "µg",
+      "potency": "10µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 24,
+          "r": 21,
+          "disk_ug": "10",
+          "source_row": "Doripenem"
+        },
+        "Pseudomonas": {
+          "s": 50,
+          "r": 22,
+          "disk_ug": "10",
+          "source_row": "Doripenem"
+        },
+        "Acinetobacter": {
+          "s": 50,
+          "r": 22,
+          "disk_ug": "10",
+          "source_row": "Doripenem"
+        },
+        "H.influenzae": {
+          "s": 23,
+          "r": 23,
+          "disk_ug": "10",
+          "source_row": "Doripenem"
+        }
+      },
+      "clsi": {}
+    },
+    "ETP": {
+      "code": "ETP",
+      "name": "Ertapenem",
+      "atc": "J01DH03",
+      "loinc": "35799-6",
+      "unit": "µg",
+      "potency": "10µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 23,
+          "r": 23,
+          "disk_ug": "10",
+          "source_row": "Ertapenem"
+        },
+        "H.influenzae": {
+          "s": 23,
+          "r": 23,
+          "disk_ug": "10",
+          "source_row": "Ertapenem"
+        }
+      },
+      "clsi": {
+        "Enterobacterales": {
+          "s": 22,
+          "r": 19
+        }
+      }
+    },
+    "IPM": {
+      "code": "IPM",
+      "name": "Imipenem",
+      "atc": "J01DH51",
+      "loinc": "280-8",
+      "unit": "µg",
+      "potency": "10µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 22,
+          "r": 19,
+          "disk_ug": "10",
+          "source_row": "Imipenem, Enterobacterales except Morganellaceae"
+        },
+        "Pseudomonas": {
+          "s": 50,
+          "r": 20,
+          "disk_ug": "10",
+          "source_row": "Imipenem"
+        },
+        "Enterococcus": {
+          "s": 50,
+          "r": 21,
+          "disk_ug": "10",
+          "source_row": "Imipenem, E. faecalis"
+        },
+        "Acinetobacter": {
+          "s": 24,
+          "r": 21,
+          "disk_ug": "10",
+          "source_row": "Imipenem"
+        },
+        "H.influenzae": {
+          "s": 20,
+          "r": 20,
+          "disk_ug": "10",
+          "source_row": "Imipenem",
+          "atu": [
+            6,
+            19
+          ]
+        }
+      },
+      "clsi": {
+        "Enterobacterales": {
+          "s": 23,
+          "r": 20
+        },
+        "Pseudomonas": {
+          "s": 19,
+          "r": 16
+        },
+        "Acinetobacter": {
+          "s": 22,
+          "r": 19
+        }
+      }
+    },
+    "IMR": {
+      "code": "IMR",
+      "name": "Imipenem-relebactam",
+      "atc": "J01DH56",
+      "loinc": "",
+      "unit": "µg",
+      "potency": "10/25µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 22,
+          "r": 22,
+          "disk_ug": "10-25",
+          "source_row": "Imipenem-relebactam, Enterobacterales except Morganellaceae",
+          "atu": [
+            20,
+            22
+          ]
+        },
+        "Pseudomonas": {
+          "s": 22,
+          "r": 22,
+          "disk_ug": "10-25",
+          "source_row": "Imipenem-relebactam, P. aeruginosa"
+        }
+      },
+      "clsi": {}
+    },
+    "MEM": {
+      "code": "MEM",
+      "name": "Meropenem",
+      "atc": "J01DH02",
+      "loinc": "6653-0",
+      "unit": "µg",
+      "potency": "10µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 22,
+          "r": 16,
+          "disk_ug": "10",
+          "source_row": "Meropenem (indications other than meningitis)"
+        },
+        "Pseudomonas": {
+          "s": 20,
+          "r": 14,
+          "disk_ug": "10",
+          "source_row": "Meropenem (indications other than meningitis), P. aeruginosa"
+        },
+        "Acinetobacter": {
+          "s": 21,
+          "r": 15,
+          "disk_ug": "10",
+          "source_row": "Meropenem (indications other than meningitis)"
+        },
+        "H.influenzae": {
+          "s": 20,
+          "r": 20,
+          "disk_ug": "10",
+          "source_row": "Meropenem (indications other than meningitis)"
+        }
+      },
+      "clsi": {
+        "Enterobacterales": {
+          "s": 23,
+          "r": 20
+        },
+        "Pseudomonas": {
+          "s": 19,
+          "r": 16
+        },
+        "Acinetobacter": {
+          "s": 18,
+          "r": 15
+        }
+      }
+    },
+    "MEV": {
+      "code": "MEV",
+      "name": "Meropenem-vaborbactam",
+      "atc": "J01DH52",
+      "loinc": "",
+      "unit": "µg",
+      "potency": "20/10µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 20,
+          "r": 20,
+          "disk_ug": "20-10",
+          "source_row": "Meropenem-vaborbactam",
+          "atu": [
+            15,
+            19
+          ]
+        },
+        "Pseudomonas": {
+          "s": 14,
+          "r": 14,
+          "disk_ug": "20-10",
+          "source_row": "Meropenem-vaborbactam,  P. aeruginosa"
+        }
+      },
+      "clsi": {}
+    },
+    "ATM": {
+      "code": "ATM",
+      "name": "Aztreonam",
+      "atc": "J01DF01",
+      "loinc": "45-5",
+      "unit": "µg",
+      "potency": "30µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 26,
+          "r": 21,
+          "disk_ug": "30",
+          "source_row": "Aztreonam1"
+        },
+        "Pseudomonas": {
+          "s": 50,
+          "r": 18,
+          "disk_ug": "30",
+          "source_row": "Aztreonam"
+        }
+      },
+      "clsi": {
+        "Enterobacterales": {
+          "s": 21,
+          "r": 18
+        },
+        "Pseudomonas": {
+          "s": 22,
+          "r": 16
+        }
+      }
+    },
+    "AZA": {
+      "code": "AZA",
+      "name": "Aztreonam-avibactam",
+      "atc": "J01DF51",
+      "loinc": "",
+      "unit": "µg",
+      "potency": "30-20",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 25,
+          "r": 25,
+          "disk_ug": "30-20",
+          "source_row": "Aztreonam-avibactam",
+          "atu": [
+            22,
+            24
+          ]
+        }
+      },
+      "clsi": {}
+    },
+    "CIP": {
+      "code": "CIP",
+      "name": "Ciprofloxacino",
+      "atc": "J01MA02",
+      "loinc": "186-7",
+      "unit": "µg",
+      "potency": "10µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 25,
+          "r": 22,
+          "disk_ug": "5",
+          "source_row": "Ciprofloxacin (indications other than meningitis)",
+          "atu": [
+            22,
+            24
+          ]
+        },
+        "Staphylococcus": {
+          "s": 50,
+          "r": 17,
+          "disk_ug": "5",
+          "source_row": "Ciprofloxacin, S. aureus"
+        },
+        "Pseudomonas": {
+          "s": 50,
+          "r": 26,
+          "disk_ug": "5",
+          "source_row": "Ciprofloxacin"
+        },
+        "Enterococcus": {
+          "s": 15,
+          "r": 15,
+          "disk_ug": "5",
+          "source_row": "Ciprofloxacin (uncomplicated UTI only)"
+        },
+        "Acinetobacter": {
+          "s": 50,
+          "r": 21,
+          "disk_ug": "5",
+          "source_row": "Ciprofloxacin"
+        },
+        "H.influenzae": {
+          "s": 32,
+          "r": 32,
+          "disk_ug": "5",
+          "source_row": "Ciprofloxacin"
+        }
+      },
+      "clsi": {
+        "Enterobacterales": {
+          "s": 26,
+          "r": 22
+        },
+        "Staphylococcus": {
+          "s": 21,
+          "r": 16
+        },
+        "Pseudomonas": {
+          "s": 25,
+          "r": 19
+        }
+      }
+    },
+    "PEF": {
+      "code": "PEF",
+      "name": "Pefloxacino (cribado)",
+      "atc": "J01MA03",
+      "loinc": "",
+      "unit": "µg",
+      "potency": "5",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 24,
+          "r": 24,
+          "disk_ug": "5",
+          "source_row": "Pefloxacin (screen only)"
+        }
+      },
+      "clsi": {}
+    },
+    "LEV": {
+      "code": "LEV",
+      "name": "Levofloxacino",
+      "atc": "J01MA12",
+      "loinc": "21367-8",
+      "unit": "µg",
+      "potency": "5µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 23,
+          "r": 19,
+          "disk_ug": "5",
+          "source_row": "Levofloxacin"
+        },
+        "Staphylococcus": {
+          "s": 50,
+          "r": 22,
+          "disk_ug": "5",
+          "source_row": "Levofloxacin, S. aureus"
+        },
+        "Pseudomonas": {
+          "s": 50,
+          "r": 18,
+          "disk_ug": "5",
+          "source_row": "Levofloxacin"
+        },
+        "Enterococcus": {
+          "s": 15,
+          "r": 15,
+          "disk_ug": "5",
+          "source_row": "Levofloxacin (uncomplicated UTI only)"
+        },
+        "Acinetobacter": {
+          "s": 23,
+          "r": 20,
+          "disk_ug": "5",
+          "source_row": "Levofloxacin"
+        },
+        "Streptococcus A,B,C,G": {
+          "s": 50,
+          "r": 17,
+          "disk_ug": "5",
+          "source_row": "Levofloxacin"
+        },
+        "S.pneumoniae": {
+          "s": 50,
+          "r": 16,
+          "disk_ug": "5",
+          "source_row": "Levofloxacin"
+        },
+        "H.influenzae": {
+          "s": 30,
+          "r": 30,
+          "disk_ug": "5",
+          "source_row": "Levofloxacin"
+        }
+      },
+      "clsi": {
+        "Enterobacterales": {
+          "s": 21,
+          "r": 17
+        },
+        "Staphylococcus": {
+          "s": 19,
+          "r": 16
+        },
+        "Pseudomonas": {
+          "s": 22,
+          "r": 15
+        }
+      }
+    },
+    "MXF": {
+      "code": "MXF",
+      "name": "Moxifloxacino",
+      "atc": "J01MA14",
+      "loinc": "31041-7",
+      "unit": "µg",
+      "potency": "1µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 22,
+          "r": 22,
+          "disk_ug": "5",
+          "source_row": "Moxifloxacin, Enterobacterales except Morganella morganii, Proteus spp. and Serratia spp.3"
+        },
+        "Staphylococcus": {
+          "s": 25,
+          "r": 25,
+          "disk_ug": "5",
+          "source_row": "Moxifloxacin3, S. aureus"
+        },
+        "Streptococcus A,B,C,G": {
+          "s": 19,
+          "r": 19,
+          "disk_ug": "5",
+          "source_row": "Moxifloxacin"
+        },
+        "S.pneumoniae": {
+          "s": 22,
+          "r": 22,
+          "disk_ug": "5",
+          "source_row": "Moxifloxacin"
+        },
+        "H.influenzae": {
+          "s": 28,
+          "r": 28,
+          "disk_ug": "5",
+          "source_row": "Moxifloxacin"
+        }
+      },
+      "clsi": {
+        "Enterobacterales": {
+          "s": 24,
+          "r": 21
+        },
+        "Staphylococcus": {
+          "s": 24,
+          "r": 21
+        }
+      }
+    },
+    "NOR": {
+      "code": "NOR",
+      "name": "Norfloxacino",
+      "atc": "J01MA06",
+      "loinc": "368-1",
+      "unit": "µg",
+      "potency": "10µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 24,
+          "r": 24,
+          "disk_ug": "10",
+          "source_row": "Norfloxacin (uncomplicated UTI only)"
+        },
+        "Staphylococcus": {
+          "s": 17,
+          "r": 17,
+          "disk_ug": "10",
+          "source_row": "Norfloxacin (screen only)"
+        },
+        "Enterococcus": {
+          "s": 12,
+          "r": 12,
+          "disk_ug": "10",
+          "source_row": "Norfloxacin (screen only)"
+        },
+        "Streptococcus A,B,C,G": {
+          "s": 12,
+          "r": 12,
+          "disk_ug": "10",
+          "source_row": "Norfloxacin (screen only)"
+        },
+        "S.pneumoniae": {
+          "s": 10,
+          "r": 10,
+          "disk_ug": "10",
+          "source_row": "Norfloxacin (screen only)"
+        }
+      },
+      "clsi": {
+        "Enterobacterales": {
+          "s": 17,
+          "r": 13
+        },
+        "Staphylococcus": {
+          "s": 17,
+          "r": 13
+        }
+      }
+    },
+    "OFX": {
+      "code": "OFX",
+      "name": "Ofloxacino",
+      "atc": "J01MA01",
+      "loinc": "376-4",
+      "unit": "µg",
+      "potency": "5µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 24,
+          "r": 22,
+          "disk_ug": "5",
+          "source_row": "Ofloxacin"
+        },
+        "H.influenzae": {
+          "s": 30,
+          "r": 30,
+          "disk_ug": "5",
+          "source_row": "Ofloxacin"
+        }
+      },
+      "clsi": {}
+    },
+    "AK": {
+      "code": "AK",
+      "name": "Amikacina",
+      "atc": "J01GB06",
+      "loinc": "13-3",
+      "unit": "µg",
+      "potency": "30µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 18,
+          "r": 18,
+          "disk_ug": "30",
+          "source_row": "Amikacin (systemic infections)"
+        },
+        "Staphylococcus": {
+          "s": 15,
+          "r": 15,
+          "disk_ug": "30",
+          "source_row": "Amikacin, S. aureus"
+        },
+        "Pseudomonas": {
+          "s": 15,
+          "r": 15,
+          "disk_ug": "30",
+          "source_row": "Amikacin (systemic infections)"
+        },
+        "Acinetobacter": {
+          "s": 19,
+          "r": 19,
+          "disk_ug": "30",
+          "source_row": "Amikacin (systemic infections)"
+        }
+      },
+      "clsi": {
+        "Enterobacterales": {
+          "s": 17,
+          "r": 15
+        },
+        "Pseudomonas": {
+          "s": 17,
+          "r": 15
+        }
+      }
+    },
+    "CN": {
+      "code": "CN",
+      "name": "Gentamicina",
+      "atc": "J01GB03",
+      "loinc": "268-3",
+      "unit": "µg",
+      "potency": "15µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 17,
+          "r": 17,
+          "disk_ug": "10",
+          "source_row": "Gentamicin (systemic infections)"
+        },
+        "Staphylococcus": {
+          "s": 18,
+          "r": 18,
+          "disk_ug": "10",
+          "source_row": "Gentamicin, S. aureus"
+        },
+        "Acinetobacter": {
+          "s": 17,
+          "r": 17,
+          "disk_ug": "10",
+          "source_row": "Gentamicin (systemic infections)"
+        }
+      },
+      "clsi": {
+        "Enterobacterales": {
+          "s": 15,
+          "r": 13
+        },
+        "Staphylococcus": {
+          "s": 15,
+          "r": 13
+        }
+      }
+    },
+    "TOB": {
+      "code": "TOB",
+      "name": "Tobramicina",
+      "atc": "J01GB01",
+      "loinc": "509-0",
+      "unit": "µg",
+      "potency": "30µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 16,
+          "r": 16,
+          "disk_ug": "10",
+          "source_row": "Tobramycin (systemic infections)"
+        },
+        "Staphylococcus": {
+          "s": 18,
+          "r": 18,
+          "disk_ug": "10",
+          "source_row": "Tobramycin, S. aureus"
+        },
+        "Pseudomonas": {
+          "s": 18,
+          "r": 18,
+          "disk_ug": "10",
+          "source_row": "Tobramycin (systemic infections)"
+        },
+        "Acinetobacter": {
+          "s": 17,
+          "r": 17,
+          "disk_ug": "10",
+          "source_row": "Tobramycin (systemic infections)"
+        }
+      },
+      "clsi": {
+        "Enterobacterales": {
+          "s": 15,
+          "r": 13
+        },
+        "Pseudomonas": {
+          "s": 15,
+          "r": 13
+        }
+      }
+    },
+    "ERV": {
+      "code": "ERV",
+      "name": "Eravaciclina",
+      "atc": "J01AA13",
+      "loinc": "",
+      "unit": "µg",
+      "potency": "20",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 17,
+          "r": 17,
+          "disk_ug": "20",
+          "source_row": "Eravacycline, E. coli"
+        },
+        "Staphylococcus": {
+          "s": 20,
+          "r": 20,
+          "disk_ug": "20",
+          "source_row": "Eravacycline, S. aureus"
+        },
+        "Enterococcus": {
+          "s": 22,
+          "r": 22,
+          "disk_ug": "20",
+          "source_row": "Eravacycline"
+        }
+      },
+      "clsi": {}
+    },
+    "TGC": {
+      "code": "TGC",
+      "name": "Tigeciclina",
+      "atc": "J01AA12",
+      "loinc": "42356-6",
+      "unit": "µg",
+      "potency": "15µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 18,
+          "r": 18,
+          "disk_ug": "15",
+          "source_row": "Tigecycline, E. coli and C. koseri"
+        },
+        "Staphylococcus": {
+          "s": 19,
+          "r": 19,
+          "disk_ug": "15",
+          "source_row": "Tigecycline2"
+        },
+        "Enterococcus": {
+          "s": 20,
+          "r": 20,
+          "disk_ug": "15",
+          "source_row": "Tigecycline1"
+        },
+        "Streptococcus A,B,C,G": {
+          "s": 19,
+          "r": 19,
+          "disk_ug": "15",
+          "source_row": "Tigecycline2"
+        }
+      },
+      "clsi": {
+        "Enterobacterales": {
+          "s": 19,
+          "r": 15
+        },
+        "Staphylococcus": {
+          "s": 19,
+          "r": 19
+        }
+      }
+    },
+    "FOS": {
+      "code": "FOS",
+      "name": "Fosfomicina",
+      "atc": "J01XX01",
+      "loinc": "35810-1",
+      "unit": "µg",
+      "potency": "70µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 24,
+          "r": 24,
+          "disk_ug": "200C",
+          "source_row": "Fosfomycin iv (infections originating from the urinary tract), E. coli"
+        }
+      },
+      "clsi": {}
+    },
+    "F": {
+      "code": "F",
+      "name": "Nitrofurantoína",
+      "atc": "J01XE01",
+      "loinc": "364-0",
+      "unit": "µg",
+      "potency": "50µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 11,
+          "r": 11,
+          "disk_ug": "100",
+          "source_row": "Nitrofurantoin (uncomplicated UTI only), E. coli"
+        },
+        "Staphylococcus": {
+          "s": 13,
+          "r": 13,
+          "disk_ug": "100",
+          "source_row": "Nitrofurantoin (uncomplicated UTI only),  S. saprophyticus"
+        },
+        "Enterococcus": {
+          "s": 15,
+          "r": 15,
+          "disk_ug": "100",
+          "source_row": "Nitrofurantoin (uncomplicated UTI only),  E. faecalis"
+        },
+        "Streptococcus A,B,C,G": {
+          "s": 15,
+          "r": 15,
+          "disk_ug": "100",
+          "source_row": "Nitrofurantoin (uncomplicated UTI only),  S. agalactiae (group B streptococci)"
+        }
+      },
+      "clsi": {
+        "Enterobacterales": {
+          "s": 17,
+          "r": 15
+        },
+        "Staphylococcus": {
+          "s": 17,
+          "r": 15
+        }
+      }
+    },
+    "W": {
+      "code": "W",
+      "name": "Trimetoprima",
+      "atc": "J01EA01",
+      "loinc": "513-2",
+      "unit": "µg",
+      "potency": "2.5µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 15,
+          "r": 15,
+          "disk_ug": "5",
+          "source_row": "Trimethoprim (uncomplicated UTI only), E. coli and Klebsiella spp. (except K. aerogenes)"
+        },
+        "Staphylococcus": {
+          "s": 19,
+          "r": 19,
+          "disk_ug": "5",
+          "source_row": "Trimethoprim (uncomplicated UTI only)"
+        }
+      },
+      "clsi": {}
+    },
+    "SXT": {
+      "code": "SXT",
+      "name": "Trimetoprima-sulfametoxazol",
+      "atc": "J01EE01",
+      "loinc": "517-3",
+      "unit": "µg",
+      "potency": "1.25/23.75µg",
+      "note": "",
+      "eucast": {
+        "Enterobacterales": {
+          "s": 15,
+          "r": 15,
+          "disk_ug": "1.25-23.75",
+          "source_row": "Trimethoprim-sulfamethoxazole8,  Enterobacterales except Serratia spp."
+        },
+        "Staphylococcus": {
+          "s": 24,
+          "r": 24,
+          "disk_ug": "1.25-23.75",
+          "source_row": "Trimethoprim-sulfamethoxazole5"
+        },
+        "Acinetobacter": {
+          "s": 16,
+          "r": 16,
+          "disk_ug": "1.25-23.75",
+          "source_row": "Trimethoprim-sulfamethoxazole4"
+        },
+        "Streptococcus A,B,C,G": {
+          "s": 16,
+          "r": 16,
+          "disk_ug": "1.25-23.75",
+          "source_row": "Trimethoprim-sulfamethoxazole4"
+        },
+        "S.pneumoniae": {
+          "s": 15,
+          "r": 15,
+          "disk_ug": "1.25-23.75",
+          "source_row": "Trimethoprim-sulfamethoxazole2"
+        },
+        "H.influenzae": {
+          "s": 23,
+          "r": 23,
+          "disk_ug": "1.25-23.75",
+          "source_row": "Trimethoprim-sulfamethoxazole2"
+        }
+      },
+      "clsi": {
+        "Enterobacterales": {
+          "s": 16,
+          "r": 11
+        },
+        "Staphylococcus": {
+          "s": 16,
+          "r": 11
+        }
+      }
+    },
+    "P": {
+      "code": "P",
+      "name": "Penicilina G",
+      "atc": "J01CE01",
+      "loinc": "393-9",
+      "unit": "U",
+      "potency": "10units",
+      "note": "",
+      "eucast": {
+        "Staphylococcus": {
+          "s": 26,
+          "r": 26,
+          "disk_ug": "1 unit",
+          "source_row": "Benzylpenicillin, S. aureus"
+        },
+        "Streptococcus A,B,C,G": {
+          "s": 23,
+          "r": 23,
+          "disk_ug": "1 unit",
+          "source_row": "Benzylpenicillin2, Streptococcus groups A, C and G"
+        },
+        "H.influenzae": {
+          "s": 12,
+          "r": 12,
+          "disk_ug": "1 unit",
+          "source_row": "Benzylpenicillin (screen only)1"
+        }
+      },
+      "clsi": {
+        "Staphylococcus": {
+          "s": 29,
+          "r": 29
+        }
+      }
+    },
+    "E": {
+      "code": "E",
+      "name": "Eritromicina",
+      "atc": "J01FA01",
+      "loinc": "234-5",
+      "unit": "µg",
+      "potency": "5µg",
+      "note": "",
+      "eucast": {
+        "Staphylococcus": {
+          "s": 21,
+          "r": 21,
+          "disk_ug": "15",
+          "source_row": "Erythromycin"
+        },
+        "Streptococcus A,B,C,G": {
+          "s": 21,
+          "r": 21,
+          "disk_ug": "15",
+          "source_row": "Erythromycin"
+        },
+        "S.pneumoniae": {
+          "s": 22,
+          "r": 22,
+          "disk_ug": "15",
+          "source_row": "Erythromycin"
+        }
+      },
+      "clsi": {
+        "Staphylococcus": {
+          "s": 23,
+          "r": 14
+        }
+      }
+    },
+    "DA": {
+      "code": "DA",
+      "name": "Clindamicina",
+      "atc": "J01FF01",
+      "loinc": "194-1",
+      "unit": "µg",
+      "potency": "15µg",
+      "note": "",
+      "eucast": {
+        "Staphylococcus": {
+          "s": 22,
+          "r": 22,
+          "disk_ug": "2",
+          "source_row": "Clindamycin2"
+        },
+        "Streptococcus A,B,C,G": {
+          "s": 17,
+          "r": 17,
+          "disk_ug": "2",
+          "source_row": "Clindamycin2"
+        },
+        "S.pneumoniae": {
+          "s": 19,
+          "r": 19,
+          "disk_ug": "2",
+          "source_row": "Clindamycin2"
+        }
+      },
+      "clsi": {
+        "Staphylococcus": {
+          "s": 21,
+          "r": 15
+        }
+      }
+    },
+    "QD": {
+      "code": "QD",
+      "name": "Quinupristina-dalfopristina",
+      "atc": "J01FG02",
+      "loinc": "35835-8",
+      "unit": "µg",
+      "potency": "15µg",
+      "note": "",
+      "eucast": {
+        "Staphylococcus": {
+          "s": 21,
+          "r": 21,
+          "disk_ug": "15",
+          "source_row": "Quinupristin-dalfopristin"
+        },
+        "Enterococcus": {
+          "s": 22,
+          "r": 22,
+          "disk_ug": "15",
+          "source_row": "Quinupristin-dalfopristin, E. faecium"
+        }
+      },
+      "clsi": {
+        "Staphylococcus": {
+          "s": 19,
+          "r": 16
+        }
+      }
+    },
+    "MH": {
+      "code": "MH",
+      "name": "Minociclina",
+      "atc": "J01AA08",
+      "loinc": "336-8",
+      "unit": "µg",
+      "potency": "30µg",
+      "note": "",
+      "eucast": {
+        "Staphylococcus": {
+          "s": 23,
+          "r": 23,
+          "disk_ug": "30",
+          "source_row": "Minocycline"
+        },
+        "Streptococcus A,B,C,G": {
+          "s": 23,
+          "r": 23,
+          "disk_ug": "30",
+          "source_row": "Minocycline"
+        },
+        "S.pneumoniae": {
+          "s": 24,
+          "r": 24,
+          "disk_ug": "30",
+          "source_row": "Minocycline"
+        },
+        "H.influenzae": {
+          "s": 24,
+          "r": 24,
+          "disk_ug": "30",
+          "source_row": "Minocycline"
+        }
+      },
+      "clsi": {
+        "Staphylococcus": {
+          "s": 19,
+          "r": 15
+        },
+        "Acinetobacter": {
+          "s": 16,
+          "r": 13
+        }
+      }
+    },
+    "TE": {
+      "code": "TE",
+      "name": "Tetraciclina",
+      "atc": "J01AA07",
+      "loinc": "497-8",
+      "unit": "µg",
+      "potency": "30µg",
+      "note": "",
+      "eucast": {
+        "Staphylococcus": {
+          "s": 22,
+          "r": 22,
+          "disk_ug": "30",
+          "source_row": "Tetracycline"
+        },
+        "Streptococcus A,B,C,G": {
+          "s": 23,
+          "r": 23,
+          "disk_ug": "30",
+          "source_row": "Tetracycline"
+        },
+        "S.pneumoniae": {
+          "s": 25,
+          "r": 25,
+          "disk_ug": "30",
+          "source_row": "Tetracycline"
+        },
+        "H.influenzae": {
+          "s": 25,
+          "r": 25,
+          "disk_ug": "30",
+          "source_row": "Tetracycline"
+        }
+      },
+      "clsi": {
+        "Staphylococcus": {
+          "s": 19,
+          "r": 15
+        },
+        "Enterobacterales": {
+          "s": 15,
+          "r": 12
+        }
+      }
+    },
+    "LZD": {
+      "code": "LZD",
+      "name": "Linezolid",
+      "atc": "J01XX08",
+      "loinc": "29255-7",
+      "unit": "µg",
+      "potency": "30µg",
+      "note": "",
+      "eucast": {
+        "Staphylococcus": {
+          "s": 21,
+          "r": 21,
+          "disk_ug": "10",
+          "source_row": "Linezolid"
+        },
+        "Enterococcus": {
+          "s": 20,
+          "r": 20,
+          "disk_ug": "10",
+          "source_row": "Linezolid"
+        },
+        "Streptococcus A,B,C,G": {
+          "s": 19,
+          "r": 19,
+          "disk_ug": "10",
+          "source_row": "Linezolid1"
+        },
+        "S.pneumoniae": {
+          "s": 22,
+          "r": 22,
+          "disk_ug": "10",
+          "source_row": "Linezolid"
+        }
+      },
+      "clsi": {
+        "Staphylococcus": {
+          "s": 21,
+          "r": 21
+        },
+        "Enterococcus": {
+          "s": 23,
+          "r": 21
+        }
+      }
+    },
+    "TZD": {
+      "code": "TZD",
+      "name": "Tedizolid",
+      "atc": "J01XX11",
+      "loinc": "",
+      "unit": "µg",
+      "potency": "2",
+      "note": "",
+      "eucast": {
+        "Staphylococcus": {
+          "s": 20,
+          "r": 20,
+          "disk_ug": "2",
+          "source_row": "Tedizolid",
+          "atu": [
+            19,
+            19
+          ]
+        },
+        "Streptococcus A,B,C,G": {
+          "s": 18,
+          "r": 18,
+          "disk_ug": "2",
+          "source_row": "Tedizolid1"
+        }
+      },
+      "clsi": {}
+    },
+    "LEF": {
+      "code": "LEF",
+      "name": "Lefamulina",
+      "atc": "J01XX12",
+      "loinc": "",
+      "unit": "µg",
+      "potency": "5",
+      "note": "",
+      "eucast": {
+        "Staphylococcus": {
+          "s": 23,
+          "r": 23,
+          "disk_ug": "5",
+          "source_row": "Lefamulin, S. aureus"
+        },
+        "S.pneumoniae": {
+          "s": 12,
+          "r": 12,
+          "disk_ug": "5",
+          "source_row": "Lefamulin"
+        }
+      },
+      "clsi": {}
+    },
+    "RD": {
+      "code": "RD",
+      "name": "Rifampicina",
+      "atc": "J04AB02",
+      "loinc": "429-1",
+      "unit": "µg",
+      "potency": "30µg",
+      "note": "",
+      "eucast": {
+        "Staphylococcus": {
+          "s": 26,
+          "r": 26,
+          "disk_ug": "5",
+          "source_row": "Rifampicin, S. aureus"
+        },
+        "Streptococcus A,B,C,G": {
+          "s": 21,
+          "r": 21,
+          "disk_ug": "5",
+          "source_row": "Rifampicin"
+        },
+        "S.pneumoniae": {
+          "s": 22,
+          "r": 22,
+          "disk_ug": "5",
+          "source_row": "Rifampicin"
+        },
+        "H.influenzae": {
+          "s": 18,
+          "r": 18,
+          "disk_ug": "5",
+          "source_row": "Rifampicin (for prophylaxis only)"
+        }
+      },
+      "clsi": {
+        "Staphylococcus": {
+          "s": 20,
+          "r": 17
+        }
+      }
+    },
+    "TEC": {
+      "code": "TEC",
+      "name": "Teicoplanina",
+      "atc": "J01XA02",
+      "loinc": "485-3",
+      "unit": "µg",
+      "potency": "60µg",
+      "note": "",
+      "eucast": {
+        "Enterococcus": {
+          "s": 16,
+          "r": 16,
+          "disk_ug": "30",
+          "source_row": "Teicoplanin"
+        },
+        "Streptococcus A,B,C,G": {
+          "s": 15,
+          "r": 15,
+          "disk_ug": "30",
+          "source_row": "Teicoplanin1"
+        },
+        "S.pneumoniae": {
+          "s": 17,
+          "r": 17,
+          "disk_ug": "30",
+          "source_row": "Teicoplanin1"
+        }
+      },
+      "clsi": {}
+    },
+    "C": {
+      "code": "C",
+      "name": "Cloranfenicol",
+      "atc": "J01BA01",
+      "loinc": "174-3",
+      "unit": "µg",
+      "potency": "60µg",
+      "note": "",
+      "eucast": {
+        "H.influenzae": {
+          "s": 28,
+          "r": 28,
+          "disk_ug": "30",
+          "source_row": "Chloramphenicol1"
+        }
+      },
+      "clsi": {
+        "Enterobacterales": {
+          "s": 18,
+          "r": 13
+        },
+        "Staphylococcus": {
+          "s": 18,
+          "r": 13
+        }
+      }
+    }
+  },
+  "intrinsic_rules": [
+    {
+      "pattern": "klebsiella",
+      "organism_label": "Klebsiella pneumoniae / Klebsiella spp.",
+      "codes": [
+        "AM",
+        "AML",
+        "AMP",
+        "AMX",
+        "PIP",
+        "PRL",
+        "TIC"
+      ],
+      "mechanism": "Beta-lactamasa cromosómica clase A (SHV-1)"
+    },
+    {
+      "pattern": "pseudomonas",
+      "organism_label": "Pseudomonas aeruginosa",
+      "codes": [
+        "AM",
+        "AMC",
+        "AML",
+        "AMP",
+        "C",
+        "CRO",
+        "CTX",
+        "CXM",
+        "ETP",
+        "FOX",
+        "SAM",
+        "SXT",
+        "TE",
+        "TGC"
+      ],
+      "mechanism": "AmpC inducible y bombas de eflujo MexAB-OprM intrínsecas"
+    },
+    {
+      "pattern": "(enterobacter|citrobacter\\s+freundii|serratia|morganella)",
+      "organism_label": "Enterobacterales AmpC cromosómico",
+      "codes": [
+        "AM",
+        "AMC",
+        "AMP",
+        "CXM",
+        "FOX",
+        "SAM"
+      ],
+      "mechanism": "Cefalosporinasa cromosómica AmpC inducible"
+    },
+    {
+      "pattern": "proteus\\s+mirabilis",
+      "organism_label": "Proteus mirabilis",
+      "codes": [
+        "COL",
+        "F",
+        "NIT",
+        "TE",
+        "TGC"
+      ],
+      "mechanism": "Resistencia intrínseca a tetraciclinas/glicilciclinas y nitrofurantoína"
+    },
+    {
+      "pattern": "enterococcus",
+      "organism_label": "Enterococcus spp.",
+      "codes": [
+        "ATM",
+        "CAZ",
+        "CLI",
+        "CRO",
+        "CTX",
+        "CXM",
+        "DA",
+        "FEP",
+        "FOX",
+        "SXT"
+      ],
+      "mechanism": "Baja afinidad de PBPs por cefalosporinas y vía folato exógena"
+    },
+    {
+      "pattern": "(escherichia|klebsiella|enterobacter|enterobacterales|pseudomonas|acinetobacter|proteus|salmonella|serratia|citrobacter)",
+      "organism_label": "Bacilos Gram negativos",
+      "codes": [
+        "CLI",
+        "DA",
+        "E",
+        "ERY",
+        "FD",
+        "LNZ",
+        "LZD",
+        "P",
+        "PEN",
+        "QD",
+        "QDA",
+        "RD",
+        "RIF",
+        "VA",
+        "VAN"
+      ],
+      "mechanism": "Impermeabilidad de membrana externa frente a glucopéptidos/macrólidos/lincosamidas"
+    },
+    {
+      "pattern": "staphylococcus",
+      "organism_label": "Staphylococcus spp.",
+      "codes": [
+        "ATM",
+        "CTZ"
+      ],
+      "mechanism": "Ausencia de actividad de monobactámicos sobre Gram positivos"
+    }
+  ]
+}

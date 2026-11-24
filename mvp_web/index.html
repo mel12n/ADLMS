@@ -4,10 +4,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#070b12">
+  <meta name="theme-color" content="#06090f">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="DeepHalo">
   <title>DeepHalo · ADLMS — Antibiograma automatizado asistido por IA</title>
   <meta name="description"
     content="Suite automatizada de interpretación de antibiogramas por difusión en disco (Kirby-Bauer): calibración fiducial, Grad-CAM sobre el crecimiento bacteriano, categorización S/I/R y exportación HL7 FHIR R4.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/svg+xml" href="icons/option-3-refined-aperture-d.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -16,9 +21,33 @@
   <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body data-layout="twin" data-active-tab="placa">
   <div class="bg-glow glow-a"></div>
   <div class="bg-glow glow-b"></div>
+
+  <aside class="stage-toolbar" id="stage-toolbar" aria-label="Modo de visualización del emulador móvil">
+    <div class="stage-mode-group" role="group" aria-label="Selector de chasis móvil">
+      <button class="stage-mode-btn" id="btn-layout-single" data-mode="single"
+        title="Emular flujo real en 1 teléfono móvil">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="7" y="2" width="10" height="20" rx="2.5" />
+          <line x1="11" y1="18" x2="13" y2="18" />
+        </svg>
+        <span>1 Móvil (App)</span>
+      </button>
+      <button class="stage-mode-btn active" id="btn-layout-twin" data-mode="twin"
+        title="Vista dual sincronizada para defensa académica">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="8" height="18" rx="2" />
+          <rect x="13" y="3" width="8" height="18" rx="2" />
+        </svg>
+        <span>2 Móviles (Defensa)</span>
+      </button>
+    </div>
+    <span class="stage-spec-badge" title="Ejecución 100% CPU ARM NEON / WebAssembly sin NPU">
+      <i class="dot"></i>ARM NEON / Wasm · INT8 &lt; 600 ms
+    </span>
+  </aside>
 
   <main class="stage">
     <!-- ============ LEFT MOBILE DEVICE (Placa & Detección) ============ -->
@@ -61,11 +90,36 @@
               <p>ADLMS · Antibiograma automatizado</p>
             </div>
           </div>
-          <span class="chip chip-edge" title="Inferencia local, sin enviar imágenes a la nube"><i
-              class="dot"></i>Edge</span>
+          <div class="app-bar-chips">
+            <button class="chip chip-std" id="btn-toggle-std-left" title="Clic para alternar entre CLSI y EUCAST"
+              aria-label="Estándar clínico activo">
+              <i class="dot"></i><span id="std-label-left">CLSI</span>
+            </button>
+            <span class="chip chip-edge" title="Inferencia local, sin enviar imágenes a la nube"><i
+                class="dot"></i>Edge</span>
+          </div>
         </header>
 
         <div class="screen-scroll" id="screen-scroll-left">
+          <div class="fiducial-telemetry" id="fiducial-telemetry" aria-label="Telemetría de calibración fiducial">
+            <div class="tel-item">
+              <span class="tel-label">Anclaje 6,0 mm</span>
+              <strong class="tel-val" id="tel-disc-px">— px</strong>
+            </div>
+            <div class="tel-sep" aria-hidden="true"></div>
+            <div class="tel-item">
+              <span class="tel-label">Escala F</span>
+              <strong class="tel-val" id="tel-scale">— px/mm</strong>
+            </div>
+            <div class="tel-sep" aria-hidden="true"></div>
+            <div class="tel-item">
+              <span class="tel-label">Resolución</span>
+              <strong class="tel-val" id="tel-res">— mm/px</strong>
+            </div>
+          </div>
+
+          <div class="plate-picker" id="plate-picker" role="tablist" aria-label="Placas clínicas y pruebas"></div>
+
           <section class="viewer" aria-label="Visor de placa">
             <div class="viewer-frame" id="viewer-frame">
               <canvas id="plate-canvas" aria-label="Placa de Petri con halos de inhibición"></canvas>
@@ -135,13 +189,24 @@
             </div>
             <div class="specimen-row">
               <span class="specimen-label">Microorganismo</span>
-              <span class="specimen-val organism" id="meta-organism">—</span>
+              <select class="specimen-select" id="organism-select" aria-label="Microorganismo aislado">
+                <option value="Escherichia coli (ATCC 25922)|Enterobacterales">Escherichia coli · Enterobacterales</option>
+                <option value="Klebsiella pneumoniae (BLEE)|Enterobacterales">Klebsiella pneumoniae · Enterobacterales (SHV-1)</option>
+                <option value="Staphylococcus aureus (ATCC 29213)|Staphylococcus">Staphylococcus aureus · Staphylococcus</option>
+                <option value="Pseudomonas aeruginosa|Pseudomonas">Pseudomonas aeruginosa · Pseudomonas</option>
+                <option value="Enterococcus faecalis|Enterococcus">Enterococcus faecalis · Enterococcus</option>
+                <option value="Acinetobacter baumannii|Acinetobacter">Acinetobacter baumannii · Acinetobacter</option>
+              </select>
+            </div>
+            <div class="specimen-row">
+              <span class="specimen-label">Motor IA</span>
+              <span class="specimen-val mono" id="meta-engine">YOLO11n-seg · Sobel 36-ray</span>
             </div>
           </div>
         </div>
 
         <nav class="tab-bar" aria-label="Navegación">
-          <button class="tab active"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor"
+          <button class="tab active" id="tab-placa-left"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor"
               stroke-width="1.8">
               <circle cx="12" cy="12" r="9" />
               <circle cx="9" cy="10" r="1.4" />
@@ -216,8 +281,13 @@
               aria-label="Ajuste fino del halo">
             <div class="caliper-foot">
               <span id="cal-bp">—</span>
-              <button class="link" id="cal-reset">Restaurar medida del dataset</button>
+              <button class="link" id="cal-reset">Restaurar IA</button>
             </div>
+            <div class="caliper-xval" id="cal-xval" hidden>
+              <span class="xval-pill ok" id="cal-geo-pill">Sobel 36 rayos: —</span>
+              <span class="xval-audit" id="cal-audit-tag" hidden>AUDITED_BY_TECHNOLOGIST</span>
+            </div>
+            <div class="caliper-alert" id="cal-bio-alert" hidden></div>
           </div>
 
           <div class="table-container">
@@ -256,7 +326,7 @@
               <circle cx="9" cy="10" r="1.4" />
               <circle cx="14.5" cy="13.5" r="1.8" />
             </svg><span>Placa</span></button>
-          <button class="tab active"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor"
+          <button class="tab active" id="tab-results-right"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor"
               stroke-width="1.8">
               <path d="M4 6h16M4 12h16M4 18h10" />
             </svg><span>Resultados</span></button>
@@ -298,6 +368,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+  <script src="breakpoints_data.js"></script>
   <script src="plates_data.js"></script>
   <script src="app.js"></script>
 </body>

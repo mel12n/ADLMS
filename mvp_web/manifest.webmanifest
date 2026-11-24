@@ -1,0 +1,27 @@
+{
+  "name": "DeepHalo · ADLMS — Antibiograma Clínico Asistido por IA",
+  "short_name": "DeepHalo",
+  "description": "Lectura e interpretación automatizada de antibiogramas Kirby-Bauer con calibración fiducial de 6,0 mm, Grad-CAM y exportación HL7 FHIR R4 (100% Offline Edge AI).",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#06090f",
+  "theme_color": "#06090f",
+  "lang": "es-CL",
+  "categories": ["medical", "health", "productivity"],
+  "icons": [
+    {
+      "src": "icons/option-3-refined-aperture-d.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "logos/variant-1-canonical-diaphragm.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

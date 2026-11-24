@@ -1,15 +1,10 @@
-# YOLOv8 Dataset Configuration for ADLMS
-# Absolute paths are best for YOLO, but relative paths starting from YOLO's datasets dir also work.
-# We will use paths relative to the project root for training script parsing.
+# YOLO11n-seg Dataset Configuration for DeepHalo / ADLMS
+path: data/Antibiogram_demo
+train: Train_yolo
+val: Train_yolo  # Prototype: using Train_yolo subset for validation until Val is labeled
+test: Train_yolo
 
-path: data/splits
-train: train/images
-val: train/images  # For prototyping, we'll use train as val since it's a tiny subset
-test: train/images
-
-# Classes
 names:
-  0: colony
+  0: antibiotic_disk
   1: inhibition_zone
-  2: antibiotic_disk
-  3: empty_plate
+  2: inner_colony

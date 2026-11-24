@@ -1,27 +1,28 @@
-/* DeepHalo · ADLMS — mobile-first design system */
+/* DeepHalo · ADLMS — Clinical Precision Dark Instrument (mobile-first) */
 :root {
-  --bg: #070b12;
-  --surface: #0e1522;
-  --elev: #141d2e;
-  --hair: rgba(255, 255, 255, 0.07);
-  --hair-2: rgba(255, 255, 255, 0.12);
-  --text: #e8eef8;
-  --muted: #8b9ab3;
-  --accent: #2dd4bf;
-  --accent-2: #38bdf8;
-  --accent-glow: rgba(45, 212, 191, 0.28);
+  --bg: #06090f;
+  --surface: #0b101b;
+  --elev: #111827;
+  --surface-hover: #172033;
+  --hair: rgba(148, 163, 184, 0.12);
+  --hair-2: rgba(148, 163, 184, 0.22);
+  --text: #f1f5f9;
+  --muted: #94a3b8;
+  --accent: #14b8a6;
+  --accent-2: #0ea5e9;
+  --accent-glow: rgba(20, 184, 166, 0.28);
   --brand-secondary: #0284c7;
-  --brand-secondary-light: #38bdf8;
-  --surface-card: rgba(14, 21, 34, 0.85);
-  --surface-sticky: rgba(14, 21, 34, 0.95);
-  --surface-note: rgba(7, 11, 18, 0.58);
-  --s: #34d399;
-  --i: #fbbf24;
-  --r: #f87171;
+  --brand-secondary-light: #0ea5e9;
+  --surface-card: rgba(11, 16, 27, 0.9);
+  --surface-sticky: rgba(11, 16, 27, 0.96);
+  --surface-note: rgba(6, 9, 15, 0.72);
+  --s: #10b981;
+  --i: #f59e0b;
+  --r: #f43f5e;
   --n: #64748b;
   --radius: 16px;
   --radius-sm: 10px;
-  --ease: cubic-bezier(0.22, 0.8, 0.3, 1);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --font: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Consolas, monospace;
 }
@@ -94,7 +95,80 @@ input:focus-visible {
   opacity: 0.2;
 }
 
-/* ---------- Stage ---------- */
+/* ---------- Stage & Desktop Emulator Toolbar ---------- */
+.stage-toolbar {
+  position: fixed;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 5px 10px 5px 6px;
+  border-radius: 999px;
+  background: rgba(11, 16, 27, 0.9);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--hair-2);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+}
+
+.stage-mode-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px;
+  border-radius: 999px;
+  background: var(--bg);
+  border: 1px solid var(--hair);
+}
+
+.stage-mode-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--muted);
+  white-space: nowrap;
+  transition: all 0.18s var(--ease);
+}
+
+.stage-mode-btn:hover {
+  color: var(--text);
+  background: var(--surface-hover);
+}
+
+.stage-mode-btn.active {
+  color: var(--text);
+  background: rgba(20, 184, 166, 0.14);
+  border: 1px solid rgba(20, 184, 166, 0.45);
+  box-shadow: 0 0 14px rgba(20, 184, 166, 0.18);
+}
+
+.stage-spec-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  white-space: nowrap;
+  padding-right: 4px;
+}
+
+.stage-spec-badge .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--s);
+  box-shadow: 0 0 8px var(--s);
+}
+
 .stage {
   position: relative;
   z-index: 1;
@@ -103,7 +177,7 @@ input:focus-visible {
   align-items: center;
   justify-content: center;
   gap: 40px;
-  padding: 32px 24px;
+  padding: 72px 24px 28px;
 }
 
 /* ---------- Device frame ---------- */
@@ -243,6 +317,12 @@ input:focus-visible {
   color: var(--muted);
 }
 
+.app-bar-chips {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .chip {
   display: inline-flex;
   align-items: center;
@@ -256,25 +336,82 @@ input:focus-visible {
   color: var(--text);
 }
 
+.chip .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.chip-edge .dot {
+  background: var(--s);
+}
+
 .chip-std {
   white-space: nowrap;
   color: var(--accent);
-  border-color: rgba(45, 212, 191, 0.35);
-  background: rgba(45, 212, 191, 0.1);
+  border-color: rgba(20, 184, 166, 0.38);
+  background: rgba(20, 184, 166, 0.1);
   cursor: pointer;
   transition: all 0.2s var(--ease);
   user-select: none;
 }
 
 button.chip-std:hover {
-  background: rgba(45, 212, 191, 0.2);
+  background: rgba(20, 184, 166, 0.2);
   border-color: var(--accent);
-  box-shadow: 0 0 12px rgba(45, 212, 191, 0.25);
+  box-shadow: 0 0 12px rgba(20, 184, 166, 0.25);
   transform: translateY(-1px);
 }
 
 button.chip-std:active {
   transform: scale(0.96);
+}
+
+/* ---------- Fiducial Calibration Telemetry Bar ---------- */
+.fiducial-telemetry {
+  flex: none;
+  margin: 2px 14px 10px;
+  padding: 7px 12px;
+  border-radius: 12px;
+  background: var(--surface);
+  border: 1px solid var(--hair-2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.tel-item {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.tel-label {
+  font-size: 9.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.tel-val {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums lining-nums;
+  color: var(--accent-2);
+  white-space: nowrap;
+}
+
+.tel-sep {
+  width: 1px;
+  height: 22px;
+  background: var(--hair-2);
+  flex: none;
 }
 
 /* ---------- Plate picker ---------- */
@@ -452,7 +589,7 @@ button.chip-std:active {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  height: 34px;
+  height: 38px;
   padding: 0 12px;
   border-radius: 999px;
   font-size: 12px;
@@ -654,6 +791,24 @@ input[type='range']::-moz-range-thumb {
   color: #f1f5f9;
 }
 
+.specimen-select {
+  max-width: 66%;
+  background: var(--elev);
+  color: var(--text);
+  border: 1px solid var(--hair-2);
+  border-radius: 8px;
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: var(--font);
+  cursor: pointer;
+}
+
+.specimen-select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
 /* ---------- Tab bar ---------- */
 .tab-bar {
   flex: none;
@@ -671,7 +826,7 @@ input[type='range']::-moz-range-thumb {
   align-items: center;
   gap: 3px;
   min-width: 72px;
-  min-height: 44px;
+  min-height: 48px;
   padding: 4px 8px;
   color: var(--muted);
   font-size: 10.5px;
@@ -736,8 +891,8 @@ input[type='range']::-moz-range-thumb {
 }
 
 .step {
-  width: 44px;
-  height: 44px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
   font-size: 22px;
   line-height: 1;
@@ -803,6 +958,67 @@ input[type='range']::-moz-range-thumb {
   margin-top: 12px;
   font-size: 11.5px;
   color: var(--muted);
+}
+
+.caliper-xval {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--hair);
+}
+
+.xval-pill {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.xval-pill.ok {
+  background: rgba(16, 185, 129, 0.12);
+  color: var(--s);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+.xval-pill.warn {
+  background: rgba(245, 158, 11, 0.14);
+  color: var(--i);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.xval-audit {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--accent-2);
+  background: rgba(14, 165, 233, 0.14);
+  border: 1px solid rgba(14, 165, 233, 0.38);
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+.caliper-alert {
+  margin-top: 8px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.35;
+  background: rgba(244, 63, 94, 0.14);
+  color: #fda4af;
+  border: 1px solid rgba(244, 63, 94, 0.45);
+}
+
+.caliper-alert.atu {
+  background: rgba(245, 158, 11, 0.14);
+  color: #fcd34d;
+  border-color: rgba(245, 158, 11, 0.45);
 }
 
 .link {
@@ -916,6 +1132,36 @@ input[type='range']::-moz-range-thumb {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.row-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 3px;
+}
+
+.rtag {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.rtag.bio {
+  background: rgba(244, 63, 94, 0.16);
+  color: #fda4af;
+}
+
+.rtag.geo {
+  background: rgba(245, 158, 11, 0.16);
+  color: #fcd34d;
+}
+
+.rtag.edit {
+  background: rgba(14, 165, 233, 0.16);
+  color: #7dd3fc;
 }
 
 .row-mm {
@@ -1076,13 +1322,34 @@ input[type='range']::-moz-range-thumb {
   opacity: 1;
 }
 
-/* ---------- Responsive Layout (Twin Devices) ---------- */
+/* ---------- Single-Phone App Flow & Twin-Phone Defense Modes ---------- */
+body[data-layout="single"][data-active-tab="placa"] .device-right {
+  display: none;
+}
+
+body[data-layout="single"][data-active-tab="resultados"] .device-left {
+  display: none;
+}
+
+/* ---------- Responsive Layout (Tablet / Mobile Emulator / Native PWA) ---------- */
 @media (max-width: 959px) {
+  .stage-spec-badge {
+    display: none;
+  }
+
   .stage {
     flex-direction: column;
     align-items: center;
-    gap: 28px;
-    padding: 20px 12px 36px;
+    gap: 24px;
+    padding: 68px 12px 24px;
+  }
+
+  body[data-active-tab="placa"] .device-right {
+    display: none;
+  }
+
+  body[data-active-tab="resultados"] .device-left {
+    display: none;
   }
 
   .device {
@@ -1097,37 +1364,40 @@ input[type='range']::-moz-range-thumb {
   }
 }
 
-@media (max-width: 480px) {
-  .stage {
-    padding: 0 0 24px;
-    gap: 16px;
-  }
-
-  .device {
-    width: 100%;
-    height: auto;
-    min-height: 100svh;
-    padding: 0;
-    border-radius: 0;
-    background: none;
-    box-shadow: none;
-  }
-
+@media (max-width: 600px) {
+  .stage-toolbar,
   .device-island,
   .status-bar,
   .home-indicator {
     display: none;
   }
 
+  .stage {
+    padding: 0;
+    min-height: 100dvh;
+    gap: 0;
+  }
+
+  .device {
+    width: 100%;
+    max-width: none;
+    height: 100dvh;
+    min-height: 100dvh;
+    padding: 0;
+    border-radius: 0;
+    background: var(--bg);
+    box-shadow: none;
+  }
+
   .screen {
-    height: auto;
-    min-height: 100svh;
+    height: 100%;
+    min-height: 100dvh;
     border-radius: 0;
     padding-top: env(safe-area-inset-top);
   }
 
   .app-bar {
-    padding-top: 14px;
+    padding-top: 12px;
   }
 
   .tab-bar {

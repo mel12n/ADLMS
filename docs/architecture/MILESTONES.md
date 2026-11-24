@@ -4,11 +4,18 @@ This document outlines the roadmap and milestones for the Antibiogram Deep Learn
 
 ## Phase 1: Dataset Preparation (In Progress)
 **Goal:** Prepare a robust baseline dataset for YOLO object detection.
-- [x] Set up local Python environment and install `labelImg`.
+- [x] Set up local Python environment and install `labelImg` / `labelme`.
 - [x] Configure classes (`LEV-5`, `TGC-15`, `inhibition_zone`, etc.).
 - [x] Fix Python 3.12+ compatibility issues with `labelImg`.
-- [ ] Complete bounding box annotations for all 81 images in `Antibiogram_demo/Train`.
-- [ ] Create `dataset.yaml` mapping the indices to the exact antibiotic names.
+- [ ] Complete annotations for images in `data/Antibiogram_demo/Train` (target: 60–80 plates for prototype).
+- [ ] Create `dataset.yaml` mapping the indices to the target classes.
+
+## Phase 1.5: Mobile User UI App & Installable PWA (Parallel Track — Active)
+**Goal:** Advance the user-facing DeepHalo mobile application (`mvp_web/`) into a complete mobile PWA while dataset labeling is completed.
+- [x] **Phase 2.7:** Clinical Precision Dark Instrument mobile design system, installable Mobile PWA (`manifest.webmanifest` + `sw.js`), fiducial telemetry bar, full-screen on phones + Single/Twin phone frame toggle on desktop.
+- [ ] **Phase 2.8:** Guided Camera Capture & Perspective Alignment Assistant (live camera / upload, Petri ring reticle, tilt/ellipse perspective indicator, 6.0 mm fiducial check).
+- [ ] **Phase 2.9:** Interactive Plate Inspector & Direct Canvas Digital Caliper (on-canvas radial drag handles, fiducial `mm/px` telemetry, CLAHE/ROI/Grad-CAM layers, CLSI/EUCAST live delta table).
+- [ ] **Phase 2.10:** Specimen Intake editor, NCh-ISO 15189 technologist audit log (`AUDITED_BY_TECHNOLOGIST`), and HL7 FHIR R4 / printable report studio.
 
 ## Phase 2: Model Training & Validation
 **Goal:** Train a YOLO11n model to accurately detect disks and inhibition zones.

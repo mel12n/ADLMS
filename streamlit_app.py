@@ -18,6 +18,12 @@ BASE_DIR = Path(__file__).resolve().parent
 if str(BASE_DIR) not in sys.path:
     sys.path.append(str(BASE_DIR))
 
+from src.evaluation.eucast_breakpoints import (
+    evaluate_susceptibility as _eval_eucast_v16,
+    get_breakpoint_db as _get_bp_db,
+)
+from src.evaluation.measure_zones import DEFAULT_MODEL_PATH, analyze_plate_image
+
 # Try importing Streamlit and OpenCV gracefully
 try:
     import streamlit as st
@@ -235,63 +241,39 @@ def generate_gradcam_overlay(pil_img, disks, px_per_mm):
 # -----------------------------------------------------------------------------
 # EUCAST Categorization Engine
 # -----------------------------------------------------------------------------
-def evaluate_eucast(abx_key, diameter_mm, organism_group):
+def evaluate_eucast(abx_key, diameter_mm, organism_group, organism_name=""):
+    """Evaluate disk diameter using official EUCAST v16.1 xlsx table + intrinsic resistance rules."""
     abx = ANTIBIOTIC_CATALOG.get(abx_key)
-    if not abx:
-        return {"category": "N/A", "color": "gray", "text": "Sin datos", "interpretation": "Antibiótico no parametrizado"}
-    
-    bp_data = abx["breakpoints"].get(organism_group)
-    if not bp_data:
-        # Fallback to first available species group
-        bp_data = list(abx["breakpoints"].values())[0]
-        
-    s_cut = bp_data.get("S")
-    r_cut = bp_data.get("R")
-    
-    if s_cut == r_cut:
-        # Binary breakpoint
-        if diameter_mm >= s_cut:
-            return {
-                "category": "S",
-                "label": "Sensible (Dosis Estándar)",
-                "color": "#10b981", # Emerald
-                "text": f"Sensible (≥ {s_cut} mm)",
-                "comment": "Alta probabilidad de éxito terapéutico con régimen dosimétrico estándar."
-            }
-        else:
-            return {
-                "category": "R",
-                "label": "Resistente",
-                "color": "#ef4444", # Red
-                "text": f"Resistente (< {r_cut} mm)",
-                "comment": "Alta probabilidad de fallo terapéutico. Mecanismo de resistencia expresado."
-            }
-    else:
-        # Ternary breakpoint (S, I, R)
-        if diameter_mm >= s_cut:
-            return {
-                "category": "S",
-                "label": "Sensible (Dosis Estándar)",
-                "color": "#10b981",
-                "text": f"Sensible (≥ {s_cut} mm)",
-                "comment": "Éxito clínico esperado con dosificación estándar."
-            }
-        elif diameter_mm < r_cut:
-            return {
-                "category": "R",
-                "label": "Resistente",
-                "color": "#ef4444",
-                "text": f"Resistente (< {r_cut} mm)",
-                "comment": "Inhibición insuficiente según corte EUCAST v16.0."
-            }
-        else:
-            return {
-                "category": "I",
-                "label": "Sensible (Exposición Incrementada)",
-                "color": "#f59e0b", # Amber
-                "text": f"Sensible Incrementado ({r_cut} - {s_cut - 1} mm)",
-                "comment": "Éxito terapéutico alcanzable aumentando la dosificación o por concentración en el foco."
-            }
+    res = _eval_eucast_v16(
+        abx_code=abx_key,
+        diameter_mm=diameter_mm,
+        organism_group=organism_group,
+        standard="EUCAST",
+        organism_name=organism_name or organism_group,
+    )
+    color_map = {"S": "#10b981", "I": "#f59e0b", "R": "#ef4444", "NA": "#64748b"}
+    label_map = {
+        "S": "Sensible (Dosis Estándar)",
+        "I": "Sensible (Exposición Incrementada)",
+        "R": "Resistente",
+        "NA": "Sin punto de corte",
+    }
+    cat = res["category"]
+    comment = res["bio_message"] or res["atu_message"] or res["bp_text"]
+    if cat == "NA" and abx:
+        # Fallback to legacy catalog entry if drug is unmapped in selected species sheet
+        bp_data = abx["breakpoints"].get(organism_group) or list(abx["breakpoints"].values())[0]
+        s_cut, r_cut = bp_data.get("S"), bp_data.get("R")
+        cat = "S" if diameter_mm >= s_cut else ("R" if diameter_mm < r_cut else "I")
+        comment = f"Referencia complementaria ({s_cut}/{r_cut} mm)."
+    return {
+        "category": cat,
+        "label": label_map.get(cat, "Sin punto de corte"),
+        "color": color_map.get(cat, "#64748b"),
+        "text": res["bp_text"],
+        "comment": comment,
+        "bio_alert": res["bio_alert"],
+    }
 
 
 # -----------------------------------------------------------------------------
@@ -469,9 +451,21 @@ def main():
     st.title("🧫 Interpretación Automatizada de Antibiogramas")
     st.markdown(f"**Aislamiento:** `{current_preset['organism']}` | **Grupo Taxonómico:** `{current_preset['species_group']}`")
 
-    # Load Base Image
+    # Load Base Image & Optional Live YOLO11n-seg Detections
+    live_analysis = None
     if uploaded_file is not None:
         base_img = Image.open(uploaded_file).convert("RGB")
+        if HAS_CV2 and DEFAULT_MODEL_PATH.is_file():
+            with st.spinner("Ejecutando YOLO11n-seg + Sobel 36 rayos + EUCAST v16.1..."):
+                img_bgr = cv2.cvtColor(np.array(base_img), cv2.COLOR_RGB2BGR)
+                live_analysis = analyze_plate_image(
+                    image_source=img_bgr,
+                    organism=current_preset["organism"],
+                    organism_group=current_preset["species_group"],
+                    standard="EUCAST",
+                    enable_ocr=True,
+                    ocr_angles=8,
+                )
     else:
         img_path = current_preset["image_file"]
         if img_path.exists():
@@ -493,26 +487,55 @@ def main():
     # Human-in-the-Loop Caliper Controls
     st.sidebar.subheader("4. Calibre Digital (Human-in-the-Loop)")
     active_disks = []
-    for idx, d_info in enumerate(current_preset["disks"]):
-        abx_info = ANTIBIOTIC_CATALOG[d_info["abx"]]
-        slider_val = st.sidebar.slider(
-            f"{abx_info['name']} ({abx_info['code']}) [mm]",
-            min_value=6.0,
-            max_value=40.0,
-            value=float(d_info["default_dia_mm"]),
-            step=0.5,
-            key=f"slider_{sample_key}_{idx}"
-        )
-        active_disks.append({
-            "id": d_info["id"],
-            "abx": d_info["abx"],
-            "x_pct": d_info["x_pct"],
-            "y_pct": d_info["y_pct"],
-            "dia_mm": slider_val
-        })
+    bp_db = _get_bp_db()
+    if live_analysis and live_analysis.get("detections"):
+        px_per_mm = live_analysis["scale_px_per_mm"] or px_per_mm
+        for idx, det in enumerate(live_analysis["detections"]):
+            abx_code = det["abx_code"] if det["abx_code"] != "UNK" else det["code"]
+            slider_val = st.sidebar.slider(
+                f"{det['abx_name']} ({det['code']}) [mm]",
+                min_value=6.0,
+                max_value=45.0,
+                value=float(det["diam_mm"]),
+                step=0.5,
+                key=f"slider_live_{idx}_{det['code']}"
+            )
+            active_disks.append({
+                "id": f"live-{idx}",
+                "abx": abx_code,
+                "name": det["abx_name"],
+                "code": det["code"],
+                "loinc": (bp_db["drugs"].get(abx_code) or {}).get("loinc") or "18769-0",
+                "disk_content": f"{det.get('potency') or '6'} µg",
+                "x_pct": det["hx"],
+                "y_pct": det["hy"],
+                "dia_mm": slider_val
+            })
+    else:
+        for idx, d_info in enumerate(current_preset["disks"]):
+            abx_info = ANTIBIOTIC_CATALOG[d_info["abx"]]
+            slider_val = st.sidebar.slider(
+                f"{abx_info['name']} ({abx_info['code']}) [mm]",
+                min_value=6.0,
+                max_value=40.0,
+                value=float(d_info["default_dia_mm"]),
+                step=0.5,
+                key=f"slider_{sample_key}_{idx}"
+            )
+            active_disks.append({
+                "id": d_info["id"],
+                "abx": d_info["abx"],
+                "name": abx_info["name"],
+                "code": abx_info["code"],
+                "loinc": abx_info["loinc"],
+                "disk_content": abx_info["disk_content"],
+                "x_pct": d_info["x_pct"],
+                "y_pct": d_info["y_pct"],
+                "dia_mm": slider_val
+            })
 
     # Render Visualized Image with Disks and Halos
-    from PIL import ImageDraw, ImageFont
+    from PIL import ImageDraw
     annotated_img = proc_img.copy()
     draw = ImageDraw.Draw(annotated_img)
     w, h = annotated_img.size
@@ -520,8 +543,7 @@ def main():
     for d in active_disks:
         cx = int(d["x_pct"] * w)
         cy = int(d["y_pct"] * h)
-        abx_info = ANTIBIOTIC_CATALOG[d["abx"]]
-        eval_res = evaluate_eucast(d["abx"], d["dia_mm"], current_preset["species_group"])
+        eval_res = evaluate_eucast(d["abx"], d["dia_mm"], current_preset["species_group"], current_preset["organism"])
         
         # Radii in pixels
         disk_rad = int((fiducial_mm / 2.0) * px_per_mm)
@@ -555,25 +577,24 @@ def main():
         """, unsafe_allow_html=True)
 
     with col_metrics:
-        st.subheader("Resultados Interpretativos (EUCAST v16.0)")
+        st.subheader("Resultados Interpretativos (EUCAST v16.1)")
         
         eval_results = []
         for d in active_disks:
-            abx_info = ANTIBIOTIC_CATALOG[d["abx"]]
-            res = evaluate_eucast(d["abx"], d["dia_mm"], current_preset["species_group"])
+            res = evaluate_eucast(d["abx"], d["dia_mm"], current_preset["species_group"], current_preset["organism"])
             
             badge_class = f"badge-{res['category'].lower()}" if res['category'] in ['S', 'I', 'R'] else ""
             
             st.markdown(f"""
             <div class="metric-card">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                    <strong style="font-size: 16px;">{abx_info['name']} ({abx_info['code']})</strong>
+                    <strong style="font-size: 16px;">{d['name']} ({d['code']})</strong>
                     <span class="{badge_class}">{res['label']}</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; font-size: 14px; color: #94a3b8;">
                     <span>Diámetro Halo: <strong>{d['dia_mm']:.1f} mm</strong></span>
                     <span>Corte: <strong>{res['text']}</strong></span>
-                    <span>LOINC: <code>{abx_info['loinc']}</code></span>
+                    <span>LOINC: <code>{d['loinc']}</code></span>
                 </div>
                 <div style="margin-top: 6px; font-size: 12px; color: #cbd5e1; font-style: italic;">
                     {res['comment']}
@@ -583,10 +604,10 @@ def main():
             
             eval_results.append({
                 "abx_key": d["abx"],
-                "name": abx_info["name"],
-                "code": abx_info["code"],
-                "disk_content": abx_info["disk_content"],
-                "loinc": abx_info["loinc"],
+                "name": d["name"],
+                "code": d["code"],
+                "disk_content": d["disk_content"],
+                "loinc": d["loinc"],
                 "diameter_mm": d["dia_mm"],
                 "category": res["category"],
                 "category_label": res["label"],
