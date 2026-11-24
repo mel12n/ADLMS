@@ -98,6 +98,19 @@ These criteria from the **ACIF3003 Fase 2 Report** govern all production milesto
 
 ---
 
+## 6. Engineering & Single Responsibility Principle (SRP) Standards
+
+All new and modified code across Python, JavaScript, and Kotlin MUST adhere to the **Single Responsibility Principle (SRP)**:
+
+1. **One Module = One Reason to Change:** Separate *pure domain/math logic* (e.g. `yolo_seg_decode.js`, `sobel_cv.js`), *runtime/I/O/session lifecycle* (e.g. `edge_detector.js`, `inference_router.js`), *UI/DOM rendering*, and *export/bridge adapters*.
+2. **Size Guardrails:** Keep new modules focused (target $\le 300\text{ lines}$) and functions single-purpose ($\le 40\text{ lines}$ where practical). Do not grow existing monoliths (e.g. `mvp_web/app.js`, `src/evaluation/measure_zones.py`) with unrelated features — extract a dedicated module instead.
+3. **Phase-Specific Boundaries:**
+   - **Android (`android/`):** Keep `MainActivity.kt` thin; isolate `WebViewAssetLoader` + MIME handling, Camera/Gallery `FileProvider` chooser, and `MediaStore` Downloads export into separate classes.
+   - **Frontend (`mvp_web/`):** Place new UI subsystems (e.g. Phase 9 65-drug formulary picker & panel presets) in dedicated modules (`mvp_web/formulary_ui.js`) rather than inline in `app.js`.
+4. **Verification Gate:** Planners and code reviewers (`gsd-planner`, `gsd-code-reviewer`) must flag SRP violations (mixed I/O + pure logic, god-file additions) before merge.
+
+---
+
 ## Evolution
 
 This document evolves at phase transitions and milestone boundaries.
