@@ -1,0 +1,103 @@
+{
+  "model": "yolo11n_seg_416_fp32.onnx",
+  "imgsz": 416,
+  "threshold_mae_mm": 0.2,
+  "total_matched_detections": 78,
+  "overall_mae_mm": 0.0212,
+  "plate_4_3_mae_mm": 0.0237,
+  "overall_sobel_delta_r_mae_mm": 0.2259,
+  "pass": true,
+  "plates": [
+    {
+      "plate": "IMG_20230305_154816.jpg",
+      "aspect": "1:1",
+      "dimensions": "2847x2823",
+      "letterbox_pad_top": 2,
+      "py_disks": 10,
+      "js_disks": 10,
+      "py_inner_colonies": 0,
+      "js_inner_colonies": 0,
+      "matched_detections": 10,
+      "mae_mm": 0.0177,
+      "sobel_delta_r_mae_mm": 0.182
+    },
+    {
+      "plate": "IMG_20230313_102516.jpg",
+      "aspect": "1:1",
+      "dimensions": "2882x2913",
+      "letterbox_pad_top": 0,
+      "py_disks": 12,
+      "js_disks": 12,
+      "py_inner_colonies": 0,
+      "js_inner_colonies": 0,
+      "matched_detections": 12,
+      "mae_mm": 0.0211,
+      "sobel_delta_r_mae_mm": 0.2033
+    },
+    {
+      "plate": "IMG_20230323_111801.jpg",
+      "aspect": "1:1",
+      "dimensions": "3292x3000",
+      "letterbox_pad_top": 18,
+      "py_disks": 11,
+      "js_disks": 11,
+      "py_inner_colonies": 0,
+      "js_inner_colonies": 0,
+      "matched_detections": 11,
+      "mae_mm": 0.0179,
+      "sobel_delta_r_mae_mm": 0.2173
+    },
+    {
+      "plate": "IMG_20230323_111837.jpg",
+      "aspect": "1:1",
+      "dimensions": "3258x2977",
+      "letterbox_pad_top": 18,
+      "py_disks": 12,
+      "js_disks": 12,
+      "py_inner_colonies": 0,
+      "js_inner_colonies": 0,
+      "matched_detections": 12,
+      "mae_mm": 0.0272,
+      "sobel_delta_r_mae_mm": 0.3675
+    },
+    {
+      "plate": "IMG_20230305_154641.jpg",
+      "aspect": "1:1",
+      "dimensions": "2900x2926",
+      "letterbox_pad_top": 0,
+      "py_disks": 11,
+      "js_disks": 11,
+      "py_inner_colonies": 0,
+      "js_inner_colonies": 0,
+      "matched_detections": 11,
+      "mae_mm": 0.0227,
+      "sobel_delta_r_mae_mm": 0.1518
+    },
+    {
+      "plate": "IMG_20230323_111918.jpg",
+      "aspect": "1:1",
+      "dimensions": "3133x3000",
+      "letterbox_pad_top": 9,
+      "py_disks": 12,
+      "js_disks": 12,
+      "py_inner_colonies": 0,
+      "js_inner_colonies": 0,
+      "matched_detections": 12,
+      "mae_mm": 0.018,
+      "sobel_delta_r_mae_mm": 0.285
+    },
+    {
+      "plate": "IMG_20230305_154816_synth_1600x1200.jpg",
+      "aspect": "4:3",
+      "dimensions": "1600x1200",
+      "letterbox_pad_top": 52,
+      "py_disks": 10,
+      "js_disks": 10,
+      "py_inner_colonies": 0,
+      "js_inner_colonies": 0,
+      "matched_detections": 10,
+      "mae_mm": 0.0237,
+      "sobel_delta_r_mae_mm": 0.147
+    }
+  ]
+}
