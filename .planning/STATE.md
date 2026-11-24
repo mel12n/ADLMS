@@ -2,20 +2,20 @@
 gsd_state_version: "1.0"
 milestone: v1.6
 milestone_name: "): Edge Device Demo (TR6948) — [CURRENT]"
-current_phase: 6
-current_phase_name: Edge Model Split, Retrain & ONNX Export
-status: ready_to_plan
-stopped_at: Phase 6 context gathered
-last_updated: "2026-11-24T15:19:54.536Z"
+current_phase: "2.8"
+current_phase_name: guided mobile camera capture & perspective alignment assistant
+status: planning
+stopped_at: Phase 6 complete, ready to plan Phase 2.8
+last_updated: "2026-11-24T17:22:18.702Z"
 last_activity: 2026-11-24
-last_activity_desc: Roadmap created for Milestone v1.6 (Phases 6–10)
-state_head: dc5417f2debc321cbf60e8b338e864bdc5a4a245
+last_activity_desc: Phase 6 complete, transitioned to Phase 2.8
+state_head: 16506e5cb6da02e5c51a72e0b801cf02282caf70
 progress:
   total_phases: 5
-  completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
-  percent: 0
+  completed_phases: 1
+  total_plans: 3
+  completed_plans: 3
+  percent: 20
 ---
 
 # ADLMS: Project State (STATE.md)
@@ -62,13 +62,13 @@ progress:
 
 ## Current Position
 
-Phase: 6 of 10 (Edge Model Split, Retrain & ONNX Export)
-Plan: 0 of TBD
-Status: Ready to discuss
-Last activity: 2026-11-24 — Roadmap created for Milestone v1.6 (Phases 6–10)
+Phase: 2.8 of 10 (guided mobile camera capture & perspective alignment assistant)
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-11-24 — Phase 6 complete, transitioned to Phase 2.8
 
 ## Session
 
 **Last session:** 2026-11-24T15:19:54.513Z
-**Stopped at:** Phase 6 context gathered
+**Stopped at:** Phase 6 complete, ready to plan Phase 2.8
 **Resume file:** .planning/phases/06-edge-model-split-retrain-onnx-export/06-CONTEXT.md

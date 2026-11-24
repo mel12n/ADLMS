@@ -88,7 +88,7 @@
 
 ### Phases
 
-- [ ] **Phase 6: Edge Model Split, Retrain & ONNX Export** - Leak-free split, retrained YOLO11n-seg, WASM-safe ONNX variants with Python parity
+- [x] **Phase 6: Edge Model Split, Retrain & ONNX Export** - Leak-free split, retrained YOLO11n-seg, WASM-safe ONNX variants with Python parity (completed 2026-11-24)
 - [ ] **Phase 7: In-Browser Edge Inference & Clinical Parity** - `mvp_web/` analyzes plates via local ORT-Web with mm/S/I/R matching Python
 - [ ] **Phase 8: Offline Android WebView Wrapper APK** - Installable offline APK on TR6948 with camera/gallery input and on-device export
 - [ ] **Phase 9: Tablet UX & Manual Drug Formulary** - 1024x600 tablet layout, memory-safe canvases, manual drug picker and panel presets
@@ -105,9 +105,9 @@
   2. Retraining writes `results/yolo11n_microbiology/weights/best.pt`, with mAP50 and per-class (disk/zone/inner_colony) metrics reported on held-out validation plates only, replacing the leaked 0.66 / 0.99 figures.
   3. Four ONNX files exist (320 and 416 × FP32 and real-plate-calibrated QDQ INT8) plus `model_meta.json`; graph inspection shows opset 17, static input shape, outputs `[1,39,N]` and `[1,32,S/4,S/4]`, no NMS, no `ConvInteger`, and no FP16 tensors.
   4. A Python parity report lists, per ONNX variant, zone-diameter MAE vs `best.pt` on held-out validation plates, and at least one variant is within `MAE <= 0.50 mm` (failing variants are marked as not shippable).
-**Plans**: 2 plans
-- [ ] 06-01-PLAN.md — Stratified 16/4 split + Test_yolo conversion (`MODL-01`) and leak-free `imgsz=416` YOLO11n-seg retrain (`MODL-02`)
-- [ ] 06-02-PLAN.md — 4-variant static `opset=17` FP32/QDQ-INT8 ONNX export + `model_meta.json` (`MODL-03`) and Python `MAE <= 0.50 mm` parity check (`MODL-04`)
+**Plans**: 3/3 plans complete
+- [x] 06-01-PLAN.md — Stratified 16/4 split + Test_yolo conversion (`MODL-01`) and leak-free `imgsz=416` YOLO11n-seg retrain (`MODL-02`)
+- [x] 06-02-PLAN.md — 4-variant static `opset=17` FP32/QDQ-INT8 ONNX export + `model_meta.json` (`MODL-03`) and Python `MAE <= 0.50 mm` parity check (`MODL-04`)
 
 ### Phase 7: In-Browser Edge Inference & Clinical Parity
 **Goal**: The existing `mvp_web/` UI analyzes a plate entirely in the browser (no Python server) and produces the same disks, zones, mm diameters and S/I/R as the Python pipeline.
@@ -162,7 +162,7 @@
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 6. Edge Model Split, Retrain & ONNX Export | 0/TBD | Not started | - |
+| 6. Edge Model Split, Retrain & ONNX Export | 3/3 | Complete    | 2026-11-24 |
 | 7. In-Browser Edge Inference & Clinical Parity | 0/TBD | Not started | - |
 | 8. Offline Android WebView Wrapper APK | 0/TBD | Not started | - |
 | 9. Tablet UX & Manual Drug Formulary | 0/TBD | Not started | - |

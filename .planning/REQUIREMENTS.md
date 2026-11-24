@@ -9,10 +9,10 @@ Goal: the `run_web_mvp.py` demo flow running fully offline on the USB-attached T
 
 ### Model Split, Training & ONNX Export (MODL)
 
-- [ ] **MODL-01**: Developer can train/validate on a non-leaking stratified train/val split of the labeled `Antibiogram_demo` plates (today `configs/dataset.yaml` uses `Train_yolo` for train, val and test).
-- [ ] **MODL-02**: Developer can retrain `YOLO11n-seg` (3 classes) on the MODL-01 split with small-dataset regularization, producing `results/yolo11n_microbiology/weights/best.pt`. *(Note: the 2026-11-24 50-epoch CPU run in `results/yolo11n_microbiology-2/` used the leaked split, so its mAP50 0.66 / zone 0.99 is measured on training images and must be re-measured.)*
-- [ ] **MODL-03**: Developer can export static `opset=17` ONNX (`dynamic=False`, `nms=False`) at 320 and 416 input, in FP32 and real-plate-calibrated QDQ INT8 (Conv-only), plus `model_meta.json`; no FP16, no `ConvInteger`.
-- [ ] **MODL-04**: Developer can run a Python parity check showing ONNX vs `best.pt` zone diameters within `MAE <= 0.50 mm` on held-out validation plates.
+- [x] **MODL-01**: Developer can train/validate on a non-leaking stratified train/val split of the labeled `Antibiogram_demo` plates (today `configs/dataset.yaml` uses `Train_yolo` for train, val and test).
+- [x] **MODL-02**: Developer can retrain `YOLO11n-seg` (3 classes) on the MODL-01 split with small-dataset regularization, producing `results/yolo11n_microbiology/weights/best.pt`. *(Note: the 2026-11-24 50-epoch CPU run in `results/yolo11n_microbiology-2/` used the leaked split, so its mAP50 0.66 / zone 0.99 is measured on training images and must be re-measured.)*
+- [x] **MODL-03**: Developer can export static `opset=17` ONNX (`dynamic=False`, `nms=False`) at 320 and 416 input, in FP32 and real-plate-calibrated QDQ INT8 (Conv-only), plus `model_meta.json`; no FP16, no `ConvInteger`.
+- [x] **MODL-04**: Developer can run a Python parity check showing ONNX vs `best.pt` zone diameters within `MAE <= 0.50 mm` on held-out validation plates.
 
 ### In-Browser Inference & Clinical Parity (WASM)
 
@@ -60,10 +60,10 @@ Goal: the `run_web_mvp.py` demo flow running fully offline on the USB-attached T
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| MODL-01 | Phase 6 | Pending |
-| MODL-02 | Phase 6 | Pending |
-| MODL-03 | Phase 6 | Pending |
-| MODL-04 | Phase 6 | Pending |
+| MODL-01 | Phase 6 | Complete |
+| MODL-02 | Phase 6 | Complete |
+| MODL-03 | Phase 6 | Complete |
+| MODL-04 | Phase 6 | Complete |
 | WASM-01 | Phase 7 | Pending |
 | WASM-02 | Phase 7 | Pending |
 | WASM-03 | Phase 7 | Pending |
