@@ -17,7 +17,7 @@ TEST_LBL_DIR = SPLITS_DIR / "test" / "labels"
 CONFIGS_DIR = BASE_DIR / "configs"
 MODELS_DIR = BASE_DIR / "models"
 CHECKPOINTS_DIR = MODELS_DIR / "checkpoints"
-EXPORTS_DIR = MODELS_DIR / "exports"
+EXPORTS_DIR = BASE_DIR / "exports"
 RESULTS_DIR = BASE_DIR / "results"
 
 # Image processing constants
