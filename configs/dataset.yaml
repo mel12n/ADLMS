@@ -1,8 +1,8 @@
 # YOLO11n-seg Dataset Configuration for DeepHalo / ADLMS
 path: data/Antibiogram_demo
-train: Train_yolo
-val: Train_yolo  # Prototype: using Train_yolo subset for validation until Val is labeled
-test: Train_yolo
+train: train.txt
+val: val.txt
+test: Test_yolo
 
 names:
   0: antibiotic_disk

@@ -1,0 +1,4 @@
+./Train_yolo/IMG_20230305_154816.jpg
+./Train_yolo/IMG_20230313_102516.jpg
+./Train_yolo/IMG_20230323_111801.jpg
+./Train_yolo/IMG_20230323_111837.jpg

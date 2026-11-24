@@ -1,0 +1,16 @@
+./Train_yolo/IMG_20230301_005827.jpg
+./Train_yolo/IMG_20230305_154514.jpg
+./Train_yolo/IMG_20230305_154534.jpg
+./Train_yolo/IMG_20230305_154610.jpg
+./Train_yolo/IMG_20230305_154728.jpg
+./Train_yolo/IMG_20230305_154750.jpg
+./Train_yolo/IMG_20230313_102541.jpg
+./Train_yolo/IMG_20230313_102608.jpg
+./Train_yolo/IMG_20230313_102637.jpg
+./Train_yolo/IMG_20230313_102712.jpg
+./Train_yolo/IMG_20230313_102731.jpg
+./Train_yolo/IMG_20230313_102825.jpg
+./Train_yolo/IMG_20230313_102842.jpg
+./Train_yolo/IMG_20230313_102921.jpg
+./Train_yolo/IMG_20230323_111742.jpg
+./Train_yolo/IMG_20230323_111906.jpg
