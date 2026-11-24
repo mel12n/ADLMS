@@ -1066,6 +1066,10 @@ function exportCsv() {
 }
 
 function download(name, text, type) {
+  if (window.AndroidExport && typeof window.AndroidExport.saveFile === 'function') {
+    window.AndroidExport.saveFile(name, type, text);
+    return;
+  }
   const url = URL.createObjectURL(new Blob([text], { type }));
   const a = document.createElement('a');
   a.href = url; a.download = name; a.click();
