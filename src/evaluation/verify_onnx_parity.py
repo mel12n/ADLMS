@@ -89,7 +89,7 @@ def _stats_dict(poly: np.ndarray):
 
 
 def _extract_pt_detections(model: YOLO, img_bgr: np.ndarray, conf: float = 0.45):
-    res = model.predict(img_bgr, imgsz=416, conf=conf, verbose=False)[0]
+    res = model.predict(img_bgr, imgsz=416, conf=conf, rect=False, verbose=False)[0]
     disks, zones, colonies = [], [], []
     if res.masks is None or res.boxes is None:
         return disks, zones, colonies
@@ -165,20 +165,17 @@ def _extract_onnx_detections(
             continue
         for idx in np.array(indices).flatten():
             cx, cy, bw, bh = c_boxes[idx]
-            x1 = max(0, int(math.floor(cx - bw / 2.0)))
-            y1 = max(0, int(math.floor(cy - bh / 2.0)))
-            x2 = min(imgsz, int(math.ceil(cx + bw / 2.0)))
-            y2 = min(imgsz, int(math.ceil(cy + bh / 2.0)))
-            if x2 <= x1 or y2 <= y1:
+            px1 = max(0, int(math.floor((cx - bw / 2.0) * proto_w / imgsz)))
+            py1 = max(0, int(math.floor((cy - bh / 2.0) * proto_h / imgsz)))
+            px2 = min(proto_w, int(math.ceil((cx + bw / 2.0) * proto_w / imgsz)))
+            py2 = min(proto_h, int(math.ceil((cy + bh / 2.0) * proto_h / imgsz)))
+            if px2 <= px1 or py2 <= py1:
                 continue
 
             raw_mask = (c_coeffs[idx] @ protos_flat).reshape(proto_h, proto_w)
             prob_mask = 1.0 / (1.0 + np.exp(-np.clip(raw_mask, -40.0, 40.0)))
-            up_mask = cv2.resize(
-                prob_mask, (imgsz, imgsz), interpolation=cv2.INTER_LINEAR
-            )
-            roi_mask = np.zeros((imgsz, imgsz), dtype=np.uint8)
-            roi_mask[y1:y2, x1:x2] = (up_mask[y1:y2, x1:x2] > 0.5).astype(
+            roi_mask = np.zeros((proto_h, proto_w), dtype=np.uint8)
+            roi_mask[py1:py2, px1:px2] = (prob_mask[py1:py2, px1:px2] > 0.5).astype(
                 np.uint8
             )
 
@@ -191,8 +188,8 @@ def _extract_onnx_detections(
             if len(largest) < 3:
                 continue
             pts = largest.reshape(-1, 2).astype(np.float32)
-            pts[:, 0] = np.clip((pts[:, 0] - pad_left) / scale, 0, orig_w)
-            pts[:, 1] = np.clip((pts[:, 1] - pad_top) / scale, 0, orig_h)
+            pts[:, 0] = np.clip((pts[:, 0] * (imgsz / proto_w) - pad_left) / scale, 0, orig_w)
+            pts[:, 1] = np.clip((pts[:, 1] * (imgsz / proto_h) - pad_top) / scale, 0, orig_h)
             stats = _stats_dict(pts)
             if stats is None:
                 continue

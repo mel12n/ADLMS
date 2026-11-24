@@ -16,7 +16,7 @@
       "imgsz": 320,
       "precision": "fp32",
       "matched_zones": 67,
-      "mae_mm": 1.0576,
+      "mae_mm": 1.0351,
       "verdict": "NOT_SHIPPABLE",
       "inner_colony_count": 0,
       "pt_inner_colony_count": 0
@@ -26,7 +26,7 @@
       "imgsz": 320,
       "precision": "qdq_int8",
       "matched_zones": 68,
-      "mae_mm": 1.0322,
+      "mae_mm": 1.1958,
       "verdict": "NOT_SHIPPABLE",
       "inner_colony_count": 0,
       "pt_inner_colony_count": 0
@@ -36,8 +36,8 @@
       "imgsz": 416,
       "precision": "fp32",
       "matched_zones": 68,
-      "mae_mm": 0.8453,
-      "verdict": "NOT_SHIPPABLE",
+      "mae_mm": 0.4678,
+      "verdict": "SHIPPABLE",
       "inner_colony_count": 0,
       "pt_inner_colony_count": 0
     },
@@ -46,11 +46,11 @@
       "imgsz": 416,
       "precision": "qdq_int8",
       "matched_zones": 68,
-      "mae_mm": 0.7242,
+      "mae_mm": 0.8197,
       "verdict": "NOT_SHIPPABLE",
       "inner_colony_count": 0,
       "pt_inner_colony_count": 0
     }
   ],
-  "overall_pass": false
+  "overall_pass": true
 }
