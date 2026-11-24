@@ -1,3 +1,18 @@
+---
+gsd_state_version: "1.0"
+milestone: v1.6
+milestone_name: Edge Device Demo (TR6948)
+status: planning
+last_updated: "2026-11-24T14:25:23.106Z"
+last_activity: 2026-11-24
+progress:
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
+---
+
 # ADLMS: Project State (STATE.md)
 
 ## Current Status
@@ -39,3 +54,10 @@
 ## Technical Debt & Gaps
 * [ ] Full training on large dataset needs to be executed on desktop PC / Colab GPU (Phase 3).
 * [ ] Live LIS endpoint integration currently simulated via local FHIR R4 JSON export (Phase 4).
+
+## Current Position
+
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-11-24 — Milestone v1.6 started

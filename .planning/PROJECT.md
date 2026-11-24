@@ -2,9 +2,26 @@
 ## Project Context & Vision
 
 > **Status:** Active  
-> **Milestone:** Milestone 1.5 (v1.5) — DeepHalo Mobile App UI & PWA (Parallel Track during Dataset Labeling)  
+> **Milestone:** Milestone 1.6 (v1.6) — Edge Device Demo (TR6948)  
 > **Course / Academic Program:** Anteproyecto (ACIF3003) — Universidad Andrés Bello  
-> **Architecture:** Dual-Hybrid Edge AI & Mobile Web App / PWA (Clinical Precision Dark Instrument + Python Streamlit)  
+> **Architecture:** Dual-Hybrid Edge AI & Mobile Web App / PWA + Offline Android WebView Wrapper (TR6948)
+
+---
+
+## Current Milestone: v1.6 Edge Device Demo (TR6948)
+
+**Goal:** Deliver the `run_web_mvp.py` demo experience (upload/capture plate → YOLO11n-seg segmentation → mm calibration via 6.0 mm disk → EUCAST v16.1 S/I/R → report) running fully on-device on the USB-attached TR6948 with no PC required at runtime.
+
+**Target features:**
+- Train `YOLO11n-seg` on the 20 labeled plates in `data/Antibiogram_demo/Train_yolo` (`configs/dataset.yaml`, `src/models/train_yolo.py`) → `results/yolo11n_microbiology/weights/best.pt`.
+- Export to compact ONNX (320–416 px input, INT8 or FP16) sized to fit TR6948's ~1 GB RAM budget (~22 MB free, 726 MB swap at idle).
+- Port mask decoding, disk/zone radial measurement, 6.0 mm fiducial scale factor, and EUCAST v16.1 breakpoint lookup (from `configs/eucast_v16_1_breakpoints.json`) to browser JavaScript, using manual drug selection instead of EasyOCR.
+- Bundle `mvp_web/` + `onnxruntime-web` (WASM, single-thread, no SIMD assumptions) offline inside a minimal Android WebView wrapper APK (`armeabi-v7a`, `minSdk 29`) installed via `adb`.
+- Benchmark end-to-end latency and peak RAM on the physical TR6948 device.
+
+**Device Constraints & ADR-001 Delta (TR6948 Hardware Profile):**
+- Captured via `adb` on 2026-11-20 & 2026-11-24: `TR6948` (Allwinner `sun50iw10p1`), Android 10 (API 29), 32-bit `armeabi-v7a` (`armv8l` kernel with NEON/vfpv4), `968 MB` total RAM (`~22 MB` free + `726 MB` swap), `1024x600@160dpi`, `2 MP` back camera, Chrome `81.0.4044.138` (no modern WASM SIMD), Android System WebView `119.0.6045.163`.
+- Conflicts with ADR-001's production baseline (64-bit ARMv8-A, $\ge 2\text{ GB}$ RAM): v1.6 explicitly targets this constrained 32-bit ~1 GB demo hardware via a WebView 119 wrapper APK and single-threaded non-SIMD WASM fallback.  
 
 ---
 
@@ -52,3 +69,22 @@ The system addresses the critical bottleneck of manual caliper/ruler measurement
 * **Submillimeter Accuracy:** Radial Mean Absolute Error must satisfy $\text{MAE} \le 0.50\text{ mm}$ to prevent classification errors in EUCAST category "I".
 * **Latency Threshold:** Complete end-to-end processing pipeline from image upload to report generation must render in $\text{TRT} \le 2.0\text{ seconds}$.
 * **Compliance:** NCh-ISO 15189:2022 trace audit log requirement and Chilean Law N° 21.719 privacy compliance.
+
+---
+
+## Evolution
+
+This document evolves at phase transitions and milestone boundaries.
+
+**After each phase transition** (via `/gsd-transition`):
+1. Requirements invalidated? → Move to Out of Scope with reason
+2. Requirements validated? → Move to Validated with phase reference
+3. New requirements emerged? → Add to Active
+4. Decisions to log? → Add to Key Decisions
+5. "What This Is" still accurate? → Update if drifted
+
+**After each milestone** (via `/gsd-complete-milestone`):
+1. Full review of all sections
+2. Core Value check — still the right priority?
+3. Audit Out of Scope — reasons still valid?
+4. Update Context with current state
