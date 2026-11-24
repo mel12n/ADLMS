@@ -1,0 +1,38 @@
+{
+  "contract": "1.0.0",
+  "flavor": "core",
+  "milestone": "v1.6 — ): Edge Device Demo (TR6948) — [CURRENT]",
+  "phases": [
+    {
+      "number": "6",
+      "name": "Edge Model Split, Retrain & ONNX Export",
+      "status": "complete"
+    },
+    {
+      "number": "7",
+      "name": "In-Browser Edge Inference & Clinical Parity",
+      "status": "complete"
+    },
+    {
+      "number": "8",
+      "name": "Offline Android WebView Wrapper APK",
+      "status": "complete"
+    },
+    {
+      "number": "9",
+      "name": "Tablet UX & Manual Drug Formulary",
+      "status": "complete"
+    },
+    {
+      "number": "10",
+      "name": "TR6948 Benchmark & Variant Lock",
+      "status": "in_progress"
+    }
+  ],
+  "next": {
+    "command": "/gsd-progress",
+    "label": "Show progress",
+    "reason": "Unsure of state — showing progress"
+  },
+  "updated_at": "2026-11-24T20:15:18.140Z"
+}

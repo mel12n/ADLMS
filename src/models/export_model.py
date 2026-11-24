@@ -229,7 +229,7 @@ def export_all_variants(weights_path: Path, output_dir: Path) -> Path:
             per_channel=True,
             activation_type=QuantType.QUInt8,
             weight_type=QuantType.QInt8,
-            calibrate_method=CalibrationMethod.MinMax,
+            calibrate_method=CalibrationMethod.Entropy,
             nodes_to_exclude=nodes_to_exclude,
         )
         qdq_shapes = audit_onnx_graph(qdq_path, imgsz)

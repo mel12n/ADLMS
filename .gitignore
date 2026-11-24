@@ -19,10 +19,10 @@ data/splits/
 # Model Weights & Results
 models/checkpoints/
 models/exports/
-results/
-runs/
-*.pt
-*.onnx
+# results/
+# runs/
+# *.pt
+# *.onnx
 *.tflite
 
 # IDE & OS
@@ -31,9 +31,15 @@ runs/
 .idea/
 
 # Image database & large samples
-data/AGAR_demo/
+# data/AGAR_demo/
 *.log
+*.cache
 .pytest_cache/
+
+# Android build & synced assets
+android/.gradle/
+android/app/build/
+android/app/src/main/assets/
 
 #Agents
 .antigravity/

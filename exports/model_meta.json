@@ -41,7 +41,7 @@
         ]
       ],
       "size_bytes": 11561671,
-      "sha256": "344f00bfd20ec6e85959c93762bf20b9ee15c333c1c5ed59a9e53c1465d204a2"
+      "sha256": "e2d822683e710ea6007c308187bcc8c2843a5394799c44b8bfe54dbdf2b93a3e"
     },
     {
       "id": "yolo11n_seg_320_qdq_int8",
@@ -68,7 +68,7 @@
         ]
       ],
       "size_bytes": 5329845,
-      "sha256": "64a6c765f5f88024c1ff0ea0849f354fed9ee1974b87d002ceb96e869021de26"
+      "sha256": "208c1954fa4b068b30ac4828a9101b2549459be7673f7ecdb606d92a84a2918d"
     },
     {
       "id": "yolo11n_seg_416_fp32",
@@ -95,7 +95,7 @@
         ]
       ],
       "size_bytes": 11590683,
-      "sha256": "c41d1076913cd71d4b5447b499d1c0a18048421342c4171e24d1c1945733258a"
+      "sha256": "c26f73665f6bad90773149050729025f357b405b41e1564f66a15f0bd93e368b"
     },
     {
       "id": "yolo11n_seg_416_qdq_int8",
@@ -122,7 +122,7 @@
         ]
       ],
       "size_bytes": 5358855,
-      "sha256": "39a6eabde871d55235b8ae596b4860d38141c3366bc09fe949ddbbb1f05d823d"
+      "sha256": "c7eb58f1b360a922b38f29756c87236bf45004c06f25074647e5ef74b3033702"
     }
   ]
 }
