@@ -164,7 +164,10 @@
   2. Running the `adb` profiling script during a session produces a log with WebView renderer RSS/PSS peaks and any `lmkd` kill events.
   3. A benchmark report covers 10 consecutive plates in Airplane Mode for each 320/416 × FP32/INT8 × SIMD/scalar combination, with latency, peak PSS, MAE and `lmkd` kills per variant.
   4. The locked variant meets `<= 2.0 s` inference, `MAE <= 0.50 mm` and zero `lmkd` kills, and it is the variant bundled in the APK (recorded in `model_meta.json`/config).
-**Plans**: TBD
+**Plans**: 3 plans
+- [ ] 10-01-PLAN.md — In-app 4-stage latency telemetry (`telemetry_ui.js` <= 120 lines), `?bench=10` auto-runner, `locked_variant` runtime selection & Android `[ADLMS_BENCH]` logcat/intent bridge (`BENCH-01`, `BENCH-02`)
+- [ ] 10-02-PLAN.md — Host `adb` `dumpsys meminfo`/`lmkd` profiler (`scripts/profile_tr6948.py`) & `locked_variant`-aware `scripts/sync_edge_assets.py` (`BENCH-01`, `BENCH-02`)
+- [ ] 10-03-PLAN.md — TR6948 8-cell × 10-plate Airplane Mode matrix, `model_meta.json` variant lock & final slim single-model APK rebuild/install (`BENCH-02`)
 **UI hint**: yes
 
 ### Progress (v1.6)
@@ -175,4 +178,4 @@
 | 7. In-Browser Edge Inference & Clinical Parity | 3/3 | Complete | 2026-11-24 |
 | 8. Offline Android WebView Wrapper APK | 3/3 | Complete | 2026-11-24 |
 | 9. Tablet UX & Manual Drug Formulary | 3/3 | Complete | 2026-11-24 |
-| 10. TR6948 Benchmark & Variant Lock | 0/TBD | Not started | - |
+| 10. TR6948 Benchmark & Variant Lock | 0/3 | Planned | - |
