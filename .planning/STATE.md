@@ -5,11 +5,11 @@ milestone_name: "): Edge Device Demo (TR6948) — [CURRENT]"
 current_phase: "2.8"
 current_phase_name: guided mobile camera capture & perspective alignment assistant
 status: planning
-stopped_at: Phase 6 complete, ready to plan Phase 2.8
-last_updated: "2026-11-24T17:22:18.702Z"
+stopped_at: Phase 7 context gathered
+last_updated: "2026-11-24T17:26:25.126Z"
 last_activity: 2026-11-24
 last_activity_desc: Phase 6 complete, transitioned to Phase 2.8
-state_head: 16506e5cb6da02e5c51a72e0b801cf02282caf70
+state_head: a9eb988abe18c8f84aaa2b968506f4e216056701
 progress:
   total_phases: 5
   completed_phases: 1
@@ -69,6 +69,6 @@ Last activity: 2026-11-24 — Phase 6 complete, transitioned to Phase 2.8
 
 ## Session
 
-**Last session:** 2026-11-24T15:19:54.513Z
-**Stopped at:** Phase 6 complete, ready to plan Phase 2.8
-**Resume file:** .planning/phases/06-edge-model-split-retrain-onnx-export/06-CONTEXT.md
+**Last session:** 2026-11-24T17:26:24.953Z
+**Stopped at:** Phase 7 context gathered
+**Resume file:** .planning/phases/07-in-browser-edge-inference-clinical-parity/07-CONTEXT.md
