@@ -1,0 +1,56 @@
+{
+  "heldout_plates": [
+    "IMG_20230305_154816.jpg",
+    "IMG_20230313_102516.jpg",
+    "IMG_20230323_111801.jpg",
+    "IMG_20230323_111837.jpg",
+    "IMG_20230305_154641.jpg",
+    "IMG_20230323_111918.jpg"
+  ],
+  "plate_count": 6,
+  "threshold_mae_mm": 0.5,
+  "pt_inner_colony_total": 0,
+  "variants": [
+    {
+      "id": "yolo11n_seg_320_fp32",
+      "imgsz": 320,
+      "precision": "fp32",
+      "matched_zones": 67,
+      "mae_mm": 1.0576,
+      "verdict": "NOT_SHIPPABLE",
+      "inner_colony_count": 0,
+      "pt_inner_colony_count": 0
+    },
+    {
+      "id": "yolo11n_seg_320_qdq_int8",
+      "imgsz": 320,
+      "precision": "qdq_int8",
+      "matched_zones": 68,
+      "mae_mm": 1.0322,
+      "verdict": "NOT_SHIPPABLE",
+      "inner_colony_count": 0,
+      "pt_inner_colony_count": 0
+    },
+    {
+      "id": "yolo11n_seg_416_fp32",
+      "imgsz": 416,
+      "precision": "fp32",
+      "matched_zones": 68,
+      "mae_mm": 0.8453,
+      "verdict": "NOT_SHIPPABLE",
+      "inner_colony_count": 0,
+      "pt_inner_colony_count": 0
+    },
+    {
+      "id": "yolo11n_seg_416_qdq_int8",
+      "imgsz": 416,
+      "precision": "qdq_int8",
+      "matched_zones": 68,
+      "mae_mm": 0.7242,
+      "verdict": "NOT_SHIPPABLE",
+      "inner_colony_count": 0,
+      "pt_inner_colony_count": 0
+    }
+  ],
+  "overall_pass": false
+}
