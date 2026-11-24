@@ -509,9 +509,50 @@ function render() {
     ctx.stroke();
     ctx.restore();
 
+    // Detected antibiotic disk center mark (YOLO centroid cx, cy)
+    ctx.save();
+    const cs = selected ? 9 * u : 5 * u;
+    ctx.strokeStyle = 'rgba(7, 11, 18, 0.8)';
+    ctx.lineWidth = (selected ? 3.5 : 2.2) * u;
+    ctx.beginPath();
+    ctx.moveTo(d.cx - cs, d.cy); ctx.lineTo(d.cx + cs, d.cy);
+    ctx.moveTo(d.cx, d.cy - cs); ctx.lineTo(d.cx, d.cy + cs);
+    ctx.stroke();
+    ctx.strokeStyle = selected ? '#fff' : 'rgba(255, 255, 255, 0.78)';
+    ctx.lineWidth = (selected ? 1.8 : 1.2) * u;
+    ctx.beginPath();
+    ctx.moveTo(d.cx - cs * 0.9, d.cy); ctx.lineTo(d.cx + cs * 0.9, d.cy);
+    ctx.moveTo(d.cx, d.cy - cs * 0.9); ctx.lineTo(d.cx, d.cy + cs * 0.9);
+    ctx.stroke();
+    ctx.fillStyle = selected ? col : '#fff';
+    ctx.beginPath();
+    ctx.arc(d.cx, d.cy, (selected ? 3 : 2) * u, 0, Math.PI * 2);
+    ctx.fill();
+    if (selected) {
+      ctx.strokeStyle = col;
+      ctx.lineWidth = 1.6 * u;
+      ctx.beginPath();
+      ctx.arc(d.cx, d.cy, 11 * u, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+    ctx.restore();
+
     if (selected) {
       const a = -Math.PI / 4;
-      const hx = d.hx + R * Math.cos(a), hy = d.hy + R * Math.sin(a);
+      const dxR = R * Math.cos(a), dyR = R * Math.sin(a);
+      const hx = d.cx + dxR, hy = d.cy + dyR;
+
+      // Diameter caliper line (2 * R) passing directly through disk center (cx, cy)
+      ctx.save();
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.75)';
+      ctx.lineWidth = 1.6 * u;
+      ctx.setLineDash([4 * u, 4 * u]);
+      ctx.beginPath();
+      ctx.moveTo(d.cx - dxR, d.cy - dyR);
+      ctx.lineTo(hx, hy);
+      ctx.stroke();
+      ctx.restore();
+
       ctx.save();
       ctx.fillStyle = '#fff';
       ctx.strokeStyle = col;
@@ -520,31 +561,6 @@ function render() {
       ctx.arc(hx, hy, 9 * u, 0, Math.PI * 2);
       ctx.fill();
       ctx.stroke();
-      ctx.restore();
-
-      // Draggable center crosshair mark for aligning halo on antibiotic disk
-      ctx.save();
-      ctx.strokeStyle = 'rgba(7, 11, 18, 0.75)';
-      ctx.lineWidth = 3.5 * u;
-      ctx.beginPath();
-      ctx.moveTo(d.hx - 10 * u, d.hy); ctx.lineTo(d.hx + 10 * u, d.hy);
-      ctx.moveTo(d.hx, d.hy - 10 * u); ctx.lineTo(d.hx, d.hy + 10 * u);
-      ctx.stroke();
-      ctx.strokeStyle = '#fff';
-      ctx.lineWidth = 1.8 * u;
-      ctx.beginPath();
-      ctx.moveTo(d.hx - 9 * u, d.hy); ctx.lineTo(d.hx + 9 * u, d.hy);
-      ctx.moveTo(d.hx, d.hy - 9 * u); ctx.lineTo(d.hx, d.hy + 9 * u);
-      ctx.stroke();
-      ctx.strokeStyle = col;
-      ctx.lineWidth = 1.6 * u;
-      ctx.beginPath();
-      ctx.arc(d.hx, d.hy, 11 * u, 0, Math.PI * 2);
-      ctx.stroke();
-      ctx.fillStyle = '#fff';
-      ctx.beginPath();
-      ctx.arc(d.hx, d.hy, 2.5 * u, 0, Math.PI * 2);
-      ctx.fill();
       ctx.restore();
 
       ctx.save();
@@ -617,7 +633,7 @@ function hideHint() { $('viewer-hint').classList.add('hide'); }
 function handlePos(d) {
   const R = Math.max((d.mm / 2) * state.scale, 3 * state.scale);
   const a = -Math.PI / 4;
-  return { x: d.hx + R * Math.cos(a), y: d.hy + R * Math.sin(a) };
+  return { x: d.cx + R * Math.cos(a), y: d.cy + R * Math.sin(a) };
 }
 function hitDisc(p) {
   let best = -1, bestArea = Infinity;
@@ -635,7 +651,7 @@ function hitDisc(p) {
 
 function initGestures() {
   const pointers = new Map();
-  let mode = null, start = null, pinch = null;
+  let mode = null, start = null, pinch = null, moveOffset = { dx: 0, dy: 0 };
 
   frame.addEventListener('pointerdown', (e) => {
     frame.setPointerCapture(e.pointerId);
@@ -653,7 +669,14 @@ function initGestures() {
     if (sel) {
       const h = handlePos(sel);
       if (Math.hypot(p.x - h.x, p.y - h.y) <= 20 * (p.k / state.zoom)) { mode = 'resize'; frame.classList.add('dragging'); return; }
-      if (Math.hypot(p.x - sel.hx, p.y - sel.hy) <= 22 * (p.k / state.zoom)) { mode = 'move'; frame.classList.add('dragging'); return; }
+      const nearCenter = Math.hypot(p.x - sel.hx, p.y - sel.hy) <= 22 * (p.k / state.zoom)
+        || Math.hypot(p.x - sel.cx, p.y - sel.cy) <= 22 * (p.k / state.zoom);
+      if (nearCenter) {
+        moveOffset = { dx: p.x - sel.hx, dy: p.y - sel.hy };
+        mode = 'move';
+        frame.classList.add('dragging');
+        return;
+      }
     }
     mode = 'pending';
     start = { x: e.clientX, y: e.clientY, px: state.panX, py: state.panY, t: performance.now() };
@@ -673,14 +696,14 @@ function initGestures() {
     } else if (mode === 'resize') {
       const d = state.discs[state.sel];
       const p = toCanvas(e.clientX, e.clientY);
-      const mm = (Math.hypot(p.x - d.hx, p.y - d.hy) * 2) / state.scale;
+      const mm = (Math.hypot(p.x - d.cx, p.y - d.cy) * 2) / state.scale;
       setMm(state.sel, mm, true);
     } else if (mode === 'move') {
       const d = state.discs[state.sel];
       const p = toCanvas(e.clientX, e.clientY);
       if (d.hx0 == null) { d.hx0 = d.hx; d.hy0 = d.hy; }
-      d.hx = Math.max(0, Math.min(state.N, p.x));
-      d.hy = Math.max(0, Math.min(state.N, p.y));
+      d.hx = Math.max(0, Math.min(state.N, p.x - moveOffset.dx));
+      d.hy = Math.max(0, Math.min(state.N, p.y - moveOffset.dy));
       scheduleRender();
     } else if (mode === 'pending' || mode === 'pan') {
       const f = fitFactor();
