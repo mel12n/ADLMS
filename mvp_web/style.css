@@ -1597,3 +1597,166 @@ body[data-runtime="apk"] .modal {
     scroll-behavior: auto !important;
   }
 }
+
+/* ============================================================================
+   Phase 9 (UI-03 & UI-04): Manual Drug Formulary Picker & 4-Panel Preset Bar
+   ============================================================================ */
+.formulary-presets {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+  padding: 8px 14px 2px;
+}
+
+.formulary-preset-btn {
+  min-height: 44px;
+  padding: 6px 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(45, 212, 191, 0.28);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.formulary-preset-btn:active,
+.formulary-preset-btn:hover {
+  background: rgba(45, 212, 191, 0.14);
+  border-color: var(--accent);
+}
+
+#cal-code {
+  cursor: pointer;
+  text-decoration: underline dotted rgba(45, 212, 191, 0.65);
+  text-underline-offset: 3px;
+}
+
+.formulary-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background: rgba(2, 6, 23, 0.78);
+}
+
+.formulary-modal.hidden {
+  display: none;
+}
+
+body[data-runtime="apk"] .formulary-modal {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.formulary-sheet {
+  width: min(560px, 100%);
+  max-height: 82vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--panel, #0f172a);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 16px 16px 0 0;
+  padding: 12px 14px 16px;
+  gap: 10px;
+}
+
+.formulary-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.formulary-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.formulary-close {
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 10px;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.formulary-search {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(45, 212, 191, 0.4);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 14px;
+}
+
+.formulary-list {
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 56vh;
+}
+
+.formulary-row {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  background: var(--surface);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+
+.formulary-row:active,
+.formulary-row:hover {
+  border-color: var(--accent);
+  background: rgba(45, 212, 191, 0.12);
+}
+
+.formulary-code {
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--accent);
+  min-width: 78px;
+}
+
+.formulary-name {
+  flex: 1;
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.formulary-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: rgba(45, 212, 191, 0.16);
+  color: var(--accent);
+}
+
+.formulary-empty {
+  padding: 18px 12px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+}

@@ -682,10 +682,38 @@ function initGestures() {
 // ============================================================================
 // 7. Selection, caliper, panel & cross-validation UI
 // ============================================================================
-function selectDisc(i, scroll) {
+let formularyCtrl = null;
+
+function assignDiscDrug(idx, drug) {
+  const d = state.discs[idx];
+  if (!d || !drug) return;
+  d.code = drug.code || drug.key;
+  d.key = drug.key || baseCode(d.code);
+  d.name = drug.name || d.code;
+  renderPanel();
+  scheduleRender();
+}
+
+function applyPanelPreset(panelId) {
+  const ui = window.ADLMS_FORMULARY_UI;
+  if (!ui || !state.discs.length) return;
+  const cx = state.img ? (state.img.naturalWidth || state.img.width) / 2 : undefined;
+  const cy = state.img ? (state.img.naturalHeight || state.img.height) / 2 : undefined;
+  const res = ui.applyPanelPresetToDiscs(state.discs, panelId, window.ADLMS_BREAKPOINTS, cx, cy);
+  state.group = panelId;
+  renderPanel();
+  scheduleRender();
+  toast(`Panel ${panelId}: ${res.assignedCount} discos asignados`);
+}
+
+function selectDisc(i, scroll, skipPicker) {
   state.sel = i;
   renderPanel(scroll);
   scheduleRender();
+  const d = state.discs[i];
+  if (!skipPicker && formularyCtrl && d && /^UNK(\b|[-_\d])/i.test(String(d.code || '').trim())) {
+    formularyCtrl.openForDisc(i);
+  }
 }
 
 function setMm(i, mm, fromDrag = false) {
@@ -883,6 +911,11 @@ function initPanelControls() {
   });
   $('cal-input').addEventListener('blur', renderCaliper);
   $('cal-reset').addEventListener('click', () => { const d = state.discs[state.sel]; if (d) setMm(state.sel, d.mm0); });
+  if ($('cal-code')) {
+    $('cal-code').addEventListener('click', () => {
+      if (formularyCtrl && state.discs[state.sel]) formularyCtrl.openForDisc(state.sel);
+    });
+  }
 
   const orgSelect = $('organism-select');
   if (orgSelect) {
@@ -1214,6 +1247,15 @@ tickClock();
 setInterval(tickClock, 30000);
 initGestures();
 initPanelControls();
+if (window.ADLMS_FORMULARY_UI && typeof window.ADLMS_FORMULARY_UI.initFormularyUI === 'function') {
+  formularyCtrl = window.ADLMS_FORMULARY_UI.initFormularyUI({
+    getState: () => state,
+    assignDiscDrug,
+    applyPanelPreset,
+    selectDisc: (idx) => selectDisc(idx, true, true),
+    toast,
+  });
+}
 probeBackend();
 if (state.plates.length) loadPlate(state.plates[0]);
 else toast('plates_data.js no encontrado: ejecute scripts/build_mvp_plates.py');
