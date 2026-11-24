@@ -23,10 +23,10 @@ Goal: the `run_web_mvp.py` demo flow running fully offline on the USB-attached T
 
 ### Offline Android WebView Wrapper (APK)
 
-- [ ] **APK-01**: User can install (via `adb`) and open a minimal Kotlin APK (`minSdk 29`, `armeabi-v7a`) that serves `mvp_web/` offline through `WebViewAssetLoader` with correct `.wasm`/`.js` MIME types and uncompressed `.onnx`/`.wasm`.
-- [ ] **APK-02**: User can capture a plate with the TR6948 rear camera or pick one from the gallery (`onShowFileChooser` + `FileProvider`, cancel-safe).
-- [ ] **APK-03**: User can save FHIR R4 JSON and CSV exports to Downloads on-device (`DownloadListener` + JS bridge + `MediaStore`).
-- [ ] **APK-04**: User's app recovers from a WebView renderer crash (`onRenderProcessGone`), and developer can sync `mvp_web/` into APK assets with `scripts/sync_edge_assets.py`.
+- [x] **APK-01**: User can install (via `adb`) and open a minimal Kotlin APK (`minSdk 29`, `armeabi-v7a`) that serves `mvp_web/` offline through `WebViewAssetLoader` with correct `.wasm`/`.js` MIME types and uncompressed `.onnx`/`.wasm`.
+- [x] **APK-02**: User can capture a plate with the TR6948 rear camera or pick one from the gallery (`onShowFileChooser` + `FileProvider`, cancel-safe).
+- [x] **APK-03**: User can save FHIR R4 JSON and CSV exports to Downloads on-device (`DownloadListener` + JS bridge + `MediaStore`).
+- [x] **APK-04**: User's app recovers from a WebView renderer crash (`onRenderProcessGone`), and developer can sync `mvp_web/` into APK assets with `scripts/sync_edge_assets.py`.
 
 ### Tablet UX & Manual Drug Formulary (UI)
 
@@ -68,10 +68,10 @@ Goal: the `run_web_mvp.py` demo flow running fully offline on the USB-attached T
 | WASM-02 | Phase 7 | Complete |
 | WASM-03 | Phase 7 | Complete |
 | WASM-04 | Phase 7 | Complete |
-| APK-01 | Phase 8 | Pending |
-| APK-02 | Phase 8 | Pending |
-| APK-03 | Phase 8 | Pending |
-| APK-04 | Phase 8 | Pending |
+| APK-01 | Phase 8 | Complete |
+| APK-02 | Phase 8 | Complete |
+| APK-03 | Phase 8 | Complete |
+| APK-04 | Phase 8 | Complete |
 | UI-01 | Phase 9 | Pending |
 | UI-02 | Phase 9 | Pending |
 | UI-03 | Phase 9 | Pending |

@@ -2,29 +2,30 @@
 gsd_state_version: "1.0"
 milestone: v1.6
 milestone_name: "): Edge Device Demo (TR6948) — [CURRENT]"
-current_phase: "8"
-current_phase_name: Offline Android WebView Wrapper APK
+current_phase: "9"
+current_phase_name: Tablet UX & Manual Drug Formulary
 status: ready_to_plan
-stopped_at: Phase 8 context captured (08-CONTEXT.md)
-last_updated: "2026-11-24T18:02:00.000Z"
+stopped_at: Phase 8 verified and complete (08-VERIFICATION.md)
+last_updated: "2026-11-24T18:45:00.000Z"
 last_activity: 2026-11-24
-last_activity_desc: Phase 8 context captured (08-CONTEXT.md), ready for /gsd-plan-phase 8
-state_head: a9eb988abe18c8f84aaa2b968506f4e216056701
+last_activity_desc: Phase 8 verified and complete (3/3 plans, TR6948 UAT passed), ready for Phase 9
+state_head: 7d958b1
 progress:
   total_phases: 5
-  completed_phases: 2
-  total_plans: 6
-  completed_plans: 6
-  percent: 40
+  completed_phases: 3
+  total_plans: 9
+  completed_plans: 9
+  percent: 60
 ---
 
 # ADLMS: Project State (STATE.md)
 
 ## Current Status
-* **Current Phase:** Phase 8 — Offline Android WebView Wrapper APK (READY TO PLAN)
+* **Current Phase:** Phase 9 — Tablet UX & Manual Drug Formulary (READY TO DISCUSS / PLAN)
 * **Active Milestone:** Milestone 1.6 (v1.6) — Edge Device Demo (TR6948) *(Milestone 1.5 paused; Phases 2.8–2.10 remain pending)*
-* **Last Completed Phase:** Phase 7 (In-Browser Edge Inference & Clinical Parity) — 100% Complete (3/3 plans, 0.0212 mm MAE)
-* **Next Action:** Run `/gsd-plan-phase 8` to plan the offline `armeabi-v7a` Android WebView Wrapper APK for TR6948.
+* **Last Completed Phase:** Phase 8 (Offline Android WebView Wrapper APK) — 100% Complete (3/3 plans, `app-debug.apk` 39.15 MB verified on TR6948 `R01236I38026001913` in Airplane Mode)
+* **Next Action:** Run `/gsd-discuss-phase 9` or `/gsd-plan-phase 9` for 1024x600 tablet UX (`UI-01`), memory-safe canvases (`UI-02`), and 65-drug manual formulary + panel presets (`UI-03`, `UI-04`).
+* **Phase 9 UX Note (`UI-01`):** User noted during TR6948 UAT a preference for smooth vertical scroll/layout ergonomics between the **Placa** (plate canvas) and **Resultados** (susceptibility table) sections on the 1024x600 tablet viewport.
 
 ---
 
@@ -62,13 +63,13 @@ progress:
 
 ## Current Position
 
-Phase: 8 of 10 (Offline Android WebView Wrapper APK)
+Phase: 9 of 10 (Tablet UX & Manual Drug Formulary)
 Plan: Not started
-Status: Context gathered — ready to plan
-Last activity: 2026-11-24 — Phase 8 context captured (08-CONTEXT.md), ready for /gsd-plan-phase 8
+Status: Ready to discuss / plan
+Last activity: 2026-11-24 — Phase 8 verified and complete (3/3 plans, TR6948 UAT passed)
 
 ## Session
 
-**Last session:** 2026-11-24T17:26:24.953Z
-**Stopped at:** Phase 7 verified and complete
-**Resume file:** .planning/phases/07-in-browser-edge-inference-clinical-parity/07-VERIFICATION.md
+**Last session:** 2026-11-24T18:45:00.000Z
+**Stopped at:** Phase 8 verified and complete
+**Resume file:** .planning/phases/08-offline-android-webview-wrapper-apk/08-VERIFICATION.md

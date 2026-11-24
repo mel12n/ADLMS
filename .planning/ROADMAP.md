@@ -90,7 +90,7 @@
 
 - [x] **Phase 6: Edge Model Split, Retrain & ONNX Export** - Leak-free split, retrained YOLO11n-seg, WASM-safe ONNX variants with Python parity (completed 2026-11-24)
 - [x] **Phase 7: In-Browser Edge Inference & Clinical Parity** - `mvp_web/` analyzes plates via local ORT-Web with mm/S/I/R matching Python (completed 2026-11-24)
-- [ ] **Phase 8: Offline Android WebView Wrapper APK** - Installable offline APK on TR6948 with camera/gallery input and on-device export
+- [x] **Phase 8: Offline Android WebView Wrapper APK** - Installable offline APK on TR6948 with camera/gallery input and on-device export (completed 2026-11-24)
 - [ ] **Phase 9: Tablet UX & Manual Drug Formulary** - 1024x600 tablet layout, memory-safe canvases, manual drug picker and panel presets
 - [ ] **Phase 10: TR6948 Benchmark & Variant Lock** - Measured latency/RAM/MAE on device and locked shipping model variant
 
@@ -134,7 +134,10 @@
   2. User can take a plate photo with the TR6948 rear camera or pick one from the gallery and it flows into analysis; cancelling the chooser leaves the input usable for another attempt.
   3. User taps FHIR R4 JSON or CSV export and the file appears in the device's Downloads folder (verifiable with `adb shell ls /sdcard/Download`).
   4. When the WebView renderer is killed, the app recovers by reloading instead of closing; and running `scripts/sync_edge_assets.py` then rebuilding ships the current `mvp_web/` and model into the APK.
-**Plans**: TBD
+**Plans**: 3/3 plans complete
+- [x] 08-01-PLAN.md — Windows Android toolchain bootstrap (setup_android_toolchain.ps1), edge asset syncer (sync_edge_assets.py), and Gradle 8.9 / AGP 8.7.3 scaffold (APK-01, APK-04)
+- [x] 08-02-PLAN.md — SRP Kotlin WebView wrapper (EdgeAssetClient.kt, FileChooserHelper.kt, ExportBridge.kt, MainActivity.kt) and mvp_web/app.js AndroidExport bridge (APK-01, APK-02, APK-03, APK-04)
+- [x] 08-03-PLAN.md — APK build (pp-debug.apk, uncompressed .onnx/.wasm) and TR6948 on-device offline UAT (APK-01..04)
 **UI hint**: yes
 
 ### Phase 9: Tablet UX & Manual Drug Formulary
@@ -167,6 +170,6 @@
 |-------|----------------|--------|-----------|
 | 6. Edge Model Split, Retrain & ONNX Export | 3/3 | Complete    | 2026-11-24 |
 | 7. In-Browser Edge Inference & Clinical Parity | 3/3 | Complete | 2026-11-24 |
-| 8. Offline Android WebView Wrapper APK | 0/TBD | Not started | - |
+| 8. Offline Android WebView Wrapper APK | 3/3 | Complete | 2026-11-24 |
 | 9. Tablet UX & Manual Drug Formulary | 0/TBD | Not started | - |
 | 10. TR6948 Benchmark & Variant Lock | 0/TBD | Not started | - |
