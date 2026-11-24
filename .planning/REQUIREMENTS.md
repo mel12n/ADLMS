@@ -1,5 +1,71 @@
 # ADLMS: Requirements Specification (REQUIREMENTS.md)
 
+**Defined (v1.6):** 2026-11-24
+**Core Value:** AI-assisted, human-in-the-loop Kirby-Bauer reading (6.0 mm fiducial calibration → EUCAST v16.1 S/I/R → FHIR report), 100% on-device.
+
+## Milestone v1.6 Requirements — Edge Device Demo (TR6948)
+
+Goal: the `run_web_mvp.py` demo flow running fully offline on the USB-attached TR6948 (Android 10, 32-bit `armeabi-v7a`, 968 MB RAM, WebView 119). Research: `.planning/research/SUMMARY.md`.
+
+### Model Split, Training & ONNX Export (MODL)
+
+- [ ] **MODL-01**: Developer can train/validate on a non-leaking stratified train/val split of the labeled `Antibiogram_demo` plates (today `configs/dataset.yaml` uses `Train_yolo` for train, val and test).
+- [ ] **MODL-02**: Developer can retrain `YOLO11n-seg` (3 classes) on the MODL-01 split with small-dataset regularization, producing `results/yolo11n_microbiology/weights/best.pt`. *(Note: the 2026-11-24 50-epoch CPU run in `results/yolo11n_microbiology-2/` used the leaked split, so its mAP50 0.66 / zone 0.99 is measured on training images and must be re-measured.)*
+- [ ] **MODL-03**: Developer can export static `opset=17` ONNX (`dynamic=False`, `nms=False`) at 320 and 416 input, in FP32 and real-plate-calibrated QDQ INT8 (Conv-only), plus `model_meta.json`; no FP16, no `ConvInteger`.
+- [ ] **MODL-04**: Developer can run a Python parity check showing ONNX vs `best.pt` zone diameters within `MAE <= 0.50 mm` on held-out validation plates.
+
+### In-Browser Inference & Clinical Parity (WASM)
+
+- [ ] **WASM-01**: User's browser/WebView runs the model via locally bundled `onnxruntime-web@1.18.0` (SIMD + non-SIMD wasm, `numThreads=1`, mem arena/pattern off, tensors disposed).
+- [ ] **WASM-02**: User gets the same `mvp_web/` UI on desktop (`run_web_mvp.py` API) and inside the APK (local ORT-Web), selected automatically by an inference router.
+- [ ] **WASM-03**: User sees disk/zone masks decoded in pure JS from `output0 [1,39,N]` + `output1 [1,32,S/4,S/4]` (NMS first, ROI-cropped proto math, 4× logit upsampling, letterbox unpadding).
+- [ ] **WASM-04**: User gets mm diameters via median 6.0 mm disk scale, 1:1 disk-zone pairing, 36-ray Sobel cross-check (`Δr <= 1.2 mm`) and `inner_colony` alerts, within 0.2 mm of Python `measure_zones.py`.
+
+### Offline Android WebView Wrapper (APK)
+
+- [ ] **APK-01**: User can install (via `adb`) and open a minimal Kotlin APK (`minSdk 29`, `armeabi-v7a`) that serves `mvp_web/` offline through `WebViewAssetLoader` with correct `.wasm`/`.js` MIME types and uncompressed `.onnx`/`.wasm`.
+- [ ] **APK-02**: User can capture a plate with the TR6948 rear camera or pick one from the gallery (`onShowFileChooser` + `FileProvider`, cancel-safe).
+- [ ] **APK-03**: User can save FHIR R4 JSON and CSV exports to Downloads on-device (`DownloadListener` + JS bridge + `MediaStore`).
+- [ ] **APK-04**: User's app recovers from a WebView renderer crash (`onRenderProcessGone`), and developer can sync `mvp_web/` into APK assets with `scripts/sync_edge_assets.py`.
+
+### Tablet UX & Manual Drug Formulary (UI)
+
+- [ ] **UI-01**: User sees a full-screen `1024x600` landscape (and `600x1024` portrait) layout with no twin-phone clipping, no Google Fonts CDN, and no service worker inside the APK.
+- [ ] **UI-02**: User can load 2 MP+ photos without renderer OOM (display/inspection canvas capped at ≤1024 px).
+- [ ] **UI-03**: User can tap an `UNK` disk and assign its antibiotic from the 65-drug EUCAST/CLSI list, with auto-advance to the next `UNK` and instant S/I/R refresh.
+- [ ] **UI-04**: User can apply a one-tap formulary panel preset (e.g. Enterobacterales, Staphylococcus) to assign a multi-disk plate in under 10 s.
+
+### On-Device Telemetry & Benchmark (BENCH)
+
+- [ ] **BENCH-01**: User sees per-stage latency (`preprocessMs`, `ortInferenceMs`, `postprocessMs`, `totalMs`) in-app, and developer can capture WebView renderer RSS/PSS and `lmkd` events via an `adb` script.
+- [ ] **BENCH-02**: Developer can run 10 consecutive plates in Airplane Mode on TR6948 across 320/416 × FP32/INT8 × SIMD/scalar and lock the variant meeting `<= 2.0 s` inference, `MAE <= 0.50 mm`, zero `lmkd` kills.
+
+### Future (deferred beyond v1.6)
+
+- On-device disk-patch CNN drug classifier (replacing manual selection / OCR).
+- Multi-threaded WASM / NNAPI / LiteRT on 64-bit ≥2 GB devices (ADR-001 baseline).
+- Live hospital HL7 FHIR server sync.
+
+### Out of Scope (v1.6)
+
+| Feature | Reason |
+|---------|--------|
+| EasyOCR / Tesseract.js / PaddleOCR on device | 10–30 MB extra weights + 80–160 OCR passes per plate; OOM on 968 MB RAM; 2 MP camera blurs disk print |
+| `numThreads > 1` WASM | WebView has no `SharedArrayBuffer`/`crossOriginIsolated` |
+| Live 30 FPS `getUserMedia` inference | 0.5–2 s per frame on 32-bit CPU; UI freeze, thermal throttling |
+| React/Vite/Capacitor rewrite | Breaks zero-build `mvp_web/`; unnecessary for a ~150-line WebView shell |
+| 640×640 FP32 ONNX | Memory and latency too high for TR6948 |
+
+### Traceability (v1.6)
+
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| *(filled by roadmapper)* | | |
+
+---
+
+## Project Baseline Requirements (v1.0–v1.5)
+
 ## 1. Functional Requirements (FR)
 
 ### FR-1: Image Ingestion & Preset Library
