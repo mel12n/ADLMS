@@ -23,8 +23,8 @@
   --radius: 16px;
   --radius-sm: 10px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --font: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Consolas, monospace;
+  --font: system-ui, -apple-system, 'Roboto', 'Segoe UI', sans-serif;
+  --mono: ui-monospace, 'Roboto Mono', 'SF Mono', Consolas, monospace;
 }
 
 * {
@@ -1421,6 +1421,170 @@ body[data-layout="single"][data-active-tab="resultados"] .device-left {
     position: sticky;
     bottom: 0;
     z-index: 10;
+    padding-bottom: calc(6px + env(safe-area-inset-bottom));
+  }
+}
+
+/* ============================================================================
+   TR6948 Tablet & Offline APK Mode (UI-01):
+   Full-screen 1024x600 landscape & 600x1024 portrait, smooth vertical scroll
+   between Placa and Resultados, zero GPU-heavy blur/backdrop-filter overhead.
+   ============================================================================ */
+html:has(body[data-runtime="apk"]),
+body[data-runtime="apk"] {
+  height: auto;
+  min-height: 100%;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+body[data-runtime="apk"] .stage-toolbar,
+body[data-runtime="apk"] .device-island,
+body[data-runtime="apk"] .status-bar,
+body[data-runtime="apk"] .home-indicator,
+body[data-runtime="apk"] .bg-glow,
+body[data-runtime="apk"] .device-right .tab-bar {
+  display: none !important;
+}
+
+body[data-runtime="apk"] *,
+body[data-runtime="apk"] *::before,
+body[data-runtime="apk"] *::after {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+body[data-runtime="apk"] .stage {
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  padding: 0;
+  gap: 0;
+  min-height: 100dvh;
+}
+
+body[data-runtime="apk"] .device,
+body[data-runtime="apk"] .device-left,
+body[data-runtime="apk"] .device-right {
+  display: flex !important;
+  width: 100%;
+  max-width: none;
+  height: auto;
+  min-height: 0;
+  padding: 0;
+  border-radius: 0;
+  background: var(--bg);
+  box-shadow: none;
+  transform: none !important;
+  margin: 0 !important;
+}
+
+body[data-runtime="apk"] .screen {
+  height: auto;
+  min-height: 0;
+  border-radius: 0;
+  overflow: visible;
+  box-shadow: none;
+}
+
+body[data-runtime="apk"] .screen-scroll {
+  height: auto;
+  overflow: visible;
+}
+
+body[data-runtime="apk"] .viewer-frame {
+  max-width: min(460px, 100%);
+  margin: 0 auto;
+}
+
+body[data-runtime="apk"] .device-left .tab-bar {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  background: var(--surface);
+  border-top: 1px solid var(--hair-2);
+  padding-bottom: calc(6px + env(safe-area-inset-bottom));
+}
+
+body[data-runtime="apk"] .modal {
+  background: rgba(6, 9, 15, 0.92);
+  box-shadow: none;
+}
+
+@media (max-width: 1024px) and (pointer: coarse) {
+  html,
+  body {
+    height: auto;
+    min-height: 100%;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+  }
+
+  .stage-toolbar,
+  .device-island,
+  .status-bar,
+  .home-indicator,
+  .bg-glow,
+  .device-right .tab-bar {
+    display: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .stage {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: 0;
+    gap: 0;
+    min-height: 100dvh;
+  }
+
+  .device,
+  .device-left,
+  .device-right {
+    display: flex !important;
+    width: 100%;
+    max-width: none;
+    height: auto;
+    min-height: 0;
+    padding: 0;
+    border-radius: 0;
+    background: var(--bg);
+    box-shadow: none;
+    transform: none !important;
+    margin: 0 !important;
+  }
+
+  .screen {
+    height: auto;
+    min-height: 0;
+    border-radius: 0;
+    overflow: visible;
+    box-shadow: none;
+  }
+
+  .screen-scroll {
+    height: auto;
+    overflow: visible;
+  }
+
+  .viewer-frame {
+    max-width: min(460px, 100%);
+    margin: 0 auto;
+  }
+
+  .device-left .tab-bar {
+    position: sticky;
+    bottom: 0;
+    z-index: 20;
+    background: var(--surface);
+    border-top: 1px solid var(--hair-2);
     padding-bottom: calc(6px + env(safe-area-inset-bottom));
   }
 }
