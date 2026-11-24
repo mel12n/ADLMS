@@ -105,7 +105,9 @@
   2. Retraining writes `results/yolo11n_microbiology/weights/best.pt`, with mAP50 and per-class (disk/zone/inner_colony) metrics reported on held-out validation plates only, replacing the leaked 0.66 / 0.99 figures.
   3. Four ONNX files exist (320 and 416 × FP32 and real-plate-calibrated QDQ INT8) plus `model_meta.json`; graph inspection shows opset 17, static input shape, outputs `[1,39,N]` and `[1,32,S/4,S/4]`, no NMS, no `ConvInteger`, and no FP16 tensors.
   4. A Python parity report lists, per ONNX variant, zone-diameter MAE vs `best.pt` on held-out validation plates, and at least one variant is within `MAE <= 0.50 mm` (failing variants are marked as not shippable).
-**Plans**: TBD
+**Plans**: 2 plans
+- [ ] 06-01-PLAN.md — Stratified 16/4 split + Test_yolo conversion (`MODL-01`) and leak-free `imgsz=416` YOLO11n-seg retrain (`MODL-02`)
+- [ ] 06-02-PLAN.md — 4-variant static `opset=17` FP32/QDQ-INT8 ONNX export + `model_meta.json` (`MODL-03`) and Python `MAE <= 0.50 mm` parity check (`MODL-04`)
 
 ### Phase 7: In-Browser Edge Inference & Clinical Parity
 **Goal**: The existing `mvp_web/` UI analyzes a plate entirely in the browser (no Python server) and produces the same disks, zones, mm diameters and S/I/R as the Python pipeline.
