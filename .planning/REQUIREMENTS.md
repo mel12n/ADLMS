@@ -30,10 +30,10 @@ Goal: the `run_web_mvp.py` demo flow running fully offline on the USB-attached T
 
 ### Tablet UX & Manual Drug Formulary (UI)
 
-- [ ] **UI-01**: User sees a full-screen `1024x600` landscape (and `600x1024` portrait) layout with no twin-phone clipping, no Google Fonts CDN, and no service worker inside the APK.
-- [ ] **UI-02**: User can load 2 MP+ photos without renderer OOM (display/inspection canvas capped at ≤1024 px).
-- [ ] **UI-03**: User can tap an `UNK` disk and assign its antibiotic from the 65-drug EUCAST/CLSI list, with auto-advance to the next `UNK` and instant S/I/R refresh.
-- [ ] **UI-04**: User can apply a one-tap formulary panel preset (e.g. Enterobacterales, Staphylococcus) to assign a multi-disk plate in under 10 s.
+- [x] **UI-01**: User sees a full-screen `1024x600` landscape (and `600x1024` portrait) layout with no twin-phone clipping, no Google Fonts CDN, and no service worker inside the APK.
+- [x] **UI-02**: User can load 2 MP+ photos without renderer OOM (display/inspection canvas capped at ≤1024 px).
+- [x] **UI-03**: User can tap an `UNK` disk and assign its antibiotic from the 65-drug EUCAST/CLSI list, with auto-advance to the next `UNK` and instant S/I/R refresh.
+- [x] **UI-04**: User can apply a one-tap formulary panel preset (e.g. Enterobacterales, Staphylococcus) to assign a multi-disk plate in under 10 s.
 
 ### On-Device Telemetry & Benchmark (BENCH)
 
@@ -72,10 +72,10 @@ Goal: the `run_web_mvp.py` demo flow running fully offline on the USB-attached T
 | APK-02 | Phase 8 | Complete |
 | APK-03 | Phase 8 | Complete |
 | APK-04 | Phase 8 | Complete |
-| UI-01 | Phase 9 | Pending |
-| UI-02 | Phase 9 | Pending |
-| UI-03 | Phase 9 | Pending |
-| UI-04 | Phase 9 | Pending |
+| UI-01 | Phase 9 | Complete |
+| UI-02 | Phase 9 | Complete |
+| UI-03 | Phase 9 | Complete |
+| UI-04 | Phase 9 | Complete |
 | BENCH-01 | Phase 10 | Pending |
 | BENCH-02 | Phase 10 | Pending |
 

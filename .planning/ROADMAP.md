@@ -91,7 +91,7 @@
 - [x] **Phase 6: Edge Model Split, Retrain & ONNX Export** - Leak-free split, retrained YOLO11n-seg, WASM-safe ONNX variants with Python parity (completed 2026-11-24)
 - [x] **Phase 7: In-Browser Edge Inference & Clinical Parity** - `mvp_web/` analyzes plates via local ORT-Web with mm/S/I/R matching Python (completed 2026-11-24)
 - [x] **Phase 8: Offline Android WebView Wrapper APK** - Installable offline APK on TR6948 with camera/gallery input and on-device export (completed 2026-11-24)
-- [ ] **Phase 9: Tablet UX & Manual Drug Formulary** - 1024x600 tablet layout, memory-safe canvases, manual drug picker and panel presets
+- [x] **Phase 9: Tablet UX & Manual Drug Formulary** - 1024x600 tablet layout, memory-safe canvases, manual drug picker and panel presets (completed 2026-11-24)
 - [ ] **Phase 10: TR6948 Benchmark & Variant Lock** - Measured latency/RAM/MAE on device and locked shipping model variant
 
 ### Phase Details
@@ -149,7 +149,10 @@
   2. User can load 2 MP camera photos (1600x1200) and larger gallery images repeatedly without a renderer crash; display/inspection canvases never exceed 1024 px.
   3. User taps an `UNK` disk, picks its antibiotic from the 65-drug EUCAST/CLSI list, sees S/I/R update immediately, and selection auto-advances to the next `UNK` disk.
   4. User applies a one-tap panel preset (e.g. Enterobacterales, Staphylococcus) and a multi-disk plate is fully assigned in under 10 s from the first tap.
-**Plans**: TBD
+**Plans**: 3/3 plans complete
+- [x] 09-01-PLAN.md — Full-screen TR6948 vertical-scroll GPU-light tablet UX & `<= 1024 px` SRP `image_scaler.js` (`UI-01`, `UI-02`)
+- [x] 09-02-PLAN.md — SRP 65-drug searchable picker (`formulary_ui.js`), `UNK` auto-advance & 4 clockwise clinical panel presets (`UI-03`, `UI-04`)
+- [x] 09-03-PLAN.md — Edge asset sync, `app-debug.apk` rebuild & TR6948 on-device Airplane Mode UAT (`UI-01..04`)
 **UI hint**: yes
 
 ### Phase 10: TR6948 Benchmark & Variant Lock
@@ -171,5 +174,5 @@
 | 6. Edge Model Split, Retrain & ONNX Export | 3/3 | Complete    | 2026-11-24 |
 | 7. In-Browser Edge Inference & Clinical Parity | 3/3 | Complete | 2026-11-24 |
 | 8. Offline Android WebView Wrapper APK | 3/3 | Complete | 2026-11-24 |
-| 9. Tablet UX & Manual Drug Formulary | 0/TBD | Not started | - |
+| 9. Tablet UX & Manual Drug Formulary | 3/3 | Complete | 2026-11-24 |
 | 10. TR6948 Benchmark & Variant Lock | 0/TBD | Not started | - |
