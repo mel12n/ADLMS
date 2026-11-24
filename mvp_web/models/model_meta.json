@@ -1,0 +1,128 @@
+{
+  "schema_version": "1.0",
+  "opset": 17,
+  "classes": {
+    "0": "antibiotic_disk",
+    "1": "inhibition_zone",
+    "2": "inner_colony"
+  },
+  "calibration": {
+    "image_count": 20,
+    "method": "MinMax",
+    "quant_format": "QDQ",
+    "excluded_segment_conv_nodes": {
+      "320": 37,
+      "416": 37
+    }
+  },
+  "variants": [
+    {
+      "id": "yolo11n_seg_320_fp32",
+      "filename": "yolo11n_seg_320_fp32.onnx",
+      "imgsz": 320,
+      "precision": "fp32",
+      "input_shape": [
+        1,
+        3,
+        320,
+        320
+      ],
+      "output_shapes": [
+        [
+          1,
+          39,
+          2100
+        ],
+        [
+          1,
+          32,
+          80,
+          80
+        ]
+      ],
+      "size_bytes": 11561671,
+      "sha256": "e2d822683e710ea6007c308187bcc8c2843a5394799c44b8bfe54dbdf2b93a3e"
+    },
+    {
+      "id": "yolo11n_seg_320_qdq_int8",
+      "filename": "yolo11n_seg_320_qdq_int8.onnx",
+      "imgsz": 320,
+      "precision": "qdq_int8",
+      "input_shape": [
+        1,
+        3,
+        320,
+        320
+      ],
+      "output_shapes": [
+        [
+          1,
+          39,
+          2100
+        ],
+        [
+          1,
+          32,
+          80,
+          80
+        ]
+      ],
+      "size_bytes": 5329845,
+      "sha256": "208c1954fa4b068b30ac4828a9101b2549459be7673f7ecdb606d92a84a2918d"
+    },
+    {
+      "id": "yolo11n_seg_416_fp32",
+      "filename": "yolo11n_seg_416_fp32.onnx",
+      "imgsz": 416,
+      "precision": "fp32",
+      "input_shape": [
+        1,
+        3,
+        416,
+        416
+      ],
+      "output_shapes": [
+        [
+          1,
+          39,
+          3549
+        ],
+        [
+          1,
+          32,
+          104,
+          104
+        ]
+      ],
+      "size_bytes": 11590683,
+      "sha256": "c26f73665f6bad90773149050729025f357b405b41e1564f66a15f0bd93e368b"
+    },
+    {
+      "id": "yolo11n_seg_416_qdq_int8",
+      "filename": "yolo11n_seg_416_qdq_int8.onnx",
+      "imgsz": 416,
+      "precision": "qdq_int8",
+      "input_shape": [
+        1,
+        3,
+        416,
+        416
+      ],
+      "output_shapes": [
+        [
+          1,
+          39,
+          3549
+        ],
+        [
+          1,
+          32,
+          104,
+          104
+        ]
+      ],
+      "size_bytes": 5358855,
+      "sha256": "c7eb58f1b360a922b38f29756c87236bf45004c06f25074647e5ef74b3033702"
+    }
+  ]
+}
