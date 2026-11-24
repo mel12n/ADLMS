@@ -72,6 +72,32 @@ The system addresses the critical bottleneck of manual caliper/ruler measurement
 
 ---
 
+## 5. Official Evaluation Criteria & Production Hardware Baseline (Fase 2 Anteproyecto)
+
+These criteria from the **ACIF3003 Fase 2 Report** govern all production milestones and agent evaluations:
+
+### AI Model & Edge Inference
+* **Radial Metric Accuracy:** $\text{MAE}_{\text{radial}} \le 0.50\text{ mm}$ against ground truth.
+* **Categorical Agreement:** $\text{CA} \ge 95.0\%$ (`vME = 0%`, `ME <= 1.5%`) against EUCAST / CLSI breakpoints.
+* **Quantization & Footprint:** Post-Training Quantization (PTQ) to INT8 via **KL-divergence (`Entropy`)** calibration (`< 4 MB` binary, `< 150 MB` active RAM, `< 800 ms` edge CPU inference, `< 0.8%` metric degradation vs. FP32).
+
+### Web App & Clinical Safety
+* **End-to-End Latency:** $\text{TRT} \le 2.0\text{ s}$ from image load to rendered halos and S/I/R table.
+* **FHIR Syntactic Integrity:** $\text{TIS} = 100\%$ valid HL7 FHIR R4 `DiagnosticReport` + `Observation` (`LOINC 18769-0`, `SNOMED CT 70549008`).
+* **Dual Cross-Validation:** 36-ray radial Sobel check ($\Delta r \le 1.2\text{ mm}$ green; $> 1.2\text{ mm}$ blocks auto-dispatch) + EUCAST/CLSI intrinsic resistance alerts.
+* **Gloved Ergonomics:** Two-Touch clinical workflow (Touch 1: capture & analyze; Touch 2: validate & send to LIS) with `Sticky Caliper` ($\pm 0.5\text{ mm}$) for exceptions.
+
+### Clinical & User Impact
+* **Bench Time Reduction:** $\text{RTM} \ge 65.0\%$ (from $\sim 180\text{ s}$ manual to $< 60\text{ s}$ per plate).
+* **Usability & Cognitive Load:** $\text{SUS} \ge 80\text{ pts}$ ("Excelente / Grado A"), $\text{NASA-TLX} \le 35\text{ pts}$, and transcription error rate $\text{TET} \approx 0.0\%$ (eliminating the $1\text{--}3\%$ manual baseline).
+
+### Production Hardware Baseline (Section 4.3 / ADR-001)
+* **SoC / CPU:** 64-bit ARMv8-A+ with **ARM NEON SIMD** (zero NPU/GPU dependency; e.g., Unisoc T606/T612/T616, MediaTek Helio G36/G85, Snapdragon 680/685).
+* **RAM & Storage:** $\ge 2\text{ GB}$ RAM (Android Go compatible) and $\ge 30\text{ MB}$ free storage.
+* **Camera & OS:** $\ge 5\text{--}8\text{ MP}$ rear camera ($10\text{--}15\text{ cm}$ focus), Android 9.0+ / iOS 13.0+ with WebAssembly-capable WebView. *(Note: `TR6948` 32-bit `armeabi-v7a` / `968 MB` RAM is strictly a constrained v1.6 demo target, not the production baseline.)*
+
+---
+
 ## Evolution
 
 This document evolves at phase transitions and milestone boundaries.
