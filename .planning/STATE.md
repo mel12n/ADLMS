@@ -1,10 +1,15 @@
 ---
 gsd_state_version: "1.0"
 milestone: v1.6
-milestone_name: Edge Device Demo (TR6948)
+milestone_name: "): Edge Device Demo (TR6948) — [CURRENT]"
+current_phase: 6
+current_phase_name: Edge Model Split, Retrain & ONNX Export
 status: ready_to_plan
-last_updated: "2026-11-24T15:15:00.000Z"
+stopped_at: Phase 6 context gathered
+last_updated: "2026-11-24T15:19:54.536Z"
 last_activity: 2026-11-24
+last_activity_desc: Roadmap created for Milestone v1.6 (Phases 6–10)
+state_head: dc5417f2debc321cbf60e8b338e864bdc5a4a245
 progress:
   total_phases: 5
   completed_phases: 0
@@ -61,3 +66,9 @@ Phase: 6 of 10 (Edge Model Split, Retrain & ONNX Export)
 Plan: 0 of TBD
 Status: Ready to discuss
 Last activity: 2026-11-24 — Roadmap created for Milestone v1.6 (Phases 6–10)
+
+## Session
+
+**Last session:** 2026-11-24T15:19:54.513Z
+**Stopped at:** Phase 6 context gathered
+**Resume file:** .planning/phases/06-edge-model-split-retrain-onnx-export/06-CONTEXT.md
