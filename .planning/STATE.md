@@ -2,29 +2,29 @@
 gsd_state_version: "1.0"
 milestone: v1.6
 milestone_name: "): Edge Device Demo (TR6948) — [CURRENT]"
-current_phase: "2.8"
-current_phase_name: guided mobile camera capture & perspective alignment assistant
-status: planning
-stopped_at: Phase 7 context gathered
+current_phase: "8"
+current_phase_name: Offline Android WebView Wrapper APK
+status: ready_to_plan
+stopped_at: Phase 7 verified and complete
 last_updated: "2026-11-24T17:26:25.126Z"
 last_activity: 2026-11-24
-last_activity_desc: Phase 6 complete, transitioned to Phase 2.8
+last_activity_desc: Phase 7 verified (5/5 must-haves, 0.0212 mm MAE), ready for Phase 8
 state_head: a9eb988abe18c8f84aaa2b968506f4e216056701
 progress:
   total_phases: 5
-  completed_phases: 1
-  total_plans: 3
-  completed_plans: 3
-  percent: 20
+  completed_phases: 2
+  total_plans: 6
+  completed_plans: 6
+  percent: 40
 ---
 
 # ADLMS: Project State (STATE.md)
 
 ## Current Status
-* **Current Phase:** Phase 6 — Edge Model Split, Retrain & ONNX Export (READY TO DISCUSS)
+* **Current Phase:** Phase 8 — Offline Android WebView Wrapper APK (READY TO PLAN)
 * **Active Milestone:** Milestone 1.6 (v1.6) — Edge Device Demo (TR6948) *(Milestone 1.5 paused; Phases 2.8–2.10 remain pending)*
-* **Last Completed Phase:** Phase 2.7 (Clinical Precision Mobile Design System & Installable PWA Shell) — 100% Complete
-* **Next Action:** Run `/gsd-discuss-phase 6` (or `/gsd-plan-phase 6`) to lock the leak-free dataset split, retraining config, and ONNX export matrix.
+* **Last Completed Phase:** Phase 7 (In-Browser Edge Inference & Clinical Parity) — 100% Complete (3/3 plans, 0.0212 mm MAE)
+* **Next Action:** Run `/gsd-discuss-phase 8` or `/gsd-plan-phase 8` to build the offline `armeabi-v7a` Android WebView Wrapper APK for TR6948.
 
 ---
 
@@ -62,13 +62,13 @@ progress:
 
 ## Current Position
 
-Phase: 2.8 of 10 (guided mobile camera capture & perspective alignment assistant)
+Phase: 8 of 10 (Offline Android WebView Wrapper APK)
 Plan: Not started
 Status: Ready to plan
-Last activity: 2026-11-24 — Phase 6 complete, transitioned to Phase 2.8
+Last activity: 2026-11-24 — Phase 7 verified and complete, ready for Phase 8
 
 ## Session
 
 **Last session:** 2026-11-24T17:26:24.953Z
-**Stopped at:** Phase 7 context gathered
-**Resume file:** .planning/phases/07-in-browser-edge-inference-clinical-parity/07-CONTEXT.md
+**Stopped at:** Phase 7 verified and complete
+**Resume file:** .planning/phases/07-in-browser-edge-inference-clinical-parity/07-VERIFICATION.md

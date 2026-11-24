@@ -16,10 +16,10 @@ Goal: the `run_web_mvp.py` demo flow running fully offline on the USB-attached T
 
 ### In-Browser Inference & Clinical Parity (WASM)
 
-- [ ] **WASM-01**: User's browser/WebView runs the model via locally bundled `onnxruntime-web@1.18.0` (SIMD + non-SIMD wasm, `numThreads=1`, mem arena/pattern off, tensors disposed).
-- [ ] **WASM-02**: User gets the same `mvp_web/` UI on desktop (`run_web_mvp.py` API) and inside the APK (local ORT-Web), selected automatically by an inference router.
-- [ ] **WASM-03**: User sees disk/zone masks decoded in pure JS from `output0 [1,39,N]` + `output1 [1,32,S/4,S/4]` (NMS first, ROI-cropped proto math, 4× logit upsampling, letterbox unpadding).
-- [ ] **WASM-04**: User gets mm diameters via median 6.0 mm disk scale, 1:1 disk-zone pairing, 36-ray Sobel cross-check (`Δr <= 1.2 mm`) and `inner_colony` alerts, within 0.2 mm of Python `measure_zones.py`.
+- [x] **WASM-01**: User's browser/WebView runs the model via locally bundled `onnxruntime-web@1.18.0` (SIMD + non-SIMD wasm, `numThreads=1`, mem arena/pattern off, tensors disposed).
+- [x] **WASM-02**: User gets the same `mvp_web/` UI on desktop (`run_web_mvp.py` API) and inside the APK (local ORT-Web), selected automatically by an inference router.
+- [x] **WASM-03**: User sees disk/zone masks decoded in pure JS from `output0 [1,39,N]` + `output1 [1,32,S/4,S/4]` (NMS first, ROI-cropped proto math, 4× logit upsampling, letterbox unpadding).
+- [x] **WASM-04**: User gets mm diameters via median 6.0 mm disk scale, 1:1 disk-zone pairing, 36-ray Sobel cross-check (`Δr <= 1.2 mm`) and `inner_colony` alerts, within 0.2 mm of Python `measure_zones.py`.
 
 ### Offline Android WebView Wrapper (APK)
 
@@ -64,10 +64,10 @@ Goal: the `run_web_mvp.py` demo flow running fully offline on the USB-attached T
 | MODL-02 | Phase 6 | Complete |
 | MODL-03 | Phase 6 | Complete |
 | MODL-04 | Phase 6 | Complete |
-| WASM-01 | Phase 7 | Pending |
-| WASM-02 | Phase 7 | Pending |
-| WASM-03 | Phase 7 | Pending |
-| WASM-04 | Phase 7 | Pending |
+| WASM-01 | Phase 7 | Complete |
+| WASM-02 | Phase 7 | Complete |
+| WASM-03 | Phase 7 | Complete |
+| WASM-04 | Phase 7 | Complete |
 | APK-01 | Phase 8 | Pending |
 | APK-02 | Phase 8 | Pending |
 | APK-03 | Phase 8 | Pending |

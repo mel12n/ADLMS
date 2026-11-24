@@ -89,7 +89,7 @@
 ### Phases
 
 - [x] **Phase 6: Edge Model Split, Retrain & ONNX Export** - Leak-free split, retrained YOLO11n-seg, WASM-safe ONNX variants with Python parity (completed 2026-11-24)
-- [ ] **Phase 7: In-Browser Edge Inference & Clinical Parity** - `mvp_web/` analyzes plates via local ORT-Web with mm/S/I/R matching Python
+- [x] **Phase 7: In-Browser Edge Inference & Clinical Parity** - `mvp_web/` analyzes plates via local ORT-Web with mm/S/I/R matching Python (completed 2026-11-24)
 - [ ] **Phase 8: Offline Android WebView Wrapper APK** - Installable offline APK on TR6948 with camera/gallery input and on-device export
 - [ ] **Phase 9: Tablet UX & Manual Drug Formulary** - 1024x600 tablet layout, memory-safe canvases, manual drug picker and panel presets
 - [ ] **Phase 10: TR6948 Benchmark & Variant Lock** - Measured latency/RAM/MAE on device and locked shipping model variant
@@ -119,7 +119,10 @@
   3. Both the SIMD and forced non-SIMD wasm builds load with `numThreads=1`, and 10 consecutive analyses complete without steadily growing WASM/JS memory (tensors disposed, arena/pattern off).
   4. A golden parity test on 1:1 and 4:3 plates shows JS zone diameters within 0.2 mm of `measure_zones.py`, with masks aligned to the original photo after letterbox unpadding.
   5. Each zone shows a 36-ray Sobel cross-check badge (flagged when `Δr > 1.2 mm`) and an `inner_colony` alert wherever one is detected inside a zone.
-**Plans**: TBD
+**Plans**: 3/3 plans complete
+- [x] 07-01-PLAN.md — Vendor `onnxruntime-web@1.18.0` + stage `yolo11n_seg_416_fp32.onnx` (`WASM-01`) and implement pure-JS `yolo_seg_decode.js` + `sobel_cv.js` (`WASM-03`, `WASM-04`)
+- [x] 07-02-PLAN.md — Implement `edge_detector.js` + `inference_router.js` (`WASM-01`, `WASM-02`) and wire `mvp_web/` top-bar mode badge + `inner_colony` alerts (`WASM-04`)
+- [x] 07-03-PLAN.md — Automated `node:test` suite (`tests/test_edge_parity.mjs`) and Python vs JS `< 0.20 mm` golden parity harness on `1:1` and `4:3` plates (`scripts/verify_js_parity.py`)
 **UI hint**: yes
 
 ### Phase 8: Offline Android WebView Wrapper APK
@@ -163,7 +166,7 @@
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 6. Edge Model Split, Retrain & ONNX Export | 3/3 | Complete    | 2026-11-24 |
-| 7. In-Browser Edge Inference & Clinical Parity | 0/TBD | Not started | - |
+| 7. In-Browser Edge Inference & Clinical Parity | 3/3 | Complete | 2026-11-24 |
 | 8. Offline Android WebView Wrapper APK | 0/TBD | Not started | - |
 | 9. Tablet UX & Manual Drug Formulary | 0/TBD | Not started | - |
 | 10. TR6948 Benchmark & Variant Lock | 0/TBD | Not started | - |
