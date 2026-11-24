@@ -538,7 +538,7 @@ function render() {
     ctx.restore();
 
     if (selected) {
-      const a = -Math.PI / 4;
+      const a = d.angle ?? -Math.PI / 4;
       const dxR = R * Math.cos(a), dyR = R * Math.sin(a);
       const hx = d.cx + dxR, hy = d.cy + dyR;
 
@@ -632,7 +632,7 @@ function hideHint() { $('viewer-hint').classList.add('hide'); }
 
 function handlePos(d) {
   const R = Math.max((d.mm / 2) * state.scale, 3 * state.scale);
-  const a = -Math.PI / 4;
+  const a = d.angle ?? -Math.PI / 4;
   return { x: d.cx + R * Math.cos(a), y: d.cy + R * Math.sin(a) };
 }
 function hitDisc(p) {
@@ -696,6 +696,7 @@ function initGestures() {
     } else if (mode === 'resize') {
       const d = state.discs[state.sel];
       const p = toCanvas(e.clientX, e.clientY);
+      d.angle = Math.atan2(p.y - d.cy, p.x - d.cx);
       const mm = (Math.hypot(p.x - d.cx, p.y - d.cy) * 2) / state.scale;
       setMm(state.sel, mm, true);
     } else if (mode === 'move') {
@@ -970,6 +971,7 @@ function initPanelControls() {
     const d = state.discs[state.sel];
     if (d) {
       if (d.hx0 != null) { d.hx = d.hx0; d.hy = d.hy0; }
+      d.angle = -Math.PI / 4;
       setMm(state.sel, d.mm0);
     }
   });
