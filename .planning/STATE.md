@@ -5,10 +5,10 @@ milestone_name: "): Edge Device Demo (TR6948) — [CURRENT]"
 current_phase: "9"
 current_phase_name: Tablet UX & Manual Drug Formulary
 status: ready_to_plan
-stopped_at: Phase 8 verified and complete (08-VERIFICATION.md)
-last_updated: "2026-11-24T18:45:00.000Z"
+stopped_at: Phase 9 context captured (09-CONTEXT.md)
+last_updated: "2026-11-24T18:53:00.000Z"
 last_activity: 2026-11-24
-last_activity_desc: Phase 8 verified and complete (3/3 plans, TR6948 UAT passed), ready for Phase 9
+last_activity_desc: Phase 9 context captured (09-CONTEXT.md), ready for /gsd-plan-phase 9
 state_head: 7d958b1
 progress:
   total_phases: 5
@@ -21,10 +21,10 @@ progress:
 # ADLMS: Project State (STATE.md)
 
 ## Current Status
-* **Current Phase:** Phase 9 — Tablet UX & Manual Drug Formulary (READY TO DISCUSS / PLAN)
+* **Current Phase:** Phase 9 — Tablet UX & Manual Drug Formulary (READY TO PLAN)
 * **Active Milestone:** Milestone 1.6 (v1.6) — Edge Device Demo (TR6948) *(Milestone 1.5 paused; Phases 2.8–2.10 remain pending)*
 * **Last Completed Phase:** Phase 8 (Offline Android WebView Wrapper APK) — 100% Complete (3/3 plans, `app-debug.apk` 39.15 MB verified on TR6948 `R01236I38026001913` in Airplane Mode)
-* **Next Action:** Run `/gsd-discuss-phase 9` or `/gsd-plan-phase 9` for 1024x600 tablet UX (`UI-01`), memory-safe canvases (`UI-02`), and 65-drug manual formulary + panel presets (`UI-03`, `UI-04`).
+* **Next Action:** Run `/gsd-plan-phase 9` for 1024x600 scroll/tablet UX (`UI-01`), ≤1024 px memory-safe canvases (`UI-02`), and 65-drug manual formulary + panel presets (`UI-03`, `UI-04`).
 * **Phase 9 UX Note (`UI-01`):** User noted during TR6948 UAT a preference for smooth vertical scroll/layout ergonomics between the **Placa** (plate canvas) and **Resultados** (susceptibility table) sections on the 1024x600 tablet viewport.
 
 ---
@@ -65,8 +65,8 @@ progress:
 
 Phase: 9 of 10 (Tablet UX & Manual Drug Formulary)
 Plan: Not started
-Status: Ready to discuss / plan
-Last activity: 2026-11-24 — Phase 8 verified and complete (3/3 plans, TR6948 UAT passed)
+Status: Context gathered — ready to plan
+Last activity: 2026-11-24 — Phase 9 context captured (09-CONTEXT.md), ready for /gsd-plan-phase 9
 
 ## Session
 
