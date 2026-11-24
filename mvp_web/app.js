@@ -223,9 +223,20 @@ function syncOrganismSelector(plate) {
 function loadPlate(plate) {
   const img = new Image();
   img.onload = () => {
-    const W = img.naturalWidth, H = img.naturalHeight;
+    const scaler = window.ADLMS_IMAGE_SCALER;
+    const rawW = img.naturalWidth || img.width;
+    const rawH = img.naturalHeight || img.height;
+    let workingImg = img;
+    let W = rawW;
+    let H = rawH;
+    if (scaler && Math.max(rawW, rawH) > (scaler.MAX_EDGE_PX || 1024)) {
+      const scaled = scaler.downscaleImageToCanvas(img, scaler.MAX_EDGE_PX || 1024);
+      workingImg = scaled.canvas;
+      W = scaled.width;
+      H = scaled.height;
+    }
     state.plate = plate;
-    state.img = img;
+    state.img = workingImg;
     state.N = Math.max(W, H);
     state.ox = (state.N - W) / 2;
     state.oy = (state.N - H) / 2;
@@ -245,103 +256,101 @@ function loadPlate(plate) {
   img.src = plate.image;
 }
 
-function fileToDataUrl(file) {
-  return new Promise((resolve, reject) => {
-    const fr = new FileReader();
-    fr.onload = () => resolve(fr.result);
-    fr.onerror = reject;
-    fr.readAsDataURL(file);
-  });
-}
-
 async function loadUpload(file) {
-  const url = URL.createObjectURL(file);
-  const img = new Image();
-  img.onload = async () => {
-    const W = img.naturalWidth, H = img.naturalHeight;
-    const sampleId = '20261122' + String(Math.floor(10000000 + Math.random() * 90000000));
-    state.plate = {
-      key: 'upload',
-      title: `Captura · ${file.name}`,
-      short: 'CAP',
-      group: state.group,
-      sampleId,
-      organism: state.organism,
-      image: url,
-      discs: [],
-    };
-    state.img = img;
-    state.N = Math.max(W, H);
-    state.ox = (state.N - W) / 2;
-    state.oy = (state.N - H) / 2;
-    state.plateR = Math.min(W, H) * 0.487;
-    state.discs = [];
-    state.sel = -1;
-    state.auditLog = [];
-    state.scale = Math.min(W, H) / 140;
-    setupCanvases();
-    resetView();
-    rebuildAll();
-    renderPicker();
-    renderPanel();
-
-    toast('Ejecutando YOLO11n-seg + Sobel 36 rayos...');
-    try {
-      const dataUrl = await fileToDataUrl(file);
-      const router = window.ADLMS_INFERENCE_ROUTER;
-      if (!router || typeof router.analyzePlate !== 'function') {
-        throw new Error('ADLMS_INFERENCE_ROUTER no cargado');
-      }
-      const data = await router.analyzePlate(file, img, {
-        organism: state.organism,
-        group: state.group,
-        standard: state.standard,
-        dataUrl,
-      });
-
-      const activeMode = data.runtime_mode || router.getActiveMode() || 'edge-wasm';
-      state.backendOnline = activeMode === 'local-api';
-      updateRuntimeModeBadge(activeMode, data.simd_enabled);
-
-      state.plate.discs = (data.detections || []).map((d) => ({
-        code: d.code,
-        abxCode: d.abx_code,
-        abxName: d.abx_name,
-        x: d.x, y: d.y, w: d.w, h: d.h, hx: d.hx, hy: d.hy,
-        mm: d.diam_mm,
-        sobelMm: d.sobel_mm,
-        deltaR: d.delta_r_mm,
-        geoValid: d.geo_valid,
-        geoMessage: d.geo_message,
-        innerColony: !!d.inner_colony,
-        innerColonyCount: d.inner_colony_count || 0,
-        innerColonyMessage: d.inner_colony_message || '',
-        contour: d.zone_contour || [],
-      }));
-      state.plate.scalePxPerMm = data.scale_px_per_mm;
-
-      const built = buildDiscsFromPlateData(state.plate, W, H, state.ox, state.oy);
-      state.discs = built.discs;
-      state.scale = data.scale_px_per_mm || built.scale;
-      state.sel = state.discs.length ? 0 : -1;
-
-      const engEl = $('meta-engine');
-      if (engEl) {
-        const label = activeMode === 'local-api'
-          ? 'Local API · YOLO11n-seg'
-          : `Edge WASM · ${data.model_variant || 'yolo11n_seg_416_fp32'}`;
-        engEl.textContent = `${label} (${data.inference_ms} ms)`;
-      }
-
-      rebuildAll();
-      renderPanel();
-      toast(`Inferencia completa (${activeMode === 'local-api' ? 'Local API' : 'Edge WASM'}): ${state.discs.length} discos (${data.total_ms} ms)`);
-    } catch (err) {
-      console.error('ADLMS inference error:', err);
-      toast('Error de inferencia: verifique consola o reinicie el análisis.');
-    }
+  const scaler = window.ADLMS_IMAGE_SCALER;
+  if (!scaler || typeof scaler.loadAndDownscaleFile !== 'function') {
+    toast('Error: ADLMS_IMAGE_SCALER no cargado');
+    return;
+  }
+  let scaled;
+  try {
+    scaled = await scaler.loadAndDownscaleFile(file, scaler.MAX_EDGE_PX || 1024);
+  } catch (err) {
+    console.error('ADLMS image scale error:', err);
+    toast('No se pudo procesar la imagen seleccionada.');
+    return;
+  }
+  const W = scaled.width, H = scaled.height;
+  const sampleId = '20261122' + String(Math.floor(10000000 + Math.random() * 90000000));
+  state.plate = {
+    key: 'upload',
+    title: `Captura · ${file.name}`,
+    short: 'CAP',
+    group: state.group,
+    sampleId,
+    organism: state.organism,
+    image: scaled.thumbDataUrl,
+    discs: [],
   };
-  img.src = url;
+  state.img = scaled.canvas;
+  state.N = Math.max(W, H);
+  state.ox = (state.N - W) / 2;
+  state.oy = (state.N - H) / 2;
+  state.plateR = Math.min(W, H) * 0.487;
+  state.discs = [];
+  state.sel = -1;
+  state.auditLog = [];
+  state.scale = Math.min(W, H) / 140;
+  setupCanvases();
+  resetView();
+  rebuildAll();
+  renderPicker();
+  renderPanel();
+
+  toast('Ejecutando YOLO11n-seg + Sobel 36 rayos...');
+  try {
+    const router = window.ADLMS_INFERENCE_ROUTER;
+    if (!router || typeof router.analyzePlate !== 'function') {
+      throw new Error('ADLMS_INFERENCE_ROUTER no cargado');
+    }
+    const data = await router.analyzePlate(file, scaled.canvas, {
+      organism: state.organism,
+      group: state.group,
+      standard: state.standard,
+      dataUrl: scaled.thumbDataUrl,
+    });
+
+    const activeMode = data.runtime_mode || router.getActiveMode() || 'edge-wasm';
+    state.backendOnline = activeMode === 'local-api';
+    updateRuntimeModeBadge(activeMode, data.simd_enabled);
+
+    state.plate.discs = (data.detections || []).map((d) => ({
+      code: d.code,
+      abxCode: d.abx_code,
+      abxName: d.abx_name,
+      x: d.x, y: d.y, w: d.w, h: d.h, hx: d.hx, hy: d.hy,
+      mm: d.diam_mm,
+      sobelMm: d.sobel_mm,
+      deltaR: d.delta_r_mm,
+      geoValid: d.geo_valid,
+      geoMessage: d.geo_message,
+      innerColony: !!d.inner_colony,
+      innerColonyCount: d.inner_colony_count || 0,
+      innerColonyMessage: d.inner_colony_message || '',
+      contour: d.zone_contour || [],
+    }));
+    state.plate.scalePxPerMm = data.scale_px_per_mm;
+
+    const built = buildDiscsFromPlateData(state.plate, W, H, state.ox, state.oy);
+    state.discs = built.discs;
+    state.scale = data.scale_px_per_mm || built.scale;
+    state.sel = state.discs.length ? 0 : -1;
+
+    const engEl = $('meta-engine');
+    if (engEl) {
+      const label = activeMode === 'local-api'
+        ? 'Local API · YOLO11n-seg'
+        : `Edge WASM · ${data.model_variant || 'yolo11n_seg_416_fp32'}`;
+      engEl.textContent = `${label} (${data.inference_ms} ms)`;
+    }
+
+    rebuildAll();
+    renderPanel();
+    toast(`Inferencia completa (${activeMode === 'local-api' ? 'Local API' : 'Edge WASM'}): ${state.discs.length} discos (${data.total_ms} ms)`);
+  } catch (err) {
+    console.error('ADLMS inference error:', err);
+    toast('Error de inferencia: verifique consola o reinicie el análisis.');
+  }
 }
 
 function setupCanvases() {
@@ -367,7 +376,9 @@ function computeHeat() {
   const ts = Math.max(24, Math.round(N / 14));
   tiny.width = tiny.height = ts;
   const tctx = tiny.getContext('2d');
-  tctx.drawImage(base._src || state.img, state.ox * ts / N, state.oy * ts / N, state.img.naturalWidth * ts / N, state.img.naturalHeight * ts / N);
+  const imgW = state.img.naturalWidth || state.img.width;
+  const imgH = state.img.naturalHeight || state.img.height;
+  tctx.drawImage(base._src || state.img, state.ox * ts / N, state.oy * ts / N, imgW * ts / N, imgH * ts / N);
   const small = document.createElement('canvas');
   small.width = small.height = hw;
   const sctx = small.getContext('2d');
@@ -1144,13 +1155,28 @@ function setLayoutMode(mode) {
   applyView();
 }
 
-function setActiveTab(tab) {
+const isApkOrigin = location.hostname === 'appassets.androidplatform.net' || Boolean(window.AndroidExport);
+document.body.dataset.runtime = isApkOrigin ? 'apk' : 'web';
+
+function isStackedTabletMode() {
+  return document.body.dataset.runtime === 'apk' || window.matchMedia('(max-width: 1024px) and (pointer: coarse)').matches;
+}
+
+function setActiveTab(tab, skipScroll) {
   state.activeTab = tab === 'resultados' ? 'resultados' : 'placa';
   document.body.setAttribute('data-active-tab', state.activeTab);
   if ($('tab-placa-left')) $('tab-placa-left').classList.toggle('active', state.activeTab === 'placa');
   if ($('tab-results')) $('tab-results').classList.toggle('active', state.activeTab === 'resultados');
   if ($('tab-placa-right')) $('tab-placa-right').classList.toggle('active', state.activeTab === 'placa');
   if ($('tab-results-right')) $('tab-results-right').classList.toggle('active', state.activeTab === 'resultados');
+  if (!skipScroll && isStackedTabletMode()) {
+    const target = state.activeTab === 'resultados'
+      ? ($('results-panel') || document.querySelector('.device-right'))
+      : document.querySelector('.device-left');
+    if (target && typeof target.scrollIntoView === 'function') {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
   fitDevice();
   applyView();
 }
@@ -1159,7 +1185,7 @@ function fitDevice() {
   const devs = document.querySelectorAll('.device');
   const mobileNative = window.matchMedia('(max-width: 600px)').matches;
   const H = 868, W = 414;
-  if (mobileNative) {
+  if (document.body.dataset.runtime === 'apk' || mobileNative || isStackedTabletMode()) {
     devs.forEach((d) => { d.style.transform = ''; d.style.margin = ''; });
     return;
   }
@@ -1183,7 +1209,7 @@ window.addEventListener('resize', () => {
   });
 }, { passive: true });
 setLayoutMode(state.layoutMode);
-setActiveTab(state.activeTab);
+setActiveTab(state.activeTab, true);
 tickClock();
 setInterval(tickClock, 30000);
 initGestures();
@@ -1192,7 +1218,7 @@ probeBackend();
 if (state.plates.length) loadPlate(state.plates[0]);
 else toast('plates_data.js no encontrado: ejecute scripts/build_mvp_plates.py');
 
-if ('serviceWorker' in navigator && (location.protocol === 'http:' || location.protocol === 'https:')) {
+if (!isApkOrigin && 'serviceWorker' in navigator && (location.protocol === 'http:' || location.protocol === 'https:')) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./sw.js').catch(() => {});
   });
