@@ -60,7 +60,24 @@ Goal: the `run_web_mvp.py` demo flow running fully offline on the USB-attached T
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| *(filled by roadmapper)* | | |
+| MODL-01 | Phase 6 | Pending |
+| MODL-02 | Phase 6 | Pending |
+| MODL-03 | Phase 6 | Pending |
+| MODL-04 | Phase 6 | Pending |
+| WASM-01 | Phase 7 | Pending |
+| WASM-02 | Phase 7 | Pending |
+| WASM-03 | Phase 7 | Pending |
+| WASM-04 | Phase 7 | Pending |
+| APK-01 | Phase 8 | Pending |
+| APK-02 | Phase 8 | Pending |
+| APK-03 | Phase 8 | Pending |
+| APK-04 | Phase 8 | Pending |
+| UI-01 | Phase 9 | Pending |
+| UI-02 | Phase 9 | Pending |
+| UI-03 | Phase 9 | Pending |
+| UI-04 | Phase 9 | Pending |
+| BENCH-01 | Phase 10 | Pending |
+| BENCH-02 | Phase 10 | Pending |
 
 ---
 

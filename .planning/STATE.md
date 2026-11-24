@@ -2,11 +2,11 @@
 gsd_state_version: "1.0"
 milestone: v1.6
 milestone_name: Edge Device Demo (TR6948)
-status: planning
-last_updated: "2026-11-24T14:25:23.106Z"
+status: ready_to_plan
+last_updated: "2026-11-24T15:15:00.000Z"
 last_activity: 2026-11-24
 progress:
-  total_phases: 0
+  total_phases: 5
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -16,10 +16,10 @@ progress:
 # ADLMS: Project State (STATE.md)
 
 ## Current Status
-* **Current Phase:** Phase 2.8 — Guided Mobile Camera Capture & Perspective Alignment Assistant (READY TO PLAN)
-* **Active Milestone:** Milestone 1.5 (v1.5) — DeepHalo Mobile User UI App & PWA (Parallel Track while dataset labeling completes)
+* **Current Phase:** Phase 6 — Edge Model Split, Retrain & ONNX Export (READY TO DISCUSS)
+* **Active Milestone:** Milestone 1.6 (v1.6) — Edge Device Demo (TR6948) *(Milestone 1.5 paused; Phases 2.8–2.10 remain pending)*
 * **Last Completed Phase:** Phase 2.7 (Clinical Precision Mobile Design System & Installable PWA Shell) — 100% Complete
-* **Next Action:** Run `/gsd-plan-phase 2.8` to design the Guided Mobile Camera Capture & Perspective Alignment screen while dataset labeling continues.
+* **Next Action:** Run `/gsd-discuss-phase 6` (or `/gsd-plan-phase 6`) to lock the leak-free dataset split, retraining config, and ONNX export matrix.
 
 ---
 
@@ -57,7 +57,7 @@ progress:
 
 ## Current Position
 
-Phase: Not started (defining requirements)
-Plan: —
-Status: Defining requirements
-Last activity: 2026-11-24 — Milestone v1.6 started
+Phase: 6 of 10 (Edge Model Split, Retrain & ONNX Export)
+Plan: 0 of TBD
+Status: Ready to discuss
+Last activity: 2026-11-24 — Roadmap created for Milestone v1.6 (Phases 6–10)
