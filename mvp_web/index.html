@@ -95,8 +95,9 @@
               aria-label="Estándar clínico activo">
               <i class="dot"></i><span id="std-label-left">CLSI</span>
             </button>
-            <span class="chip chip-edge" title="Inferencia local, sin enviar imágenes a la nube"><i
-                class="dot"></i>Edge</span>
+            <span class="chip chip-edge mode-edge" id="runtime-mode-badge"
+              title="Modo de inferencia activo (Edge WASM local o Local API)"><i class="dot"></i><span
+                id="runtime-mode-label">Edge WASM</span></span>
           </div>
         </header>
 
@@ -370,6 +371,11 @@
 
   <script src="breakpoints_data.js"></script>
   <script src="plates_data.js"></script>
+  <script src="vendor/ort/ort.wasm.min.js"></script>
+  <script src="inference/sobel_cv.js"></script>
+  <script src="inference/yolo_seg_decode.js"></script>
+  <script src="inference/edge_detector.js"></script>
+  <script src="inference/inference_router.js"></script>
   <script src="app.js"></script>
 </body>
 

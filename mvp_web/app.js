@@ -186,6 +186,9 @@ function buildDiscsFromPlateData(plate, W, H, ox, oy) {
       deltaR,
       geoValid,
       geoMessage,
+      innerColony: !!d.innerColony,
+      innerColonyCount: d.innerColonyCount || 0,
+      innerColonyMessage: d.innerColonyMessage || '',
       contour,
       audited: false,
     };
@@ -282,25 +285,24 @@ async function loadUpload(file) {
     renderPicker();
     renderPanel();
 
-    toast('Ejecutando YOLO11n-seg + Sobel 36 rayos + OCR WHONET...');
+    toast('Ejecutando YOLO11n-seg + Sobel 36 rayos...');
     try {
       const dataUrl = await fileToDataUrl(file);
-      const resp = await fetch('/api/analyze', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          image_base64: dataUrl,
-          organism: state.organism,
-          group: state.group,
-          standard: state.standard,
-          enable_ocr: true,
-          ocr_angles: 8,
-        }),
+      const router = window.ADLMS_INFERENCE_ROUTER;
+      if (!router || typeof router.analyzePlate !== 'function') {
+        throw new Error('ADLMS_INFERENCE_ROUTER no cargado');
+      }
+      const data = await router.analyzePlate(file, img, {
+        organism: state.organism,
+        group: state.group,
+        standard: state.standard,
+        dataUrl,
       });
-      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-      const data = await resp.json();
 
-      state.backendOnline = true;
+      const activeMode = data.runtime_mode || router.getActiveMode() || 'edge-wasm';
+      state.backendOnline = activeMode === 'local-api';
+      updateRuntimeModeBadge(activeMode, data.simd_enabled);
+
       state.plate.discs = (data.detections || []).map((d) => ({
         code: d.code,
         abxCode: d.abx_code,
@@ -311,6 +313,9 @@ async function loadUpload(file) {
         deltaR: d.delta_r_mm,
         geoValid: d.geo_valid,
         geoMessage: d.geo_message,
+        innerColony: !!d.inner_colony,
+        innerColonyCount: d.inner_colony_count || 0,
+        innerColonyMessage: d.inner_colony_message || '',
         contour: d.zone_contour || [],
       }));
       state.plate.scalePxPerMm = data.scale_px_per_mm;
@@ -321,13 +326,19 @@ async function loadUpload(file) {
       state.sel = state.discs.length ? 0 : -1;
 
       const engEl = $('meta-engine');
-      if (engEl) engEl.textContent = `YOLO11n-seg (${data.inference_ms} ms) · En vivo`;
+      if (engEl) {
+        const label = activeMode === 'local-api'
+          ? 'Local API · YOLO11n-seg'
+          : `Edge WASM · ${data.model_variant || 'yolo11n_seg_416_fp32'}`;
+        engEl.textContent = `${label} (${data.inference_ms} ms)`;
+      }
 
       rebuildAll();
       renderPanel();
-      toast(`Inferencia completa: ${state.discs.length} discos detectados (${data.total_ms} ms)`);
-    } catch {
-      toast('Sin conexión a run_web_mvp.py: inicie python run_web_mvp.py para análisis YOLO11n-seg en vivo.');
+      toast(`Inferencia completa (${activeMode === 'local-api' ? 'Local API' : 'Edge WASM'}): ${state.discs.length} discos (${data.total_ms} ms)`);
+    } catch (err) {
+      console.error('ADLMS inference error:', err);
+      toast('Error de inferencia: verifique consola o reinicie el análisis.');
     }
   };
   img.src = url;
@@ -732,6 +743,7 @@ function renderPanel(scroll = false, light = false) {
     const edited = Math.abs(d.mm - d.mm0) > 0.04;
     const tags = [];
     if (ev.bioAlert) tags.push('<span class="rtag bio">INTRÍNSECA</span>');
+    if (d.innerColony) tags.push('<span class="rtag badge-inner-colony">Colonias internas</span>');
     if (ev.inAtu) tags.push('<span class="rtag geo">ATU</span>');
     if (!d.geoValid && !edited) tags.push(`<span class="rtag geo">Δr ${d.deltaR.toFixed(1)}mm</span>`);
     if (edited) tags.push('<span class="rtag edit">VISADO</span>');
@@ -831,7 +843,13 @@ function renderCaliper() {
     if (ev.bioAlert) {
       bioAlertBox.hidden = false;
       bioAlertBox.className = 'caliper-alert';
-      bioAlertBox.textContent = ev.bioMsg;
+      bioAlertBox.textContent = d.innerColony
+        ? `${ev.bioMsg} · Colonias internas (${d.innerColonyCount || 1})`
+        : ev.bioMsg;
+    } else if (d.innerColony) {
+      bioAlertBox.hidden = false;
+      bioAlertBox.className = 'caliper-alert badge-inner-colony';
+      bioAlertBox.textContent = d.innerColonyMessage || 'Colonias internas detectadas — posible subpoblación resistente';
     } else if (ev.inAtu) {
       bioAlertBox.hidden = false;
       bioAlertBox.className = 'caliper-alert atu';
@@ -1066,14 +1084,41 @@ function toast(msg) {
 // ============================================================================
 // 9. Boot & Health Probe
 // ============================================================================
+function updateRuntimeModeBadge(mode, simdEnabled) {
+  const badge = $('runtime-mode-badge');
+  const labelEl = $('runtime-mode-label');
+  if (!badge) return;
+  const isApi = mode === 'local-api';
+  badge.classList.toggle('mode-api', isApi);
+  badge.classList.toggle('mode-edge', !isApi);
+  let text = 'Local API';
+  if (!isApi) {
+    const hasSimd = simdEnabled != null
+      ? simdEnabled
+      : (window.ADLMS_EDGE_DETECTOR && typeof window.ADLMS_EDGE_DETECTOR.supportsWasmSimd === 'function'
+          ? window.ADLMS_EDGE_DETECTOR.supportsWasmSimd()
+          : false);
+    const params = new URLSearchParams(location.search);
+    const effectiveSimd = params.get('simd') === '0' ? false : hasSimd;
+    text = effectiveSimd ? 'Edge WASM (SIMD)' : 'Edge WASM (Scalar)';
+  }
+  if (labelEl) labelEl.textContent = text;
+  else badge.textContent = text;
+}
+
 async function probeBackend() {
   try {
-    const r = await fetch('/api/health');
-    if (r.ok) {
-      const info = await r.json();
-      state.backendOnline = true;
-      const engEl = $('meta-engine');
-      if (engEl && info.model_exists) engEl.textContent = 'YOLO11n-seg · API En Vivo ✓';
+    const router = window.ADLMS_INFERENCE_ROUTER;
+    const mode = router && typeof router.detectRuntimeMode === 'function'
+      ? await router.detectRuntimeMode()
+      : 'edge-wasm';
+    state.backendOnline = mode === 'local-api';
+    updateRuntimeModeBadge(mode);
+    const engEl = $('meta-engine');
+    if (engEl) {
+      engEl.textContent = mode === 'local-api'
+        ? 'Local API · YOLO11n-seg ✓'
+        : 'Edge WASM · YOLO11n-seg (Offline)';
     }
   } catch {}
 }
