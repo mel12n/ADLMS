@@ -4,11 +4,11 @@ milestone: v1.6
 milestone_name: "): Edge Device Demo (TR6948) — [CURRENT]"
 current_phase: "10"
 current_phase_name: TR6948 Benchmark & Variant Lock
-status: ready_to_discuss
-stopped_at: Phase 9 verified and complete (09-VERIFICATION.md)
-last_updated: "2026-11-24T19:33:00.000Z"
+status: ready_to_plan
+stopped_at: Phase 10 context captured (10-CONTEXT.md)
+last_updated: "2026-11-24T19:59:00.000Z"
 last_activity: 2026-11-24
-last_activity_desc: Phase 9 verified (4/4 truths, 22/22 tests, TR6948 UAT passed), ready for Phase 10
+last_activity_desc: Phase 10 context captured (10-CONTEXT.md), ready for /gsd-plan-phase 10
 state_head: 7d958b1
 progress:
   total_phases: 5
@@ -21,10 +21,10 @@ progress:
 # ADLMS: Project State (STATE.md)
 
 ## Current Status
-* **Current Phase:** Phase 10 — TR6948 Benchmark & Variant Lock (READY)
+* **Current Phase:** Phase 10 — TR6948 Benchmark & Variant Lock (READY TO PLAN)
 * **Active Milestone:** Milestone 1.6 (v1.6) — Edge Device Demo (TR6948) *(Milestone 1.5 paused; Phases 2.8–2.10 remain pending)*
 * **Last Completed Phase:** Phase 9 (Tablet UX & Manual Drug Formulary) — 100% Complete (3/3 plans, `app-debug.apk` 39.18 MB, 22/22 tests & TR6948 Airplane Mode UAT verified)
-* **Next Action:** Start Phase 10 (`BENCH-01`, `BENCH-02`) — per-stage latency telemetry, `adb` RSS/PSS + `lmkd` profiling, and 10-plate TR6948 benchmark to lock the shipping model variant.
+* **Next Action:** Run `/gsd-plan-phase 10` (`BENCH-01`, `BENCH-02`) — per-stage latency telemetry, `adb` RSS/PSS + `lmkd` profiling, and 10-plate TR6948 benchmark to lock the shipping model variant.
 * **Phase 9 UX Note (`UI-01`):** User noted during TR6948 UAT a preference for smooth vertical scroll/layout ergonomics between the **Placa** (plate canvas) and **Resultados** (susceptibility table) sections on the 1024x600 tablet viewport.
 
 ---
@@ -65,8 +65,8 @@ progress:
 
 Phase: 10 of 10 (TR6948 Benchmark & Variant Lock)
 Plan: Not started
-Status: Ready for Phase 10
-Last activity: 2026-11-24 — Phase 9 verified and complete (09-VERIFICATION.md)
+Status: Context gathered — ready to plan
+Last activity: 2026-11-24 — Phase 10 context captured (10-CONTEXT.md), ready for /gsd-plan-phase 10
 
 ## Session
 
