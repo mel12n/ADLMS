@@ -124,5 +124,8 @@
       "size_bytes": 5358855,
       "sha256": "c7eb58f1b360a922b38f29756c87236bf45004c06f25074647e5ef74b3033702"
     }
-  ]
+  ],
+  "locked_variant": "yolo11n_seg_416_fp32",
+  "locked_policy": "mae_le_0.50mm_zero_lmkd",
+  "locked_at": "2026-11-25T17:57:27.495390+00:00"
 }

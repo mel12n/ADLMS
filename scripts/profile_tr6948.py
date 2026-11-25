@@ -137,6 +137,16 @@ def _percentile(values: list[float], pct: float) -> float | None:
     return round(ordered[idx], 2)
 
 
+def _get_total_ms(r: dict[str, Any]) -> float | None:
+    val = r.get("total_ms", r.get("totalMs"))
+    return float(val) if val is not None else None
+
+
+def _get_ort_ms(r: dict[str, Any]) -> float | None:
+    val = r.get("ort_ms", r.get("ortInferenceMs"))
+    return float(val) if val is not None else None
+
+
 def summarize_cell_runs(
     records: list[dict[str, Any]],
     pss_samples: list[float],
@@ -145,11 +155,23 @@ def summarize_cell_runs(
     crash_events: list[dict[str, Any]],
 ) -> dict[str, Any]:
     """Separate cold Plate 1 latency from warm Plates 2..N and compute memory/kill metrics."""
-    ordered = sorted(records, key=lambda r: int(r.get("run", 0)))
-    cold_first_ms = round(float(ordered[0].get("total_ms", 0.0)), 2) if ordered else None
+    deduped: list[dict[str, Any]] = []
+    seen_runs: set[int] = set()
+    for r in records:
+        run_id = r.get("run")
+        if run_id is not None:
+            run_int = int(run_id)
+            if run_int in seen_runs:
+                continue
+            seen_runs.add(run_int)
+        deduped.append(r)
+
+    ordered = sorted(deduped, key=lambda r: int(r.get("run", 0)))
+    cold_val = _get_total_ms(ordered[0]) if ordered else None
+    cold_first_ms = round(cold_val, 2) if cold_val is not None else None
     warm = ordered[1:] if len(ordered) > 1 else []
-    warm_totals = [float(r["total_ms"]) for r in warm if "total_ms" in r]
-    warm_orts = [float(r["ort_ms"]) for r in warm if "ort_ms" in r]
+    warm_totals = [v for v in (_get_total_ms(r) for r in warm) if v is not None]
+    warm_orts = [v for v in (_get_ort_ms(r) for r in warm) if v is not None]
 
     return {
         "completed_runs": len(ordered),
@@ -349,8 +371,11 @@ def _run_cell(
 
         deadline = time.monotonic() + timeout_s
         while not done_event.is_set() and time.monotonic() < deadline:
-            mem = _run_adb(adb_bin, serial, ["shell", "dumpsys", "meminfo", package], timeout=10.0)
-            pss_mb, rss_mb = parse_meminfo_kb(mem.stdout)
+            try:
+                mem = _run_adb(adb_bin, serial, ["shell", "dumpsys", "meminfo", package], timeout=15.0)
+                pss_mb, rss_mb = parse_meminfo_kb(mem.stdout)
+            except subprocess.TimeoutExpired:
+                pss_mb, rss_mb = None, None
             if pss_mb is not None:
                 pss_samples.append(pss_mb)
             if rss_mb is not None:

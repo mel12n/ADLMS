@@ -1339,19 +1339,20 @@ async function runBenchmarkSuite(totalRuns) {
         img.onerror = reject;
         img.src = plate.image;
       });
-      const workingImg = (window.ADLMS_IMAGE_SCALER && typeof window.ADLMS_IMAGE_SCALER.downscaleImageToCanvas === 'function')
+      const scaled = (window.ADLMS_IMAGE_SCALER && typeof window.ADLMS_IMAGE_SCALER.downscaleImageToCanvas === 'function')
         ? window.ADLMS_IMAGE_SCALER.downscaleImageToCanvas(img, 1024)
-        : img;
+        : null;
+      const workingImg = (scaled && scaled.canvas) ? scaled.canvas : img;
       const W = workingImg.width || img.naturalWidth || 960;
       const H = workingImg.height || img.naturalHeight || 960;
-      const res = await window.ADLMS_INFERENCE_ROUTER.analyzePlate(null, workingImg, {
+      const data = await window.ADLMS_INFERENCE_ROUTER.analyzePlate(null, workingImg, {
         organism: plate.organism,
         group: plate.group,
         standard: state.standard,
         search: location.search,
       });
-      const data = res.data;
       state.plate = { ...plate };
+      state.img = workingImg;
       state.plate.scalePxPerMm = data.scale_px_per_mm;
       const built = buildDiscsFromPlateData(state.plate, W, H, state.ox, state.oy);
       state.discs = built.discs;
@@ -1362,7 +1363,7 @@ async function runBenchmarkSuite(totalRuns) {
       if (window.ADLMS_TELEMETRY_UI) {
         const rec = window.ADLMS_TELEMETRY_UI.recordAnalysis(data, {
           el: $('meta-engine'),
-          mode: res.mode,
+          mode: data.runtime_mode || 'edge-wasm',
           plate: plate.key,
           runIndex: i + 1,
           totalRuns,
