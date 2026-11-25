@@ -152,3 +152,24 @@ describe('Phase 10 — BENCH-01/02: Static Wiring Guards', () => {
     assert.ok(appJs.includes('runBenchmarkSuite'), 'app.js must implement runBenchmarkSuite');
   });
 });
+
+describe('Phase 10 — BENCH-02: edge_detector.resolveModelVariant locked_variant', () => {
+  const edgeDetector = require(path.join(ROOT, 'mvp_web', 'inference', 'edge_detector.js'));
+  const syntheticMeta = {
+    locked_variant: 'yolo11n_seg_320_fp32',
+    variants: [
+      { id: 'yolo11n_seg_416_fp32', file: 'yolo11n_seg_416_fp32.onnx' },
+      { id: 'yolo11n_seg_320_fp32', file: 'yolo11n_seg_320_fp32.onnx' },
+    ],
+  };
+
+  it('honors meta.locked_variant when ?model= is absent, invalid, or path traversal', () => {
+    assert.equal(edgeDetector.resolveModelVariant(syntheticMeta, '').id, 'yolo11n_seg_320_fp32');
+    assert.equal(edgeDetector.resolveModelVariant(syntheticMeta, '?model=nonexistent').id, 'yolo11n_seg_320_fp32');
+    assert.equal(edgeDetector.resolveModelVariant(syntheticMeta, '?model=../../etc/passwd').id, 'yolo11n_seg_320_fp32');
+  });
+
+  it('allows explicit ?model= override over meta.locked_variant', () => {
+    assert.equal(edgeDetector.resolveModelVariant(syntheticMeta, '?model=yolo11n_seg_416_fp32').id, 'yolo11n_seg_416_fp32');
+  });
+});

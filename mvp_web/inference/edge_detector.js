@@ -80,9 +80,18 @@
       }
     }
 
+    var preferredId = (meta && typeof meta.locked_variant === 'string' && meta.locked_variant)
+      ? meta.locked_variant
+      : DEFAULT_MODEL_ID;
+
     for (var j = 0; j < variants.length; j++) {
-      if (variants[j] && variants[j].id === DEFAULT_MODEL_ID) {
+      if (variants[j] && variants[j].id === preferredId) {
         return variants[j];
+      }
+    }
+    for (var k = 0; k < variants.length; k++) {
+      if (variants[k] && variants[k].id === DEFAULT_MODEL_ID) {
+        return variants[k];
       }
     }
     return variants[0];
