@@ -222,5 +222,44 @@ PID   NAME
             self.assertIn("32-bit", md_text)
 
 
+class TestSyncEdgeAssetsLock(unittest.TestCase):
+    def test_resolve_locked_model_filename(self) -> None:
+        from scripts.sync_edge_assets import DEFAULT_MODEL, resolve_locked_model_filename
+
+        with tempfile.TemporaryDirectory() as tmp:
+            meta_path = Path(tmp) / "model_meta.json"
+            variants = [
+                {"id": "yolo11n_seg_320_fp32", "filename": "yolo11n_seg_320_fp32.onnx"},
+                {"id": "yolo11n_seg_416_fp32", "filename": "yolo11n_seg_416_fp32.onnx"},
+            ]
+
+            meta_path.write_text(json.dumps({"variants": variants}), encoding="utf-8")
+            self.assertEqual(resolve_locked_model_filename(meta_path), DEFAULT_MODEL)
+
+            meta_path.write_text(
+                json.dumps({"locked_variant": "yolo11n_seg_320_fp32", "variants": variants}),
+                encoding="utf-8",
+            )
+            self.assertEqual(resolve_locked_model_filename(meta_path), "yolo11n_seg_320_fp32.onnx")
+
+            meta_path.write_text(
+                json.dumps({"locked_variant": "nonexistent_variant", "variants": variants}),
+                encoding="utf-8",
+            )
+            with self.assertRaises(ValueError):
+                resolve_locked_model_filename(meta_path)
+
+    def test_collect_sync_plan_default_vs_all_models(self) -> None:
+        from scripts.sync_edge_assets import collect_sync_plan
+
+        default_plan = collect_sync_plan(all_models=False)
+        default_onnx = [src.name for src, _ in default_plan if src.suffix.lower() == ".onnx"]
+        self.assertEqual(len(default_onnx), 1)
+
+        all_plan = collect_sync_plan(all_models=True)
+        all_onnx = [src.name for src, _ in all_plan if src.suffix.lower() == ".onnx"]
+        self.assertGreaterEqual(len(all_onnx), 4)
+
+
 if __name__ == "__main__":
     unittest.main()

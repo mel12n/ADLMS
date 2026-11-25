@@ -8,6 +8,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import json
 import shutil
 import sys
 from pathlib import Path
@@ -21,11 +22,34 @@ DEFAULT_MODEL = "yolo11n_seg_416_fp32.onnx"
 MODEL_META = "model_meta.json"
 
 
-def collect_sync_plan(all_models: bool = False) -> list[tuple[Path, Path]]:
+def resolve_locked_model_filename(meta_path: Path | None = None) -> str:
+    """Resolve locked_variant -> filename from model_meta.json, or fallback to DEFAULT_MODEL."""
+    candidate = meta_path
+    if candidate is None:
+        web_meta = SRC_WEB_DIR / "models" / MODEL_META
+        exports_meta = SRC_EXPORTS_DIR / MODEL_META
+        candidate = web_meta if web_meta.is_file() else exports_meta
+
+    if not candidate.is_file():
+        return DEFAULT_MODEL
+
+    meta = json.loads(candidate.read_text(encoding="utf-8"))
+    locked_id = meta.get("locked_variant")
+    if not locked_id:
+        return DEFAULT_MODEL
+
+    variants = {v["id"]: v["filename"] for v in meta.get("variants", []) if "id" in v and "filename" in v}
+    if locked_id not in variants:
+        raise ValueError(f"Unknown locked_variant {locked_id!r} in {candidate}")
+    return variants[locked_id]
+
+
+def collect_sync_plan(all_models: bool = False, meta_path: Path | None = None) -> list[tuple[Path, Path]]:
     """Build deterministic list of (source_file, destination_file) pairs."""
     if not SRC_WEB_DIR.is_dir():
         raise FileNotFoundError(f"Source directory not found: {SRC_WEB_DIR}")
 
+    target_model = resolve_locked_model_filename(meta_path) if not all_models else None
     plan: list[tuple[Path, Path]] = []
     seen_models: set[str] = set()
 
@@ -41,7 +65,7 @@ def collect_sync_plan(all_models: bool = False) -> list[tuple[Path, Path]]:
         # Filter models/ directory
         if rel.parts[0] == "models":
             if src_path.suffix.lower() == ".onnx":
-                if not all_models and src_path.name != DEFAULT_MODEL:
+                if not all_models and src_path.name != target_model:
                     continue
                 seen_models.add(src_path.name)
             elif src_path.name != MODEL_META:
@@ -63,7 +87,9 @@ def execute_sync(plan: list[tuple[Path, Path]], dry_run: bool = False) -> int:
     """Copy planned files to destination (cleaning stale files first)."""
     total_bytes = sum(src.stat().st_size for src, _ in plan)
     mode = "DRY-RUN" if dry_run else "SYNC"
+    onnx_names = [src.name for src, _ in plan if src.suffix.lower() == ".onnx"]
     print(f"[{mode}] Destination: {DST_ASSETS_DIR}")
+    print(f"[{mode}] Locked/Bundled ONNX: {', '.join(onnx_names) if onnx_names else 'none'}")
 
     if not dry_run:
         if DST_ASSETS_DIR.exists():
