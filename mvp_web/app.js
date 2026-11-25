@@ -337,7 +337,13 @@ async function loadUpload(file) {
     state.sel = state.discs.length ? 0 : -1;
 
     const engEl = $('meta-engine');
-    if (engEl) {
+    if (window.ADLMS_TELEMETRY_UI) {
+      window.ADLMS_TELEMETRY_UI.recordAnalysis(data, {
+        el: engEl,
+        mode: activeMode,
+        plate: state.plate && state.plate.key,
+      });
+    } else if (engEl) {
       const label = activeMode === 'local-api'
         ? 'Local API · YOLO11n-seg'
         : `Edge WASM · ${data.model_variant || 'yolo11n_seg_416_fp32'}`;
@@ -1320,9 +1326,71 @@ if (window.ADLMS_FORMULARY_UI && typeof window.ADLMS_FORMULARY_UI.initFormularyU
     toast,
   });
 }
+async function runBenchmarkSuite(totalRuns) {
+  let lastModel = 'unknown';
+  let lastSimd = false;
+  let errors = 0;
+  for (let i = 0; i < totalRuns; i++) {
+    const plate = state.plates[i % state.plates.length];
+    const img = new Image();
+    try {
+      await new Promise((resolve, reject) => {
+        img.onload = resolve;
+        img.onerror = reject;
+        img.src = plate.image;
+      });
+      const workingImg = (window.ADLMS_IMAGE_SCALER && typeof window.ADLMS_IMAGE_SCALER.downscaleImageToCanvas === 'function')
+        ? window.ADLMS_IMAGE_SCALER.downscaleImageToCanvas(img, 1024)
+        : img;
+      const W = workingImg.width || img.naturalWidth || 960;
+      const H = workingImg.height || img.naturalHeight || 960;
+      const res = await window.ADLMS_INFERENCE_ROUTER.analyzePlate(null, workingImg, {
+        organism: plate.organism,
+        group: plate.group,
+        standard: state.standard,
+        search: location.search,
+      });
+      const data = res.data;
+      state.plate = { ...plate };
+      state.plate.scalePxPerMm = data.scale_px_per_mm;
+      const built = buildDiscsFromPlateData(state.plate, W, H, state.ox, state.oy);
+      state.discs = built.discs;
+      state.scale = data.scale_px_per_mm || built.scale;
+      state.sel = state.discs.length ? 0 : -1;
+      rebuildAll();
+      renderPanel();
+      if (window.ADLMS_TELEMETRY_UI) {
+        const rec = window.ADLMS_TELEMETRY_UI.recordAnalysis(data, {
+          el: $('meta-engine'),
+          mode: res.mode,
+          plate: plate.key,
+          runIndex: i + 1,
+          totalRuns,
+        });
+        lastModel = rec.model;
+        lastSimd = rec.simd;
+      }
+    } catch (err) {
+      errors += 1;
+      console.error('[ADLMS_BENCH] run error:', err);
+    } finally {
+      img.src = '';
+    }
+  }
+  if (window.ADLMS_TELEMETRY_UI) {
+    window.ADLMS_TELEMETRY_UI.emitBenchDone({ runs: totalRuns, model: lastModel, simd: lastSimd, errors });
+  }
+}
+
 probeBackend();
-if (state.plates.length) loadPlate(state.plates[0]);
-else toast('plates_data.js no encontrado: ejecute scripts/build_mvp_plates.py');
+const benchRuns = window.ADLMS_TELEMETRY_UI ? window.ADLMS_TELEMETRY_UI.parseBenchCount(location.search) : 0;
+if (benchRuns > 0 && state.plates.length && window.ADLMS_INFERENCE_ROUTER) {
+  runBenchmarkSuite(benchRuns);
+} else if (state.plates.length) {
+  loadPlate(state.plates[0]);
+} else {
+  toast('plates_data.js no encontrado: ejecute scripts/build_mvp_plates.py');
+}
 
 if (!isApkOrigin && 'serviceWorker' in navigator && (location.protocol === 'http:' || location.protocol === 'https:')) {
   window.addEventListener('load', () => {
