@@ -1,6 +1,7 @@
 package cl.unab.adlms.deephalo
 
 import android.content.Context
+import android.util.Log
 import android.view.ViewGroup
 import android.webkit.RenderProcessGoneDetail
 import android.webkit.WebResourceRequest
@@ -41,6 +42,7 @@ class EdgeAssetClient(
         (view?.parent as? ViewGroup)?.removeView(view)
         view?.destroy()
         Toast.makeText(context, "WebView renderer restarted", Toast.LENGTH_SHORT).show()
+        Log.e("ADLMS_BENCH", "RENDER_PROCESS_GONE didCrash=${detail?.didCrash()}")
         onRendererCrashed()
         return true
     }
