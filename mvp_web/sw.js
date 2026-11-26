@@ -1,4 +1,4 @@
-const CACHE_NAME = 'deephalo-adlms-v1.6-eucast';
+const CACHE_NAME = 'deephalo-adlms-v1.7-eucast';
 const PRECACHE_ASSETS = [
   './',
   './index.html',

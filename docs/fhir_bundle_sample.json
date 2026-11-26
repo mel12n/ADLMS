@@ -1,0 +1,942 @@
+{
+  "resourceType": "Bundle",
+  "id": "bundle-adlms-ast-1795703037092",
+  "type": "collection",
+  "timestamp": "2026-11-26T14:23:57.092Z",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:2885f6fd-efb2-47cf-8e9a-1feb3ece7f29",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "adlms-ast-1795703037092",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0074",
+                "code": "MB",
+                "display": "Microbiology"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "18769-0",
+              "display": "Microbial susceptibility tests Set"
+            }
+          ],
+          "text": "Antibiograma por difusión en disco — DeepHalo / Suite ADLMS"
+        },
+        "identifier": [
+          {
+            "system": "https://minsal.cl/lab/muestras",
+            "value": "2026102508332914"
+          }
+        ],
+        "subject": {
+          "display": "Muestra Anonimizada ID 2026102508332914 (Ley 21.719) · Escherichia coli (ATCC 25922)"
+        },
+        "effectiveDateTime": "2026-11-26T14:23:57.092Z",
+        "conclusion": "Aislamiento: Escherichia coli (ATCC 25922) (Enterobacterales). Estándar: EUCAST v16.1 (2026-06-24). Escala fiducial: 7.37 px/mm. Visado Human-in-the-Loop bajo NCh-ISO 15189:2022 (0 ajustes manuales registrados).",
+        "result": [
+          {
+            "reference": "urn:uuid:19f9625f-7530-4c7d-a2f1-b5d6af2f16b5"
+          },
+          {
+            "reference": "urn:uuid:0cbc6d6a-4bc2-448d-8627-f0b83a7b212f"
+          },
+          {
+            "reference": "urn:uuid:02e86d66-c1d4-43bc-8b01-6121787d9268"
+          },
+          {
+            "reference": "urn:uuid:7da2eedb-c1e6-4cc5-a44d-ee64cc602bf0"
+          },
+          {
+            "reference": "urn:uuid:72c8b981-738a-4fb7-9f81-3ec7405ad749"
+          },
+          {
+            "reference": "urn:uuid:e9806fd4-6138-4fde-93fc-90acf544ddbd"
+          },
+          {
+            "reference": "urn:uuid:9865b05e-a89a-4dec-91ee-481fd663f91c"
+          },
+          {
+            "reference": "urn:uuid:8e00514e-16b7-473c-80e7-6313a7425873"
+          },
+          {
+            "reference": "urn:uuid:84fb4425-fff8-494b-886e-19041adc9187"
+          },
+          {
+            "reference": "urn:uuid:a97fb41a-db99-4621-b387-e4d4d1506fb0"
+          },
+          {
+            "reference": "urn:uuid:722c4888-6594-4264-8d0a-a3aa4cd85235"
+          },
+          {
+            "reference": "urn:uuid:739b966e-41f9-422f-bbea-a8d6852d94db"
+          }
+        ],
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Antibiograma — DeepHalo / Suite ADLMS</div>"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:19f9625f-7530-4c7d-a2f1-b5d6af2f16b5",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-1",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "Laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8272-7"
+            },
+            {
+              "system": "http://www.whocc.no/atc",
+              "code": "J01DE01"
+            }
+          ],
+          "text": "Cefepima (FEP-30) — diámetro del halo de inhibición"
+        },
+        "effectiveDateTime": "2026-11-26T14:23:57.092Z",
+        "valueQuantity": {
+          "value": 6,
+          "unit": "mm",
+          "system": "http://unitsofmeasure.org",
+          "code": "mm"
+        },
+        "method": {
+          "text": "Kirby-Bauer YOLO11n-seg + Calibración Fiducial 6,0 mm + Validación Cruzada Sobel 36 rayos"
+        },
+        "interpretation": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+                "code": "R",
+                "display": "Resistant"
+              }
+            ],
+            "text": "Resistente"
+          }
+        ],
+        "note": [
+          {
+            "text": "Criterio: S ≥ 27 mm · I 24–26 mm · R < 24 mm (EUCAST). Sobel Δr=0.00mm. VALIDATED_AUTO."
+          }
+        ],
+        "subject": {
+          "display": "Muestra Anonimizada ID 2026102508332914 (Ley 21.719) · Escherichia coli (ATCC 25922)"
+        },
+        "performer": [
+          {
+            "display": "Tecnólogo Médico — DeepHalo / Suite ADLMS"
+          }
+        ],
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Cefepima (FEP-30) — diámetro del halo de inhibición: 6 mm</div>"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:0cbc6d6a-4bc2-448d-8627-f0b83a7b212f",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-2",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "Laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "413-5"
+            },
+            {
+              "system": "http://www.whocc.no/atc",
+              "code": "J01CR05"
+            }
+          ],
+          "text": "Piperacilina-tazobactam (TZP-36) — diámetro del halo de inhibición"
+        },
+        "effectiveDateTime": "2026-11-26T14:23:57.092Z",
+        "valueQuantity": {
+          "value": 17.6,
+          "unit": "mm",
+          "system": "http://unitsofmeasure.org",
+          "code": "mm"
+        },
+        "method": {
+          "text": "Kirby-Bauer YOLO11n-seg + Calibración Fiducial 6,0 mm + Validación Cruzada Sobel 36 rayos"
+        },
+        "interpretation": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+                "code": "R",
+                "display": "Resistant"
+              }
+            ],
+            "text": "Resistente"
+          }
+        ],
+        "note": [
+          {
+            "text": "Criterio: S ≥ 20 mm · R < 20 mm (EUCAST). Sobel Δr=0.00mm. VALIDATED_AUTO."
+          }
+        ],
+        "subject": {
+          "display": "Muestra Anonimizada ID 2026102508332914 (Ley 21.719) · Escherichia coli (ATCC 25922)"
+        },
+        "performer": [
+          {
+            "display": "Tecnólogo Médico — DeepHalo / Suite ADLMS"
+          }
+        ],
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Piperacilina-tazobactam (TZP-36) — diámetro del halo de inhibición: 17.6 mm</div>"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:02e86d66-c1d4-43bc-8b01-6121787d9268",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-3",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "Laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "45-5"
+            },
+            {
+              "system": "http://www.whocc.no/atc",
+              "code": "J01DF01"
+            }
+          ],
+          "text": "Aztreonam (ATM-30) — diámetro del halo de inhibición"
+        },
+        "effectiveDateTime": "2026-11-26T14:23:57.092Z",
+        "valueQuantity": {
+          "value": 6,
+          "unit": "mm",
+          "system": "http://unitsofmeasure.org",
+          "code": "mm"
+        },
+        "method": {
+          "text": "Kirby-Bauer YOLO11n-seg + Calibración Fiducial 6,0 mm + Validación Cruzada Sobel 36 rayos"
+        },
+        "interpretation": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+                "code": "R",
+                "display": "Resistant"
+              }
+            ],
+            "text": "Resistente"
+          }
+        ],
+        "note": [
+          {
+            "text": "Criterio: S ≥ 26 mm · I 21–25 mm · R < 21 mm (EUCAST). Sobel Δr=0.00mm. VALIDATED_AUTO."
+          }
+        ],
+        "subject": {
+          "display": "Muestra Anonimizada ID 2026102508332914 (Ley 21.719) · Escherichia coli (ATCC 25922)"
+        },
+        "performer": [
+          {
+            "display": "Tecnólogo Médico — DeepHalo / Suite ADLMS"
+          }
+        ],
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Aztreonam (ATM-30) — diámetro del halo de inhibición: 6 mm</div>"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:7da2eedb-c1e6-4cc5-a44d-ee64cc602bf0",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-4",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "Laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "142-0"
+            },
+            {
+              "system": "http://www.whocc.no/atc",
+              "code": "J01DD04"
+            }
+          ],
+          "text": "Ceftriaxona (CRO-30) — diámetro del halo de inhibición"
+        },
+        "effectiveDateTime": "2026-11-26T14:23:57.092Z",
+        "valueQuantity": {
+          "value": 6,
+          "unit": "mm",
+          "system": "http://unitsofmeasure.org",
+          "code": "mm"
+        },
+        "method": {
+          "text": "Kirby-Bauer YOLO11n-seg + Calibración Fiducial 6,0 mm + Validación Cruzada Sobel 36 rayos"
+        },
+        "interpretation": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+                "code": "R",
+                "display": "Resistant"
+              }
+            ],
+            "text": "Resistente"
+          }
+        ],
+        "note": [
+          {
+            "text": "Criterio: S ≥ 27 mm · I 24–26 mm · R < 24 mm (EUCAST). Sobel Δr=0.00mm. VALIDATED_AUTO."
+          }
+        ],
+        "subject": {
+          "display": "Muestra Anonimizada ID 2026102508332914 (Ley 21.719) · Escherichia coli (ATCC 25922)"
+        },
+        "performer": [
+          {
+            "display": "Tecnólogo Médico — DeepHalo / Suite ADLMS"
+          }
+        ],
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Ceftriaxona (CRO-30) — diámetro del halo de inhibición: 6 mm</div>"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:72c8b981-738a-4fb7-9f81-3ec7405ad749",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-5",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "Laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "21-6"
+            },
+            {
+              "system": "http://www.whocc.no/atc",
+              "code": "J01CR02"
+            }
+          ],
+          "text": "Amoxicilina-ác. clavulánico (AMC-30) — diámetro del halo de inhibición"
+        },
+        "effectiveDateTime": "2026-11-26T14:23:57.092Z",
+        "valueQuantity": {
+          "value": 6,
+          "unit": "mm",
+          "system": "http://unitsofmeasure.org",
+          "code": "mm"
+        },
+        "method": {
+          "text": "Kirby-Bauer YOLO11n-seg + Calibración Fiducial 6,0 mm + Validación Cruzada Sobel 36 rayos"
+        },
+        "interpretation": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+                "code": "R",
+                "display": "Resistant"
+              }
+            ],
+            "text": "Resistente"
+          }
+        ],
+        "note": [
+          {
+            "text": "Criterio: S ≥ 19 mm · R < 19 mm (EUCAST). Sobel Δr=0.00mm. VALIDATED_AUTO."
+          }
+        ],
+        "subject": {
+          "display": "Muestra Anonimizada ID 2026102508332914 (Ley 21.719) · Escherichia coli (ATCC 25922)"
+        },
+        "performer": [
+          {
+            "display": "Tecnólogo Médico — DeepHalo / Suite ADLMS"
+          }
+        ],
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Amoxicilina-ác. clavulánico (AMC-30) — diámetro del halo de inhibición: 6 mm</div>"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:e9806fd4-6138-4fde-93fc-90acf544ddbd",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-6",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "Laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "33-1"
+            },
+            {
+              "system": "http://www.whocc.no/atc",
+              "code": "J01CR01"
+            }
+          ],
+          "text": "Ampicilina-sulbactam (SAM-20) — diámetro del halo de inhibición"
+        },
+        "effectiveDateTime": "2026-11-26T14:23:57.092Z",
+        "valueQuantity": {
+          "value": 6,
+          "unit": "mm",
+          "system": "http://unitsofmeasure.org",
+          "code": "mm"
+        },
+        "method": {
+          "text": "Kirby-Bauer YOLO11n-seg + Calibración Fiducial 6,0 mm + Validación Cruzada Sobel 36 rayos"
+        },
+        "interpretation": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+                "code": "R",
+                "display": "Resistant"
+              }
+            ],
+            "text": "Resistente"
+          }
+        ],
+        "note": [
+          {
+            "text": "Criterio: S ≥ 14 mm · R < 14 mm (EUCAST). Sobel Δr=0.00mm. VALIDATED_AUTO."
+          }
+        ],
+        "subject": {
+          "display": "Muestra Anonimizada ID 2026102508332914 (Ley 21.719) · Escherichia coli (ATCC 25922)"
+        },
+        "performer": [
+          {
+            "display": "Tecnólogo Médico — DeepHalo / Suite ADLMS"
+          }
+        ],
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Ampicilina-sulbactam (SAM-20) — diámetro del halo de inhibición: 6 mm</div>"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:9865b05e-a89a-4dec-91ee-481fd663f91c",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-7",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "Laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "146-1"
+            },
+            {
+              "system": "http://www.whocc.no/atc",
+              "code": "J01DC02"
+            }
+          ],
+          "text": "Cefuroxima (CXM-30) — diámetro del halo de inhibición"
+        },
+        "effectiveDateTime": "2026-11-26T14:23:57.092Z",
+        "valueQuantity": {
+          "value": 6,
+          "unit": "mm",
+          "system": "http://unitsofmeasure.org",
+          "code": "mm"
+        },
+        "method": {
+          "text": "Kirby-Bauer YOLO11n-seg + Calibración Fiducial 6,0 mm + Validación Cruzada Sobel 36 rayos"
+        },
+        "interpretation": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+                "code": "R",
+                "display": "Resistant"
+              }
+            ],
+            "text": "Resistente"
+          }
+        ],
+        "note": [
+          {
+            "text": "Criterio: Sin S · I ≥ 19 mm · R < 19 mm (EUCAST). Sobel Δr=0.00mm. VALIDATED_AUTO."
+          }
+        ],
+        "subject": {
+          "display": "Muestra Anonimizada ID 2026102508332914 (Ley 21.719) · Escherichia coli (ATCC 25922)"
+        },
+        "performer": [
+          {
+            "display": "Tecnólogo Médico — DeepHalo / Suite ADLMS"
+          }
+        ],
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Cefuroxima (CXM-30) — diámetro del halo de inhibición: 6 mm</div>"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:8e00514e-16b7-473c-80e7-6313a7425873",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-8",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "Laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "117-2"
+            },
+            {
+              "system": "http://www.whocc.no/atc",
+              "code": "J01DC01"
+            }
+          ],
+          "text": "Cefoxitina (FOX-30) — diámetro del halo de inhibición"
+        },
+        "effectiveDateTime": "2026-11-26T14:23:57.092Z",
+        "valueQuantity": {
+          "value": 10.6,
+          "unit": "mm",
+          "system": "http://unitsofmeasure.org",
+          "code": "mm"
+        },
+        "method": {
+          "text": "Kirby-Bauer YOLO11n-seg + Calibración Fiducial 6,0 mm + Validación Cruzada Sobel 36 rayos"
+        },
+        "interpretation": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+                "code": "R",
+                "display": "Resistant"
+              }
+            ],
+            "text": "Resistente"
+          }
+        ],
+        "note": [
+          {
+            "text": "Criterio: S ≥ 19 mm · R < 19 mm (EUCAST). Sobel Δr=0.31mm. VALIDATED_AUTO."
+          }
+        ],
+        "subject": {
+          "display": "Muestra Anonimizada ID 2026102508332914 (Ley 21.719) · Escherichia coli (ATCC 25922)"
+        },
+        "performer": [
+          {
+            "display": "Tecnólogo Médico — DeepHalo / Suite ADLMS"
+          }
+        ],
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Cefoxitina (FOX-30) — diámetro del halo de inhibición: 10.6 mm</div>"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:84fb4425-fff8-494b-886e-19041adc9187",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-9",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "Laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "280-8"
+            },
+            {
+              "system": "http://www.whocc.no/atc",
+              "code": "J01DH51"
+            }
+          ],
+          "text": "Imipenem (IPM-10) — diámetro del halo de inhibición"
+        },
+        "effectiveDateTime": "2026-11-26T14:23:57.092Z",
+        "valueQuantity": {
+          "value": 28.9,
+          "unit": "mm",
+          "system": "http://unitsofmeasure.org",
+          "code": "mm"
+        },
+        "method": {
+          "text": "Kirby-Bauer YOLO11n-seg + Calibración Fiducial 6,0 mm + Validación Cruzada Sobel 36 rayos"
+        },
+        "interpretation": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+                "code": "S",
+                "display": "Susceptible"
+              }
+            ],
+            "text": "Sensible"
+          }
+        ],
+        "note": [
+          {
+            "text": "Criterio: S ≥ 22 mm · I 19–21 mm · R < 19 mm (EUCAST). Sobel Δr=0.20mm. VALIDATED_AUTO."
+          }
+        ],
+        "subject": {
+          "display": "Muestra Anonimizada ID 2026102508332914 (Ley 21.719) · Escherichia coli (ATCC 25922)"
+        },
+        "performer": [
+          {
+            "display": "Tecnólogo Médico — DeepHalo / Suite ADLMS"
+          }
+        ],
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Imipenem (IPM-10) — diámetro del halo de inhibición: 28.9 mm</div>"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:a97fb41a-db99-4621-b387-e4d4d1506fb0",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-10",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "Laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "409-3"
+            },
+            {
+              "system": "http://www.whocc.no/atc",
+              "code": "J01CA12"
+            }
+          ],
+          "text": "Piperacilina (PRL-30) — diámetro del halo de inhibición"
+        },
+        "effectiveDateTime": "2026-11-26T14:23:57.092Z",
+        "valueQuantity": {
+          "value": 6,
+          "unit": "mm",
+          "system": "http://unitsofmeasure.org",
+          "code": "mm"
+        },
+        "method": {
+          "text": "Kirby-Bauer YOLO11n-seg + Calibración Fiducial 6,0 mm + Validación Cruzada Sobel 36 rayos"
+        },
+        "interpretation": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+                "code": "R",
+                "display": "Resistant"
+              }
+            ],
+            "text": "Resistente"
+          }
+        ],
+        "note": [
+          {
+            "text": "Criterio: S ≥ 20 mm · R < 20 mm (EUCAST). Sobel Δr=0.00mm. VALIDATED_AUTO."
+          }
+        ],
+        "subject": {
+          "display": "Muestra Anonimizada ID 2026102508332914 (Ley 21.719) · Escherichia coli (ATCC 25922)"
+        },
+        "performer": [
+          {
+            "display": "Tecnólogo Médico — DeepHalo / Suite ADLMS"
+          }
+        ],
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Piperacilina (PRL-30) — diámetro del halo de inhibición: 6 mm</div>"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:722c4888-6594-4264-8d0a-a3aa4cd85235",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-11",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "Laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "134-7"
+            },
+            {
+              "system": "http://www.whocc.no/atc",
+              "code": "J01DD02"
+            }
+          ],
+          "text": "Ceftazidima (CAZ-10) — diámetro del halo de inhibición"
+        },
+        "effectiveDateTime": "2026-11-26T14:23:57.092Z",
+        "valueQuantity": {
+          "value": 6,
+          "unit": "mm",
+          "system": "http://unitsofmeasure.org",
+          "code": "mm"
+        },
+        "method": {
+          "text": "Kirby-Bauer YOLO11n-seg + Calibración Fiducial 6,0 mm + Validación Cruzada Sobel 36 rayos"
+        },
+        "interpretation": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+                "code": "R",
+                "display": "Resistant"
+              }
+            ],
+            "text": "Resistente"
+          }
+        ],
+        "note": [
+          {
+            "text": "Criterio: S ≥ 22 mm · I 19–21 mm · R < 19 mm (EUCAST). Sobel Δr=0.00mm. VALIDATED_AUTO."
+          }
+        ],
+        "subject": {
+          "display": "Muestra Anonimizada ID 2026102508332914 (Ley 21.719) · Escherichia coli (ATCC 25922)"
+        },
+        "performer": [
+          {
+            "display": "Tecnólogo Médico — DeepHalo / Suite ADLMS"
+          }
+        ],
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Ceftazidima (CAZ-10) — diámetro del halo de inhibición: 6 mm</div>"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:739b966e-41f9-422f-bbea-a8d6852d94db",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-12",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "Laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "29-9"
+            },
+            {
+              "system": "http://www.whocc.no/atc",
+              "code": "J01CA01"
+            }
+          ],
+          "text": "Ampicilina (AM-10) — diámetro del halo de inhibición"
+        },
+        "effectiveDateTime": "2026-11-26T14:23:57.092Z",
+        "valueQuantity": {
+          "value": 6,
+          "unit": "mm",
+          "system": "http://unitsofmeasure.org",
+          "code": "mm"
+        },
+        "method": {
+          "text": "Kirby-Bauer YOLO11n-seg + Calibración Fiducial 6,0 mm + Validación Cruzada Sobel 36 rayos"
+        },
+        "interpretation": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+                "code": "R",
+                "display": "Resistant"
+              }
+            ],
+            "text": "Resistente"
+          }
+        ],
+        "note": [
+          {
+            "text": "Criterio: S ≥ 14 mm · R < 14 mm (EUCAST). Sobel Δr=0.00mm. VALIDATED_AUTO."
+          }
+        ],
+        "subject": {
+          "display": "Muestra Anonimizada ID 2026102508332914 (Ley 21.719) · Escherichia coli (ATCC 25922)"
+        },
+        "performer": [
+          {
+            "display": "Tecnólogo Médico — DeepHalo / Suite ADLMS"
+          }
+        ],
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Ampicilina (AM-10) — diámetro del halo de inhibición: 6 mm</div>"
+        }
+      }
+    }
+  ]
+}

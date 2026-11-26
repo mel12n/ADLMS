@@ -1447,12 +1447,12 @@ body[data-runtime="apk"] {
   scroll-behavior: smooth;
 }
 
-body[data-runtime="apk"] .stage-toolbar,
-body[data-runtime="apk"] .device-island,
-body[data-runtime="apk"] .status-bar,
-body[data-runtime="apk"] .home-indicator,
-body[data-runtime="apk"] .bg-glow,
-body[data-runtime="apk"] .device-right .tab-bar {
+.stage-toolbar,
+.device-island,
+.status-bar,
+.home-indicator,
+.bg-glow,
+.device-right .tab-bar {
   display: none !important;
 }
 
@@ -1463,7 +1463,7 @@ body[data-runtime="apk"] *::after {
   -webkit-backdrop-filter: none !important;
 }
 
-body[data-runtime="apk"] .stage {
+.stage {
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-start;
@@ -1472,9 +1472,9 @@ body[data-runtime="apk"] .stage {
   min-height: 100dvh;
 }
 
-body[data-runtime="apk"] .device,
-body[data-runtime="apk"] .device-left,
-body[data-runtime="apk"] .device-right {
+.device,
+.device-left,
+.device-right {
   display: flex !important;
   width: 100%;
   max-width: none;
@@ -1488,7 +1488,7 @@ body[data-runtime="apk"] .device-right {
   margin: 0 !important;
 }
 
-body[data-runtime="apk"] .screen {
+.screen {
   height: auto;
   min-height: 0;
   border-radius: 0;
@@ -1496,17 +1496,17 @@ body[data-runtime="apk"] .screen {
   box-shadow: none;
 }
 
-body[data-runtime="apk"] .screen-scroll {
+.screen-scroll {
   height: auto;
   overflow: visible;
 }
 
-body[data-runtime="apk"] .viewer-frame {
+.viewer-frame {
   max-width: min(460px, 100%);
   margin: 0 auto;
 }
 
-body[data-runtime="apk"] .device-left .tab-bar {
+.device-left .tab-bar {
   position: fixed;
   left: 12px;
   right: 12px;
@@ -1520,7 +1520,7 @@ body[data-runtime="apk"] .device-left .tab-bar {
   padding-bottom: 6px;
 }
 
-body[data-runtime="apk"] .modal {
+.modal {
   background: rgba(6, 9, 15, 0.92);
   box-shadow: none;
 }

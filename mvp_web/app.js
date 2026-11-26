@@ -1081,30 +1081,50 @@ function initPanelControls() {
 function buildFhir() {
   const now = new Date().toISOString();
   const id = `adlms-ast-${Date.now()}`;
+  const mkUuid = () => (typeof crypto !== 'undefined' && crypto.randomUUID)
+    ? crypto.randomUUID()
+    : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+        const r = (Math.random() * 16) | 0;
+        return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
+      });
+  const reportUuid = `urn:uuid:${mkUuid()}`;
+  const sampleId = state.plate && state.plate.sampleId ? String(state.plate.sampleId) : '2026102508332914';
+  const stdDesc = state.standard === 'EUCAST' ? 'EUCAST v16.1 (2026-06-24)' : 'CLSI M100';
+  const subjectObj = { display: `Muestra Anonimizada ID ${sampleId} (Ley 21.719) · ${state.organism}` };
+  const performerArr = [{ display: 'Tecnólogo Médico — DeepHalo / Suite ADLMS' }];
+  const escHtml = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const FHIR_INTERP = { S: 'Susceptible', I: 'Intermediate', R: 'Resistant' };
   const obs = state.discs.map((d, i) => {
     const ev = evaluate(d);
     const drug = DRUGS[d.key] || {};
     const edited = Math.abs(d.mm - d.mm0) > 0.04;
     const codings = [];
-    if (drug.loinc) codings.push({ system: 'http://loinc.org', code: drug.loinc, display: `${d.name} disk diffusion` });
-    if (drug.atc) codings.push({ system: 'http://www.whocc.no/atc', code: drug.atc, display: d.name });
+    if (drug.loinc) codings.push({ system: 'http://loinc.org', code: drug.loinc });
+    if (drug.atc) codings.push({ system: 'http://www.whocc.no/atc', code: drug.atc });
 
     const o = {
       resourceType: 'Observation',
       id: `obs-${i + 1}`,
+      text: {
+        status: 'generated',
+        div: `<div xmlns="http://www.w3.org/1999/xhtml">${escHtml(`${d.name} (${d.code}): ${d.mm} mm — ${CAT_LABEL[ev.cat] || ev.cat}`)}</div>`
+      },
       status: edited ? 'amended' : 'final',
       category: [{ coding: [{ system: 'http://terminology.hl7.org/CodeSystem/observation-category', code: 'laboratory', display: 'Laboratory' }] }],
       code: {
         coding: codings,
         text: `${d.name} (${d.code}) — diámetro del halo de inhibición`
       },
+      subject: subjectObj,
+      performer: performerArr,
       effectiveDateTime: now,
       valueQuantity: { value: d.mm, unit: 'mm', system: 'http://unitsofmeasure.org', code: 'mm' },
       method: { text: 'Kirby-Bauer YOLO11n-seg + Calibración Fiducial 6,0 mm + Validación Cruzada Sobel 36 rayos' }
     };
     if (ev.cat !== 'NA') {
       o.interpretation = [{
-        coding: [{ system: 'http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation', code: ev.cat, display: CAT_LABEL[ev.cat] }]
+        coding: [{ system: 'http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation', code: ev.cat, display: FHIR_INTERP[ev.cat] || ev.cat }],
+        text: CAT_LABEL[ev.cat]
       }];
     }
     const auditTag = edited ? ` AUDITED_BY_TECHNOLOGIST (IA=${d.mm0.toFixed(1)}mm -> ${d.mm.toFixed(1)}mm).` : ' VALIDATED_AUTO.';
@@ -1114,8 +1134,7 @@ function buildFhir() {
     return o;
   });
 
-  const sampleId = state.plate && state.plate.sampleId ? String(state.plate.sampleId) : '2026102508332914';
-  const stdDesc = state.standard === 'EUCAST' ? 'EUCAST v16.1 (2026-06-24)' : 'CLSI M100';
+  const obsUuids = obs.map(() => `urn:uuid:${mkUuid()}`);
   return {
     resourceType: 'Bundle',
     id: `bundle-${id}`,
@@ -1123,15 +1142,19 @@ function buildFhir() {
     timestamp: now,
     entry: [
       {
+        fullUrl: reportUuid,
         resource: {
           resourceType: 'DiagnosticReport',
           id,
+          text: {
+            status: 'generated',
+            div: `<div xmlns="http://www.w3.org/1999/xhtml">${escHtml(`Antibiograma ${state.organism} (${stdDesc}) — ${obs.length} discos`)}</div>`
+          },
           status: 'final',
           category: [{ coding: [{ system: 'http://terminology.hl7.org/CodeSystem/v2-0074', code: 'MB', display: 'Microbiology' }] }],
           code: {
             coding: [
-              { system: 'http://loinc.org', code: '18769-0', display: 'Microbial susceptibility tests' },
-              { system: 'http://snomed.info/sct', code: '70549008', display: 'Antimicrobial susceptibility test' }
+              { system: 'http://loinc.org', code: '18769-0', display: 'Microbial susceptibility tests Set' }
             ],
             text: 'Antibiograma por difusión en disco — DeepHalo / Suite ADLMS'
           },
@@ -1144,10 +1167,10 @@ function buildFhir() {
           },
           effectiveDateTime: now,
           conclusion: `Aislamiento: ${state.organism} (${state.group}). Estándar: ${stdDesc}. Escala fiducial: ${state.scale.toFixed(2)} px/mm. Visado Human-in-the-Loop bajo NCh-ISO 15189:2022 (${state.auditLog.length} ajustes manuales registrados).`,
-          result: obs.map((o) => ({ reference: `Observation/${o.id}` }))
+          result: obsUuids.map((u) => ({ reference: u }))
         }
       },
-      ...obs.map((o) => ({ resource: o }))
+      ...obs.map((o, idx) => ({ fullUrl: obsUuids[idx], resource: o }))
     ]
   };
 }
