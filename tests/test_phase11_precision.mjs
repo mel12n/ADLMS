@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
@@ -12,6 +13,7 @@ const require = createRequire(import.meta.url);
 const plateRoi = require(path.join(ROOT, 'mvp_web/inference/plate_roi.js'));
 const sobel = require(path.join(ROOT, 'mvp_web/inference/sobel_cv.js'));
 const decoder = require(path.join(ROOT, 'mvp_web/inference/yolo_seg_decode.js'));
+const edgeDetector = require(path.join(ROOT, 'mvp_web/inference/edge_detector.js'));
 
 function makeSyntheticPlateRgba(W, H, cx, cy, a, b, angleRad = 0, dishLum = 185, bgLum = 35) {
   const rgba = new Uint8ClampedArray(W * H * 4);
@@ -297,4 +299,136 @@ test('P11-PREC & P11-XAI: yolo_seg_decode defaults zoneMaskThreshold=0.38 and em
     resDefault.detections[0].diam_mm > resStrict050.detections[0].diam_mm,
     `Expected diam_mm at 0.38 (${resDefault.detections[0].diam_mm}) > diam_mm at 0.50 (${resStrict050.detections[0].diam_mm})`
   );
+});
+
+test('P11-INT: edge_detector refines 6.0 mm disk on post-ROI CLAHE, forwards neural_xai_map, and mvp_web/ wires ROI + tilt UI', async () => {
+  const indexHtml = fs.readFileSync(path.join(ROOT, 'mvp_web/index.html'), 'utf8');
+  const appJs = fs.readFileSync(path.join(ROOT, 'mvp_web/app.js'), 'utf8');
+
+  const scalerIdx = indexHtml.indexOf('<script src="image_scaler.js"></script>');
+  const roiIdx = indexHtml.indexOf('<script src="inference/plate_roi.js"></script>');
+  const edgeIdx = indexHtml.indexOf('<script src="inference/edge_detector.js"></script>');
+  const appIdx = indexHtml.indexOf('<script src="app.js"></script>');
+  assert.ok(scalerIdx !== -1 && roiIdx > scalerIdx && edgeIdx > roiIdx && appIdx > edgeIdx, 'index.html must load plate_roi.js after image_scaler.js and before edge_detector.js and app.js');
+  assert.ok(indexHtml.includes('id="tel-tilt-badge"'), 'index.html must include #tel-tilt-badge');
+  assert.ok(appJs.includes('ADLMS_PLATE_ROI') && appJs.includes('detectPlateRoi') && appJs.includes('extractRoiCanvas'), 'app.js must wire ADLMS_PLATE_ROI');
+  assert.ok(appJs.includes('state.neuralXaiMap'), 'app.js must store and render state.neuralXaiMap');
+  assert.ok(appJs.includes('deltaR <= 0.5'), 'app.js must use 0.5 mm Sobel fallback threshold');
+
+  const W = 416;
+  const H = 416;
+  const protoW = 104;
+  const protoH = 104;
+  const protoPlane = protoW * protoH;
+  const numAnchors = 2;
+  const out0 = new Float32Array(39 * numAnchors);
+  const out1 = new Float32Array(32 * protoPlane);
+
+  // Disk at (208, 208) with slightly inflated YOLO proto mask (r=22 -> 44 px)
+  // while actual image bright paper disk has r=18 -> 36 px (6.0 mm => 6.0 px/mm)
+  out0[0 * numAnchors + 0] = 208;
+  out0[1 * numAnchors + 0] = 208;
+  out0[2 * numAnchors + 0] = 48;
+  out0[3 * numAnchors + 0] = 48;
+  out0[4 * numAnchors + 0] = 0.96;
+  out0[7 * numAnchors + 0] = 1.0;
+
+  // Inhibition zone at (208, 208) with r=60 -> 120 px (20.0 mm at true 6.0 px/mm)
+  out0[0 * numAnchors + 1] = 208;
+  out0[1 * numAnchors + 1] = 208;
+  out0[2 * numAnchors + 1] = 130;
+  out0[3 * numAnchors + 1] = 130;
+  out0[5 * numAnchors + 1] = 0.93;
+  out0[8 * numAnchors + 1] = 1.0;
+
+  for (let py = 0; py < protoH; py++) {
+    for (let px = 0; px < protoW; px++) {
+      const dist = Math.hypot((px + 0.5) * 4 - 208, (py + 0.5) * 4 - 208);
+      out1[0 * protoPlane + py * protoW + px] = dist <= 22 ? 6.0 : -6.0;
+      out1[1 * protoPlane + py * protoW + px] = dist <= 60 ? 6.0 : -6.0;
+    }
+  }
+
+  const imgRgba = new Uint8ClampedArray(W * H * 4);
+  for (let y = 0; y < H; y++) {
+    for (let x = 0; x < W; x++) {
+      const r = Math.hypot(x - 208, y - 208);
+      // Bright paper disk r<18 (235), dark halo 18<=r<60 (50), bright lawn r>=60 (175)
+      const val = r < 18 ? 235 : (r < 60 ? 50 : 175);
+      const off = (y * W + x) * 4;
+      imgRgba[off] = val;
+      imgRgba[off + 1] = val;
+      imgRgba[off + 2] = val;
+      imgRgba[off + 3] = 255;
+    }
+  }
+
+  class MockTensor {
+    constructor(type, data, dims) {
+      this.type = type;
+      this.data = data;
+      this.dims = dims;
+    }
+    dispose() {}
+  }
+
+  const mockOrt = {
+    env: { wasm: {} },
+    Tensor: MockTensor,
+    InferenceSession: {
+      async create() {
+        return {
+          inputNames: ['images'],
+          outputNames: ['output0', 'output1'],
+          async run() {
+            return {
+              output0: new MockTensor('float32', out0, [1, 39, numAnchors]),
+              output1: new MockTensor('float32', out1, [1, 32, protoH, protoW])
+            };
+          }
+        };
+      }
+    }
+  };
+
+  const meta = JSON.parse(fs.readFileSync(path.join(ROOT, 'mvp_web/models/model_meta.json'), 'utf8'));
+  const prevDocument = globalThis.document;
+  globalThis.document = {
+    createElement() {
+      return {
+        width: 0,
+        height: 0,
+        getContext() {
+          return {
+            fillStyle: '',
+            fillRect() {},
+            drawImage() {},
+            getImageData(_x, _y, w, h) {
+              return { data: w === W && h === H ? imgRgba : new Uint8ClampedArray(w * h * 4) };
+            }
+          };
+        }
+      };
+    }
+  };
+
+  try {
+    const res = await edgeDetector.runEdgeInference({ naturalWidth: W, naturalHeight: H, width: W, height: H }, {
+      ort: mockOrt,
+      meta,
+      search: ''
+    });
+    assert.ok(res.neural_xai_map, 'runEdgeInference must forward neural_xai_map');
+    assert.equal(res.neural_xai_map.width, 104);
+    assert.equal(res.detections.length, 1);
+    const det = res.detections[0];
+    assert.ok(det.raw_yolo_diam_mm > 0, 'raw_yolo_diam_mm must be preserved');
+    assert.ok(res.median_disk_px < 40, `Expected refined median_disk_px ~36 (< 40), got ${res.median_disk_px}`);
+    assert.ok(Math.abs(det.diam_mm - 20.0) <= 1.2, `Expected refined diam_mm ~20.0 mm, got ${det.diam_mm}`);
+    assert.equal(det.geo_status, 'OK');
+    assert.equal(det.geo_valid, true);
+  } finally {
+    if (prevDocument === undefined) delete globalThis.document;
+    else globalThis.document = prevDocument;
+  }
 });
