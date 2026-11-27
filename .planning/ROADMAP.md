@@ -93,6 +93,8 @@
 - [x] **Phase 8: Offline Android WebView Wrapper APK** - Installable offline APK on TR6948 with camera/gallery input and on-device export (completed 2026-11-24)
 - [x] **Phase 9: Tablet UX & Manual Drug Formulary** - 1024x600 tablet layout, memory-safe canvases, manual drug picker and panel presets (completed 2026-11-24)
 - [ ] **Phase 10: TR6948 Benchmark & Variant Lock** - Measured latency/RAM/MAE on device and locked shipping model variant
+- [ ] **Phase 11: Pipeline Precision Upgrade & Fase 3 Report** - Apply professor's precision recommendations (`ROI -> CLAHE -> Inference`, Sobel threshold/refinement, perspective handling, real neural XAI map) and document iteration in `f3_s09cmelian_avance.md`
+- [ ] **Phase 11: Pipeline Precision Upgrade & Fase 3 Report**
 
 ### Phase Details
 
@@ -182,3 +184,25 @@
 | 8. Offline Android WebView Wrapper APK | 3/3 | Complete | 2026-11-24 |
 | 9. Tablet UX & Manual Drug Formulary | 3/3 | Complete | 2026-11-24 |
 | 10. TR6948 Benchmark & Variant Lock | 0/3 | Planned | - |
+| 11. Pipeline Precision Upgrade & Fase 3 Report | 3/3 | In Progress | - |
+
+### Phase 11: Pipeline Precision Upgrade & Fase 3 Report
+
+**Goal:** Apply the professor's technical feedback and precision criteria (`ROI -> CLAHE -> Inference` ordering, Petri dish ROI crop before `416x416` inference to eliminate Field-of-View scale shrinkage, Sobel radial threshold/refinement aligned with clinical `<= 1.0 mm` diameter risk, perspective/eccentricity check or rectification, and real ONNX neural prototype activation map for XAI) across `mvp_web/` and Python preprocessing, then document the iteration in `C:\Users\cmelian\Git\Anteproyecto\f3_s09cmelian_avance.md`.
+**Requirements**: TBD (derived from `.planning/HALO_PRECISION_IMPROVEMENT_CRITERIA.md` & `C:\Users\cmelian\Git\Anteproyecto\f2_retroalimentacion_profesor.md`)
+**Depends on:** Phase 10
+**Subagent Model Routing:** Use **Neon** for thinking/reading/research/planning/verification subagents and **Hydrogen** for writing/execution/documentation subagents.
+**Success Criteria** (what must be TRUE):
+  1. Automatic Petri dish **ROI isolation precedes CLAHE and `416x416` inference** (`ROI -> CLAHE -> Inference`) in both `src/data/preprocess.py` / `streamlit_app.py` and the `mvp_web/` edge pipeline, eliminating table-margin Field-of-View shrinkage.
+  2. Fiducial `6.0 mm` disk calibration and 36-ray Sobel cross-validation threshold are audited and tightened against clinical `<= 1.0 mm` diameter risk (Hombach et al., 2014), reducing systematic underestimation observed in `Mediciones.csv`.
+  3. Perspective/tilt distortion is explicitly handled (eccentricity/perspective check or projective rectification before ROI crop).
+  4. XAI visualization uses genuine neural activation (`sigmoid(coeffs @ protos)` from `yolo_seg_decode.js`) rather than purely heuristic rings, while keeping `yolo11n_seg_416_fp32` memory-safe on TR6948.
+  5. Iteration results, architectural changes, and empirical justification are documented in `C:\Users\cmelian\Git\Anteproyecto\f3_s09cmelian_avance.md`.
+**Plans:** 3/3 plans executed
+
+**Wave 1**
+- [x] 11-01-PLAN.md — Pure-JS SRP `plate_roi.js` (`ROI -> CLAHE`, elliptical tilt `> 5°`), `sobel_cv.js` (`0.5 mm` threshold + high-res `refineDiskDiameterPx`), `yolo_seg_decode.js` (`zoneMaskThreshold = 0.38` + `104x104` `neural_xai_map`) & `tests/test_phase11_precision.mjs` (`P11-ROI`, `P11-PREC`, `P11-XAI`)
+- [x] 11-02-PLAN.md — Python parity fixes (`ROI -> CLAHE` + `> 85%` skip fallback in `src/data/preprocess.py` & `streamlit_app.py`, `GEOMETRIC_DELTA_THRESHOLD_MM = 0.5` in `src/evaluation/cross_validation.py`) & `tests/test_phase11_python_parity.py` (`P11-PARITY`)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+- [x] 11-03-PLAN.md — Wire `plate_roi.js`, high-res disk refinement, `> 5°` tilt badge, and live `neural_xai_map` into `mvp_web/`; run full JS + Python regression suites & `sync_edge_assets.py --dry-run`; document Phase 11 iteration in `C:\Users\cmelian\Git\Anteproyecto\f3_s09cmelian_avance.md` (`P11-ROI`, `P11-PARITY`, `P11-PREC`, `P11-XAI`, `P11-DOC`)
