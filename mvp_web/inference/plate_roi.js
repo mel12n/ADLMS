@@ -392,14 +392,9 @@
       ctx.imageSmoothingQuality = 'high';
     }
 
-    var canTransform = (
-      roiInfo.perspectiveCompensated &&
-      roiInfo.axisRatio > 0 &&
-      roiInfo.axisRatio < 1.0 &&
-      typeof ctx.translate === 'function' &&
-      typeof ctx.rotate === 'function' &&
-      typeof ctx.scale === 'function'
-    );
+    // Geometric aspect-ratio stretching disabled to avoid distorting small edge halos;
+    // tiltDeg & tiltWarning (> 5 deg) remain active for UI telemetry.
+    var canTransform = false;
 
     if (canTransform) {
       var phi = roiInfo.angleRad || 0;

@@ -107,7 +107,7 @@ test('P11-ROI: detectPlateRoi detects elliptical tilt b/a = 0.90, flags tiltWarn
   const extracted = plateRoi.extractRoiCanvas({ width: W, height: H }, roi, { canvas: mockOutCanvas });
   assert.equal(extracted.canvas, mockOutCanvas);
   assert.ok(extracted.width <= 1024 && extracted.height <= 1024);
-  assert.ok(transformCalls.some((c) => Array.isArray(c) && c[0] === 'rotate'));
+  assert.ok(!transformCalls.some((c) => Array.isArray(c) && c[0] === 'rotate'));
   assert.ok(transformCalls.includes('drawImage'));
 });
 
