@@ -13,6 +13,7 @@
   var DEFAULT_CONF_THRESH = 0.45;
   var DEFAULT_IOU_THRESH = 0.45;
   var DEFAULT_MAX_DET = 100;
+  var DEFAULT_ZONE_MASK_THRESH = 0.38;
   var NUM_CLASSES = 3; // 0: antibiotic_disk, 1: inhibition_zone, 2: inner_colony
   var NUM_PROTOS = 32;
   var DISK_DIAM_MM = 6.0;
@@ -151,9 +152,10 @@
 
   /**
    * ROI-cropped coeffs @ protos (before sigmoid), 4x bilinear logit upsampling,
-   * sigmoid > 0.5 threshold, unpadding to original (origW, origH), and 36-ray contour.
+   * sigmoid > maskThresh threshold, unpadding to original (origW, origH), and 36-ray contour.
    */
-  function decodeMaskRoi(det, out1, protoH, protoW, imgsz, lb) {
+  function decodeMaskRoi(det, out1, protoH, protoW, imgsz, lb, maskThresh, neuralXaiGrid) {
+    var thresh = maskThresh != null ? maskThresh : 0.5;
     var x1 = clamp(det.x1, 0, imgsz);
     var y1 = clamp(det.y1, 0, imgsz);
     var x2 = clamp(det.x2, 0, imgsz);
@@ -223,7 +225,7 @@
         var val = (v00 * (1 - wx) + v10 * wx) * (1 - wy) + (v01 * (1 - wx) + v11 * wx) * wy;
 
         var sig = 1.0 / (1.0 + Math.exp(-clamp(val, -40.0, 40.0)));
-        if (sig > 0.5) {
+        if (sig > thresh) {
           mask[mRow + (ix - ix1)] = 1;
           areaInputPx++;
           sumX += ix + 0.5;
@@ -233,6 +235,22 @@
     }
 
     if (areaInputPx === 0) return null;
+
+    // Accumulate continuous FP32 neural prototype probability field for XAI (D-08)
+    if (neuralXaiGrid && (det.cls === 0 || det.cls === 1)) {
+      for (var npy = py1; npy <= py2; npy++) {
+        var nRowBase = (npy - py1) * pRoiW;
+        var nPRowOffset = npy * protoW;
+        for (var npx = px1; npx <= px2; npx++) {
+          var nLogit = logits[nRowBase + (npx - px1)];
+          var nSig = 1.0 / (1.0 + Math.exp(-clamp(nLogit, -40.0, 40.0)));
+          var nIdx = nPRowOffset + npx;
+          if (nSig > neuralXaiGrid[nIdx]) {
+            neuralXaiGrid[nIdx] = nSig;
+          }
+        }
+      }
+    }
 
     var cxInput = sumX / areaInputPx;
     var cyInput = sumY / areaInputPx;
@@ -420,22 +438,41 @@
       o.maxDet != null ? o.maxDet : DEFAULT_MAX_DET
     );
 
+    var zoneMaskThresh = o.zoneMaskThreshold != null ? o.zoneMaskThreshold : DEFAULT_ZONE_MASK_THRESH;
+    var neuralXaiGrid = new Float32Array(protoH * protoW);
+
     var disks = [];
     var zones = [];
     var colonies = [];
 
     for (var i = 0; i < rawDets.length; i++) {
-      var decoded = decodeMaskRoi(rawDets[i], out1, protoH, protoW, lb.imgsz, lb);
+      var rawDet = rawDets[i];
+      var maskThresh = rawDet.cls === 1 ? zoneMaskThresh : 0.5;
+      var decoded = decodeMaskRoi(rawDet, out1, protoH, protoW, lb.imgsz, lb, maskThresh, neuralXaiGrid);
       if (!decoded) continue;
       if (decoded.cls === 0) disks.push(decoded);
       else if (decoded.cls === 1) zones.push(decoded);
       else if (decoded.cls === 2) colonies.push(decoded);
     }
 
-    return pairAndCalibrate(disks, zones, colonies, lb.origW, lb.origH);
+    var result = pairAndCalibrate(disks, zones, colonies, lb.origW, lb.origH);
+    result.neural_xai_map = {
+      width: protoW,
+      height: protoH,
+      lb: {
+        padLeft: lb.padLeft,
+        padTop: lb.padTop,
+        newW: lb.newW,
+        newH: lb.newH,
+        imgsz: lb.imgsz
+      },
+      data: neuralXaiGrid
+    };
+    return result;
   }
 
   return {
+    DEFAULT_ZONE_MASK_THRESH: DEFAULT_ZONE_MASK_THRESH,
     computeLetterbox: computeLetterbox,
     parseDetections: parseDetections,
     decodeMaskRoi: decodeMaskRoi,
