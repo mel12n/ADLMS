@@ -5,17 +5,17 @@ milestone_name: "): Edge Device Demo (TR6948) — [CURRENT]"
 current_phase: 10
 current_phase_name: TR6948 Benchmark & Variant Lock
 status: ready_to_plan
-stopped_at: Phase 10 context captured (10-CONTEXT.md)
-last_updated: "2026-11-24T20:15:17.971Z"
+stopped_at: Phase 11 context gathered
+last_updated: "2026-11-27T12:15:55.246Z"
 last_activity: 2026-11-24
 last_activity_desc: Phase 10 context captured (10-CONTEXT.md), ready for /gsd-plan-phase 10
-state_head: b4ec5655af1e53f24f3af129cecbf7d05cde24dc
+state_head: fe7f9c14860c8b367f4b94ab13df97f8d615bf85
 progress:
-  total_phases: 5
+  total_phases: 6
   completed_phases: 4
-  total_plans: 15
-  completed_plans: 12
-  percent: 80
+  total_plans: 16
+  completed_plans: 16
+  percent: 67
 ---
 
 # ADLMS: Project State (STATE.md)
@@ -70,6 +70,13 @@ Last activity: 2026-11-24 — Phase 10 context captured (10-CONTEXT.md), ready f
 
 ## Session
 
-**Last session:** 2026-11-24T18:45:00.000Z
-**Stopped at:** Phase 9 verified and complete
-**Resume file:** .planning/phases/09-tablet-ux-manual-drug-formulary/09-VERIFICATION.md
+**Last session:** 2026-11-27T12:15:53.874Z
+**Stopped at:** Phase 11 context gathered
+**Resume file:** .planning/phases/11-pipeline-precision-upgrade-fase-3-report/11-CONTEXT.md
+
+---
+
+## Accumulated Context
+
+### Roadmap Evolution
+- Phase 11 added: Pipeline Precision Upgrade & Fase 3 Report (`ROI -> CLAHE -> Inference`, Sobel threshold/refinement, perspective handling, real ONNX XAI activation map, and Fase 3 documentation in `C:\Users\cmelian\Git\Anteproyecto\f3_s09cmelian_avance.md`; subagent model routing: Neon for thinking/reading agents, Hydrogen for writing agents).
