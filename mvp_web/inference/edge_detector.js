@@ -27,6 +27,57 @@
     return Math.round(v * 10) / 10;
   }
 
+  function round4(v) {
+    return Math.round(v * 10000) / 10000;
+  }
+
+  function computeMedian(values) {
+    if (!values || values.length === 0) return 0;
+    var sorted = values.slice().sort(function (a, b) { return a - b; });
+    var mid = sorted.length >> 1;
+    if (sorted.length % 2 === 1) return sorted[mid];
+    return 0.5 * (sorted[mid - 1] + sorted[mid]);
+  }
+
+  function safeRequire(modPath) {
+    try {
+      return require(modPath);
+    } catch (_e) {
+      return null;
+    }
+  }
+
+  /**
+   * Separable 3x3 Gaussian blur ([1, 2, 1] / 4) for post-ROI CLAHE luminance (D-03, D-04).
+   */
+  function blurLuminance3x3(lum, width, height) {
+    var n = width * height;
+    var tmp = new Float32Array(n);
+    var out = new Float32Array(n);
+    var maxX = width - 1;
+    var maxY = height - 1;
+
+    for (var y = 0; y < height; y++) {
+      var row = y * width;
+      for (var x = 0; x < width; x++) {
+        var xm1 = x > 0 ? x - 1 : 0;
+        var xp1 = x < maxX ? x + 1 : maxX;
+        tmp[row + x] = (lum[row + xm1] + 2.0 * lum[row + x] + lum[row + xp1]) * 0.25;
+      }
+    }
+
+    for (var y2 = 0; y2 < height; y2++) {
+      var ym1 = (y2 > 0 ? y2 - 1 : 0) * width;
+      var y0 = y2 * width;
+      var yp1 = (y2 < maxY ? y2 + 1 : maxY) * width;
+      for (var x2 = 0; x2 < width; x2++) {
+        out[y0 + x2] = (tmp[ym1 + x2] + 2.0 * tmp[y0 + x2] + tmp[yp1 + x2]) * 0.25;
+      }
+    }
+
+    return out;
+  }
+
   /**
    * Auto-probe WebAssembly 128-bit SIMD support using minimal valid SIMD module bytes.
    * Returns false safely on engines without WebAssembly or SIMD.
@@ -279,16 +330,71 @@
     }
     var tInf1 = performance.now();
 
-    // 3. Postprocess: YOLO11n-seg decode + 36-ray Sobel geometric cross-validation
+    // 3. Postprocess: YOLO11n-seg decode + post-ROI CLAHE high-res disk refinement + 36-ray Sobel CV
     var tPost0 = performance.now();
     var decoded = decoder.decodeYoloSeg(out0Data, out1Data, out0Dims, out1Dims, prep.lb, {
       confThresh: o.confThresh,
       iouThresh: o.iouThresh,
-      maxDet: o.maxDet
+      maxDet: o.maxDet,
+      zoneMaskThreshold: o.zoneMaskThreshold
     });
 
     var origRgba = extractOriginalRgba(img, prep.origW, prep.origH);
-    var grayBlurred = sobel.extractBlurredLuminance(origRgba, prep.origW, prep.origH);
+    var plateRoi = (root && root.ADLMS_PLATE_ROI) || (typeof require === 'function' ? safeRequire('./plate_roi.js') : null);
+    var grayBlurred;
+    if (plateRoi && typeof plateRoi.applyTileClaheLuminance === 'function') {
+      var claheLum = plateRoi.applyTileClaheLuminance(origRgba, prep.origW, prep.origH, {
+        tilesX: 8,
+        tilesY: 8,
+        clipLimit: 2.0
+      });
+      grayBlurred = blurLuminance3x3(claheLum, prep.origW, prep.origH);
+    } else {
+      grayBlurred = sobel.extractBlurredLuminance(origRgba, prep.origW, prep.origH);
+    }
+
+    // High-res (<= 1024 px) 6.0 mm disk diameter refinement (D-04, D-06)
+    var oldFScale = decoded.scale_mm_per_px;
+    var refinedDiskDiams = [];
+    for (var di = 0; di < decoded.detections.length; di++) {
+      var dDet = decoded.detections[di];
+      dDet.raw_yolo_diam_mm = dDet.diam_mm;
+      if (typeof sobel.refineDiskDiameterPx === 'function' && dDet.disk_diam_px > 0) {
+        var refinedPx = sobel.refineDiskDiameterPx(
+          grayBlurred,
+          prep.origW,
+          prep.origH,
+          dDet.cx_px,
+          dDet.cy_px,
+          dDet.disk_diam_px
+        );
+        if (refinedPx > 0) {
+          dDet.raw_yolo_disk_diam_px = dDet.disk_diam_px;
+          dDet.disk_diam_px = refinedPx;
+          refinedDiskDiams.push(refinedPx);
+        }
+      }
+    }
+
+    if (refinedDiskDiams.length > 0) {
+      var refinedMedianPx = computeMedian(refinedDiskDiams);
+      if (refinedMedianPx > 0) {
+        var newPxPerMm = refinedMedianPx / 6.0;
+        var newMmPerPx = 6.0 / refinedMedianPx;
+        decoded.median_disk_px = round4(refinedMedianPx);
+        decoded.scale_px_per_mm = round4(newPxPerMm);
+        decoded.scale_mm_per_px = round4(newMmPerPx);
+        if (oldFScale > 0) {
+          for (var rj = 0; rj < decoded.detections.length; rj++) {
+            var rDet = decoded.detections[rj];
+            if (rDet.raw_yolo_diam_mm > 6.0 && rDet.zone_contour && rDet.zone_contour.length > 0) {
+              var rawYoloDiamPx = rDet.raw_yolo_diam_mm / oldFScale;
+              rDet.diam_mm = Math.max(6.0, round1(rawYoloDiamPx * newMmPerPx));
+            }
+          }
+        }
+      }
+    }
 
     var fScale = decoded.scale_mm_per_px;
     for (var i = 0; i < decoded.detections.length; i++) {
@@ -308,6 +414,7 @@
       det.delta_r_mm = cv.delta_r_mm;
       det.geo_valid = cv.geo_valid;
       det.geo_alert = cv.geo_alert;
+      det.geo_status = cv.geo_status;
       det.geo_message = cv.geo_message;
     }
     var tPost1 = performance.now();
@@ -326,6 +433,7 @@
       runtime_mode: 'edge-wasm',
       simd_enabled: _simdEnabled,
       model_variant: variant.id,
+      neural_xai_map: decoded.neural_xai_map || null,
       detections: decoded.detections
     };
   }

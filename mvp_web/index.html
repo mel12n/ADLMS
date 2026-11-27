@@ -97,7 +97,7 @@
         </header>
 
         <div class="screen-scroll" id="screen-scroll-left">
-          <div class="fiducial-telemetry" id="fiducial-telemetry" aria-label="Telemetría de calibración fiducial">
+          <div class="fiducial-telemetry" id="fiducial-telemetry" aria-label="Telemetría de calibración fiducial" style="flex-wrap:wrap;">
             <div class="tel-item">
               <span class="tel-label">Anclaje 6,0 mm</span>
               <strong class="tel-val" id="tel-disc-px">— px</strong>
@@ -112,6 +112,7 @@
               <span class="tel-label">Resolución</span>
               <strong class="tel-val" id="tel-res">— mm/px</strong>
             </div>
+            <span class="xval-pill warn" id="tel-tilt-badge" hidden title="Inclinación detectada respecto al plano de la placa" style="flex:none;font-size:10px;padding:2px 6px;white-space:nowrap;"></span>
           </div>
 
           <div class="plate-picker" id="plate-picker" role="tablist" aria-label="Placas clínicas y pruebas"></div>
@@ -370,11 +371,12 @@
   <script src="formulary_ui.js"></script>
   <script src="plates_data.js"></script>
   <script src="vendor/ort/ort.wasm.min.js"></script>
+  <script src="image_scaler.js"></script>
+  <script src="inference/plate_roi.js"></script>
   <script src="inference/sobel_cv.js"></script>
   <script src="inference/yolo_seg_decode.js"></script>
   <script src="inference/edge_detector.js"></script>
   <script src="inference/inference_router.js"></script>
-  <script src="image_scaler.js"></script>
   <script src="telemetry_ui.js"></script>
   <script src="app.js"></script>
 </body>

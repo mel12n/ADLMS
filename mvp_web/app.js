@@ -47,11 +47,14 @@ const state = {
   clahe: true, roi: true, cam: true, camAlpha: 0.45,
   zoom: 1, panX: 0, panY: 0,
   backendOnline: false,
+  roiInfo: null,
+  neuralXaiMap: null,
   auditLog: [],
 };
 
 const base = document.createElement('canvas');   // image + roi + heat
 const heat = document.createElement('canvas');   // cached Grad-CAM layer
+const xaiProtoCanvas = document.createElement('canvas'); // reusable 104x104 XAI buffer
 const canvas = $('plate-canvas');
 const ctx = canvas.getContext('2d');
 const frame = $('viewer-frame');
@@ -167,10 +170,10 @@ function buildDiscsFromPlateData(plate, W, H, ox, oy) {
     const mm = Math.round((d.mm !== undefined ? d.mm : FIDUCIAL_MM) * 10) / 10;
     const sobelMm = d.sobelMm !== undefined ? d.sobelMm : mm;
     const deltaR = d.deltaR !== undefined ? d.deltaR : Math.abs((mm - sobelMm) / 2);
-    const geoValid = d.geoValid !== undefined ? d.geoValid : deltaR <= 1.2;
+    const geoValid = d.geoValid !== undefined ? d.geoValid : deltaR <= 0.5;
     const geoMessage = d.geoMessage || (geoValid
-      ? `Sobel 36 rayos: Δr = ${deltaR.toFixed(2)} mm ≤ 1,2 mm`
-      : `Discrepancia geométrica (Δr = ${deltaR.toFixed(2)} mm > 1,2 mm)`);
+      ? `Sobel 36 rayos: Δr = ${deltaR.toFixed(2)} mm ≤ 0,5 mm`
+      : `Discrepancia geométrica (Δr = ${deltaR.toFixed(2)} mm > 0,5 mm)`);
     const contour = Array.isArray(d.contour)
       ? d.contour.map(([px, py]) => [px * W + ox, py * H + oy])
       : [];
@@ -237,6 +240,8 @@ function loadPlate(plate) {
     }
     state.plate = plate;
     state.img = workingImg;
+    state.roiInfo = null;
+    state.neuralXaiMap = null;
     state.N = Math.max(W, H);
     state.ox = (state.N - W) / 2;
     state.oy = (state.N - H) / 2;
@@ -270,7 +275,30 @@ async function loadUpload(file) {
     toast('No se pudo procesar la imagen seleccionada.');
     return;
   }
-  const W = scaled.width, H = scaled.height;
+  let workingCanvas = scaled.canvas;
+  let W = scaled.width, H = scaled.height;
+  let roiInfo = null;
+  const plateRoi = window.ADLMS_PLATE_ROI;
+  if (plateRoi && typeof plateRoi.detectPlateRoi === 'function' && typeof plateRoi.extractRoiCanvas === 'function') {
+    try {
+      const rCtx = scaled.canvas.getContext('2d', { willReadFrequently: true });
+      const rgba = rCtx.getImageData(0, 0, W, H).data;
+      roiInfo = plateRoi.detectPlateRoi(rgba, W, H);
+      const extracted = plateRoi.extractRoiCanvas(scaled.canvas, roiInfo, { maxEdge: scaler.MAX_EDGE_PX || 1024 });
+      if (extracted && extracted.canvas) {
+        workingCanvas = extracted.canvas;
+        W = extracted.width || workingCanvas.width || W;
+        H = extracted.height || workingCanvas.height || H;
+      }
+    } catch (roiErr) {
+      console.warn('ADLMS plate ROI skipped:', roiErr);
+      roiInfo = null;
+    }
+  }
+  const displayThumbUrl = workingCanvas !== scaled.canvas && typeof workingCanvas.toDataURL === 'function'
+    ? workingCanvas.toDataURL('image/jpeg', 0.88)
+    : scaled.thumbDataUrl;
+
   const sampleId = '20261122' + String(Math.floor(10000000 + Math.random() * 90000000));
   state.plate = {
     key: 'upload',
@@ -279,10 +307,12 @@ async function loadUpload(file) {
     group: state.group,
     sampleId,
     organism: state.organism,
-    image: scaled.thumbDataUrl,
+    image: displayThumbUrl,
     discs: [],
   };
-  state.img = scaled.canvas;
+  state.img = workingCanvas;
+  state.roiInfo = roiInfo;
+  state.neuralXaiMap = null;
   state.N = Math.max(W, H);
   state.ox = (state.N - W) / 2;
   state.oy = (state.N - H) / 2;
@@ -303,16 +333,17 @@ async function loadUpload(file) {
     if (!router || typeof router.analyzePlate !== 'function') {
       throw new Error('ADLMS_INFERENCE_ROUTER no cargado');
     }
-    const data = await router.analyzePlate(file, scaled.canvas, {
+    const data = await router.analyzePlate(file, workingCanvas, {
       organism: state.organism,
       group: state.group,
       standard: state.standard,
-      dataUrl: scaled.thumbDataUrl,
+      dataUrl: displayThumbUrl,
     });
 
     const activeMode = data.runtime_mode || router.getActiveMode() || 'edge-wasm';
     state.backendOnline = activeMode === 'local-api';
     updateRuntimeModeBadge(activeMode, data.simd_enabled);
+    state.neuralXaiMap = data.neural_xai_map || null;
 
     state.plate.discs = (data.detections || []).map((d) => ({
       code: d.code,
@@ -377,6 +408,46 @@ function computeHeat() {
   const hctx = heat.getContext('2d');
   hctx.clearRect(0, 0, N, N);
   if (!state.img) return;
+
+  // Live ONNX neural prototype activation map (D-08)
+  const xai = state.neuralXaiMap;
+  if (xai && xai.data && xai.width > 0 && xai.height > 0) {
+    const pw = xai.width;
+    const ph = xai.height;
+    const grid = xai.data;
+    if (xaiProtoCanvas.width !== pw || xaiProtoCanvas.height !== ph) {
+      xaiProtoCanvas.width = pw;
+      xaiProtoCanvas.height = ph;
+    }
+    const pCtx = xaiProtoCanvas.getContext('2d');
+    const pImg = pCtx.createImageData(pw, ph);
+    const total = pw * ph;
+    for (let idx = 0; idx < total; idx++) {
+      const v = Math.max(0, Math.min(1, grid[idx] || 0));
+      if (v < 0.04) continue;
+      const [r, g, b] = jet(v);
+      const off = idx * 4;
+      pImg.data[off] = r;
+      pImg.data[off + 1] = g;
+      pImg.data[off + 2] = b;
+      pImg.data[off + 3] = Math.min(255, 30 + v * 215);
+    }
+    pCtx.putImageData(pImg, 0, 0);
+
+    const lb = xai.lb || {};
+    const imgsz = lb.imgsz || 416;
+    const sx = ((lb.padLeft || 0) / imgsz) * pw;
+    const sy = ((lb.padTop || 0) / imgsz) * ph;
+    const sw = Math.max(1, ((lb.newW || imgsz) / imgsz) * pw);
+    const sh = Math.max(1, ((lb.newH || imgsz) / imgsz) * ph);
+    const dstW = state.img.naturalWidth || state.img.width || (N - 2 * state.ox);
+    const dstH = state.img.naturalHeight || state.img.height || (N - 2 * state.oy);
+
+    hctx.imageSmoothingEnabled = true;
+    hctx.imageSmoothingQuality = 'high';
+    hctx.drawImage(xaiProtoCanvas, sx, sy, sw, sh, state.ox, state.oy, dstW, dstH);
+    return;
+  }
 
   const tiny = document.createElement('canvas');
   const ts = Math.max(24, Math.round(N / 14));
@@ -897,6 +968,18 @@ function renderPanel(scroll = false, light = false) {
     }
   }
 
+  const telTiltBadge = $('tel-tilt-badge');
+  if (telTiltBadge) {
+    if (state.roiInfo && state.roiInfo.tiltWarning && state.roiInfo.tiltDeg > 5) {
+      telTiltBadge.hidden = false;
+      telTiltBadge.textContent = `⚠ Inclin. ${state.roiInfo.tiltDeg.toFixed(1)}°`;
+      telTiltBadge.title = `Inclinación estimada de ${state.roiInfo.tiltDeg.toFixed(1)}° (> 5°). ${state.roiInfo.perspectiveCompensated ? 'Compensación elíptica aplicada.' : 'Verifique paralelismo de cámara.'}`;
+    } else {
+      telTiltBadge.hidden = true;
+      telTiltBadge.textContent = '';
+    }
+  }
+
   renderCaliper();
 }
 
@@ -936,7 +1019,7 @@ function renderCaliper() {
       geoPill.textContent = `Sobel 36 rayos · Δr=${d.deltaR.toFixed(2)} mm ✓`;
     } else {
       geoPill.className = 'xval-pill warn';
-      geoPill.textContent = `Discrepancia Sobel Δr=${d.deltaR.toFixed(2)} mm (>1,2)`;
+      geoPill.textContent = `Discrepancia Sobel Δr=${d.deltaR.toFixed(2)} mm (>0,5)`;
     }
     if (auditTag) auditTag.hidden = !edited;
   }
