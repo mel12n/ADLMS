@@ -474,12 +474,12 @@ def main():
             # Fallback synthetic agar plate image
             base_img = Image.new("RGB", (640, 640), color=(140, 115, 80))
 
-    # Apply Image Processing Pipeline
+    # Apply Image Processing Pipeline (ROI -> CLAHE)
     proc_img = base_img.copy()
-    if enable_clahe:
-        proc_img = apply_optical_clahe(proc_img)
     if enable_roi:
         proc_img = apply_plate_roi(proc_img)
+    if enable_clahe:
+        proc_img = apply_optical_clahe(proc_img)
 
     # Setup Columns
     col_img, col_metrics = st.columns([1.1, 0.9])

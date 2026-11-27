@@ -23,10 +23,18 @@ def apply_clahe(image_bgr):
 def crop_plate_roi(image_bgr):
     """
     Detect the circular agar plate boundary and crop to ROI to remove desk/table noise.
+    Skips cropping when the detected Petri dish already fills > 85% of the frame.
     """
+    if image_bgr is None or image_bgr.size == 0:
+        return image_bgr, (0, 0, 0, 0)
+
+    h, w = image_bgr.shape[:2]
+    if min(h, w) <= 0:
+        return image_bgr, (0, 0, w, h)
+
     gray = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2GRAY)
     blurred = cv2.GaussianBlur(gray, (9, 9), 2)
-    
+
     # Hough Circle Transform to find agar plate boundary
     circles = cv2.HoughCircles(
         blurred,
@@ -35,42 +43,49 @@ def crop_plate_roi(image_bgr):
         minDist=100,
         param1=50,
         param2=30,
-        minRadius=int(min(image_bgr.shape[:2]) * 0.3),
-        maxRadius=int(max(image_bgr.shape[:2]) * 0.5)
+        minRadius=int(min(h, w) * 0.3),
+        maxRadius=int(max(h, w) * 0.5)
     )
-    
+
     if circles is not None:
         circles = np.round(circles[0, :]).astype("int")
         # Select largest circle
         largest_circle = max(circles, key=lambda c: c[2])
-        x, y, r = largest_circle
-        
-        # Bounding square around circle
-        x1 = max(0, x - r)
-        y1 = max(0, y - r)
-        x2 = min(image_bgr.shape[1], x + r)
-        y2 = min(image_bgr.shape[0], y + r)
-        
+        x, y, r = int(largest_circle[0]), int(largest_circle[1]), int(largest_circle[2])
+
+        # Skip cropping when the plate already fills > 85% of the frame (Antibiogram_demo framing)
+        if (2 * r) / min(h, w) > 0.85:
+            return image_bgr, (0, 0, w, h)
+
+        # Bounding square around circle clamped to [0, w] / [0, h]
+        x1 = max(0, min(w, x - r))
+        y1 = max(0, min(h, y - r))
+        x2 = max(0, min(w, x + r))
+        y2 = max(0, min(h, y + r))
+
+        if x2 <= x1 or y2 <= y1:
+            return image_bgr, (0, 0, w, h)
+
         cropped = image_bgr[y1:y2, x1:x2]
         return cropped, (x1, y1, x2, y2)
-    
-    return image_bgr, (0, 0, image_bgr.shape[1], image_bgr.shape[0])
+
+    return image_bgr, (0, 0, w, h)
 
 def preprocess_plate_image(image_path, target_size=IMAGE_SIZE):
     """
-    Full OpenCV preprocessing pipeline:
+    Full OpenCV preprocessing pipeline (ROI -> CLAHE):
     1. Read image
-    2. Apply CLAHE for illumination correction
-    3. Extract plate ROI
+    2. Extract plate ROI (skips crop when plate fills > 85% of frame)
+    3. Apply CLAHE strictly after ROI isolation for illumination correction
     4. Resize to target YOLO dimensions (640x640)
     """
     img = cv2.imread(str(image_path))
     if img is None:
         raise ValueError(f"Could not load image at {image_path}")
-        
-    img_clahe = apply_clahe(img)
-    roi, _ = crop_plate_roi(img_clahe)
-    resized = cv2.resize(roi, target_size, interpolation=cv2.INTER_AREA)
+
+    roi, _ = crop_plate_roi(img)
+    img_clahe = apply_clahe(roi)
+    resized = cv2.resize(img_clahe, target_size, interpolation=cv2.INTER_AREA)
     return resized
 
 if __name__ == "__main__":

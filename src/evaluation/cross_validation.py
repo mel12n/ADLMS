@@ -16,7 +16,7 @@ from typing import Any, Dict, List, Optional, Tuple
 import cv2
 import numpy as np
 
-GEOMETRIC_DELTA_THRESHOLD_MM = 1.2
+GEOMETRIC_DELTA_THRESHOLD_MM = 0.5
 NUM_RADIAL_RAYS = 36
 
 # EUCAST Expert Rules & Expected Intrinsic Resistance Phenotypes
@@ -94,7 +94,8 @@ def validate_zone_geometry(
 
     Casts 36 rays (every 10 degrees) from the disk centroid around the expected halo edge,
     extracts the 1D directional radial derivative ``dI/dr``, and takes the robust median
-    across rays to check ``|r_yolo - r_sobel| <= 1.2 mm``.
+    across rays to check ``|r_yolo - r_sobel| <= 0.5 mm`` (1.0 mm diameter clinical risk
+    per Hombach et al., 2014).
     """
     yolo_diam_mm = float(yolo_diam_mm)
     yolo_rad_mm = yolo_diam_mm / 2.0
