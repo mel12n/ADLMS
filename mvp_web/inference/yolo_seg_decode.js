@@ -13,7 +13,7 @@
   var DEFAULT_CONF_THRESH = 0.45;
   var DEFAULT_IOU_THRESH = 0.45;
   var DEFAULT_MAX_DET = 100;
-  var DEFAULT_ZONE_MASK_THRESH = 0.38;
+  var DEFAULT_ZONE_MASK_THRESH = 0.30;
   var NUM_CLASSES = 3; // 0: antibiotic_disk, 1: inhibition_zone, 2: inner_colony
   var NUM_PROTOS = 32;
   var DISK_DIAM_MM = 6.0;

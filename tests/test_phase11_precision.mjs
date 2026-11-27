@@ -221,8 +221,8 @@ test('P11-PREC: sobel_cv enforces DELTA_R_THRESHOLD_MM = 0.5 and refines 6.0 mm 
   assert.ok(clamped >= 0.70 * 56 - 0.01 && clamped <= 1.10 * 56 + 0.01, `Clamped value out of bounds: ${clamped}`);
 });
 
-test('P11-PREC & P11-XAI: yolo_seg_decode defaults zoneMaskThreshold=0.38 and emits 104x104 neural_xai_map (D-06, D-08)', () => {
-  assert.equal(decoder.DEFAULT_ZONE_MASK_THRESH, 0.38);
+test('P11-PREC & P11-XAI: yolo_seg_decode defaults zoneMaskThreshold=0.30 and emits 104x104 neural_xai_map (D-06, D-08)', () => {
+  assert.equal(decoder.DEFAULT_ZONE_MASK_THRESH, 0.30);
 
   const origW = 416;
   const origH = 416;
